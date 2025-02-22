@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QCursor>
 
 class MainWindow : public QMainWindow
 {
@@ -16,9 +17,9 @@ public:
     ~MainWindow();
 
 private:
-    QLabel              *background_logo = nullptr;                     // Фон
-    QPushButton         *button_start = nullptr;                        // Кнопка старт
-    QPushButton         *button_exit = nullptr;                         // Кнопка выход
+    QLabel              *background_logo = nullptr;                 // Фон
+    QPushButton         *button_start = nullptr;                    // Кнопка старт
+    QPushButton         *button_exit = nullptr;                     // Кнопка выход
 
     int WIDTH_SCREEN;                                               // Ширина экрана
     int HEIGHT_SCREEN;                                              // Высота экрана
@@ -26,6 +27,7 @@ private:
     void screen_size();                                             // Получаем разрешение экрана и
                                                                     // определяем результаты в переменные
                                                                     // WIDTH_SCREEN и SCREEN_HEIGHT
+    void initial();                                                 // Инициализация
 
 private slots:
     void exit_of_game();                                            // Выход из игры

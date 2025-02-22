@@ -4,5 +4,6 @@
         <file>resource/logo/repka-fon.jpg</file>
         <file>resource/logo/start.png</file>
         <file>resource/logo/prosrach.png</file>
+        <file>resource/logo/cursor1.png</file>
     </qresource>
 </RCC>
