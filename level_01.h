@@ -23,7 +23,27 @@ private:
     int HEIGHT_SCREEN = 0;
 
     QLabel          *background_lev01 = nullptr;            // Фон уровня 1
-    PicObject       *repka = nullptr;                       // Цветная репка
+    PicObject       *repka = nullptr;                       // Овощи
+    PicObject       *repka_gray = nullptr;
+    PicObject       *baklagan = nullptr;
+    PicObject       *baklagan_gray = nullptr;
+    PicObject       *chesnok = nullptr;
+    PicObject       *chesnok_gray = nullptr;
+    PicObject       *grusha = nullptr;
+    PicObject       *grusha_gray = nullptr;
+    PicObject       *kartoshka = nullptr;
+    PicObject       *kartoshka_gray = nullptr;
+    PicObject       *morkovka = nullptr;
+    PicObject       *morkovka_gray = nullptr;
+    PicObject       *ogurec = nullptr;
+    PicObject       *ogurec_gray = nullptr;
+    PicObject       *rediska = nullptr;
+    PicObject       *rediska_gray = nullptr;
+    PicObject       *tomat = nullptr;
+    PicObject       *tomat_gray = nullptr;
+    PicObject       *tykva = nullptr;
+    PicObject       *tykva_gray = nullptr;
+
 
 public slots:
     void initial();                                         // инициализация

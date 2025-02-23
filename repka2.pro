@@ -11,11 +11,13 @@ CONFIG += c++17
 SOURCES += \
     level_01.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    picobject.cpp
 
 HEADERS += \
     level_01.h \
-    mainwindow.h
+    mainwindow.h \
+    picobject.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

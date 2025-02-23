@@ -2,7 +2,7 @@
 
 PicObject::PicObject(QWidget *parent):QLabel(parent)
 {
-    setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    //setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     width_frame = width();
     height_frame = height();
 }
@@ -11,14 +11,14 @@ PicObject::PicObject(QString path, QWidget *parent):QLabel(parent)
 {
     width_frame = width();
     height_frame = height();
-    setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    //setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     path_to_image = path;
     pixmap.load(path_to_image);
 }
 
 PicObject::PicObject(QString path, int width, int height, QWidget *parent):QLabel(parent)
 {
-    setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    //setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     resize(width, height);
     width_frame = width;
     height_frame = height;

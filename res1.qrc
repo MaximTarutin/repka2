@@ -33,5 +33,6 @@
         <file>resource/lev_01/tykva.png</file>
         <file>resource/lev_01/vnuchka.png</file>
         <file>resource/lev_01/zuchka.png</file>
+        <file>resource/lev_01/baklagan-gray.png</file>
     </qresource>
 </RCC>
