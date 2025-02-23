@@ -5,7 +5,6 @@
         <file>resource/lev_01/chesnok-gray.png</file>
         <file>resource/lev_01/chesnok.png</file>
         <file>resource/lev_01/dedka.png</file>
-        <file>resource/lev_01/dom-fon.jpg</file>
         <file>resource/lev_01/grusha-gray.png</file>
         <file>resource/lev_01/grusha.png</file>
         <file>resource/lev_01/kartoshka-gray.png</file>
@@ -34,5 +33,6 @@
         <file>resource/lev_01/vnuchka.png</file>
         <file>resource/lev_01/zuchka.png</file>
         <file>resource/lev_01/baklagan-gray.png</file>
+        <file>resource/lev_01/fon.jpg</file>
     </qresource>
 </RCC>

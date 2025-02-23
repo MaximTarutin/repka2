@@ -22,7 +22,7 @@ Level_01::~Level_01()
 void Level_01::initial()
 {
     background_lev01 = new QLabel(this);
-    background_lev01->setStyleSheet("border-image: url(:/resource/lev_01/dom-fon.jpg);");
+    background_lev01->setStyleSheet("border-image: url(:/resource/lev_01/fon.jpg);");
     this->setCentralWidget(background_lev01);
     background_lev01->show();
 
@@ -43,12 +43,12 @@ void Level_01::initial()
 
     repka_gray = new PicObject(":/resource/lev_01/repka-gray.png", this);
     repka_gray->resize_object(WIDTH_SCREEN/3, HEIGHT_SCREEN/3);
-    repka_gray->move(WIDTH_SCREEN/30, HEIGHT_SCREEN-HEIGHT_SCREEN/3);
+    repka_gray->move(WIDTH_SCREEN/15, HEIGHT_SCREEN-HEIGHT_SCREEN/3);
     repka_gray->show();
 
     baklagan_gray = new PicObject(":/resource/lev_01/baklagan-gray.png", this);
     baklagan_gray->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
-    baklagan_gray->move(WIDTH_SCREEN/5, HEIGHT_SCREEN/2-HEIGHT_SCREEN/50);
+    baklagan_gray->move(WIDTH_SCREEN/60, HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
     baklagan_gray->show();
 
     chesnok_gray = new PicObject(":/resource/lev_01/chesnok-gray.png", this);
@@ -63,12 +63,12 @@ void Level_01::initial()
 
     morkovka_gray = new PicObject(":/resource/lev_01/morkovka-gray.png", this);
     morkovka_gray->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
-    morkovka_gray->move(WIDTH_SCREEN/2-WIDTH_SCREEN/6, HEIGHT_SCREEN/2+HEIGHT_SCREEN/4);
+    morkovka_gray->move(WIDTH_SCREEN/2-WIDTH_SCREEN/4, HEIGHT_SCREEN/2+HEIGHT_SCREEN/4);
     morkovka_gray->show();
 
     ogurec_gray = new PicObject(":/resource/lev_01/ogurec-gray.png", this);
     ogurec_gray->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
-    ogurec_gray->move(WIDTH_SCREEN/2, HEIGHT_SCREEN/2+HEIGHT_SCREEN/10);
+    ogurec_gray->move(WIDTH_SCREEN/2-WIDTH_SCREEN/20, HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
     ogurec_gray->show();
 }
 
