@@ -7,6 +7,7 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QCursor>
+#include "level_01.h"
 
 class MainWindow : public QMainWindow
 {
@@ -16,13 +17,20 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    void width_scr(int);                                            // Сигнал ширина экрана
+    void height_scr(int);                                           // Сигнал высота экрана
+
 private:
     QLabel              *background_logo = nullptr;                 // Фон
     QPushButton         *button_start = nullptr;                    // Кнопка старт
     QPushButton         *button_exit = nullptr;                     // Кнопка выход
 
-    int WIDTH_SCREEN;                                               // Ширина экрана
-    int HEIGHT_SCREEN;                                              // Высота экрана
+    Level_01            *lev_01 = nullptr;
+
+    int WIDTH_SCREEN = 0;                                           // Ширина экрана
+    int HEIGHT_SCREEN = 0;                                          // Высота экрана
+    int CURRENT_LEVEL = 1;                                          // Текущий уровень
 
     void screen_size();                                             // Получаем разрешение экрана и
                                                                     // определяем результаты в переменные
@@ -31,6 +39,10 @@ private:
 
 private slots:
     void exit_of_game();                                            // Выход из игры
+    void start_level();
+
+
+
 
 };
 #endif // MAINWINDOW_H

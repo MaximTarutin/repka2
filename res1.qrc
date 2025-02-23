@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resource/lev_01/babka.png</file>
+        <file>resource/lev_01/baklagan.png</file>
+        <file>resource/lev_01/chesnok-gray.png</file>
+        <file>resource/lev_01/chesnok.png</file>
+        <file>resource/lev_01/dedka.png</file>
+        <file>resource/lev_01/dom-fon.jpg</file>
+        <file>resource/lev_01/grusha-gray.png</file>
+        <file>resource/lev_01/grusha.png</file>
+        <file>resource/lev_01/kartoshka-gray.png</file>
+        <file>resource/lev_01/kartoshka.png</file>
+        <file>resource/lev_01/koshka.png</file>
+        <file>resource/lev_01/morkovka-gray.png</file>
+        <file>resource/lev_01/morkovka.png</file>
+        <file>resource/lev_01/myshka.png</file>
+        <file>resource/lev_01/next.png</file>
+        <file>resource/lev_01/ogurec-gray.png</file>
+        <file>resource/lev_01/ogurec.png</file>
+        <file>resource/lev_01/prosrach.png</file>
+        <file>resource/lev_01/rediska-gray.png</file>
+        <file>resource/lev_01/rediska.png</file>
+        <file>resource/lev_01/repa.ico</file>
+        <file>resource/lev_01/repa.png</file>
+        <file>resource/lev_01/repka-gray.png</file>
+        <file>resource/lev_01/repka.png</file>
+        <file>resource/lev_01/return.png</file>
+        <file>resource/lev_01/ruka.png</file>
+        <file>resource/lev_01/theend.png</file>
+        <file>resource/lev_01/tomat-gray.png</file>
+        <file>resource/lev_01/tomat.png</file>
+        <file>resource/lev_01/tykva-gray.png</file>
+        <file>resource/lev_01/tykva.png</file>
+        <file>resource/lev_01/vnuchka.png</file>
+        <file>resource/lev_01/zuchka.png</file>
+    </qresource>
+</RCC>
