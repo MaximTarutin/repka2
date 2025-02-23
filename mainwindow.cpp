@@ -3,16 +3,17 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    lev_01 = new Level_01(this);
+    lev_01 = new Level_01();
 
-    connect(this, &MainWindow::width_scr, lev_01, &Level_01::get_width);
-    connect(this, &MainWindow::height_scr, lev_01, &Level_01::get_height);
+    connect(this, &MainWindow::width_scr, lev_01, &Level_01::get_width);        // Получаем разрешение экрана для всех
+    connect(this, &MainWindow::height_scr, lev_01, &Level_01::get_height);      // уровней и пишем значение в каждом уровне
+                                                                                // в SCREEN_WIDTH и SCREEN_HEIGHT
 
     screen_size();          // Присваиваем значения SCREEN_WIDTH и SCREEN_HEIGHT
     initial();
 
-    connect(button_exit, &QPushButton::clicked, this, &MainWindow::exit_of_game);
-    connect(button_start, &QPushButton::clicked, this, &MainWindow::start_level);
+    connect(button_exit, &QPushButton::clicked, this, &MainWindow::exit_of_game);   // Выход из игры
+    connect(button_start, &QPushButton::clicked, this, &MainWindow::start_level);   // Запуск текущего уровня
 }
 
 MainWindow::~MainWindow()
@@ -70,6 +71,10 @@ void MainWindow::exit_of_game()
 
 void MainWindow::start_level()
 {
-    lev_01->show();
+    this->hide();
+    lev_01->showFullScreen();
+    lev_01->initial();
+    connect(lev_01->button_back, &QPushButton::clicked, this, [this](){
+        lev_01->back_level(); this->showFullScreen();});
 }
 
