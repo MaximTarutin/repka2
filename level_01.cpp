@@ -9,9 +9,14 @@ Level_01::Level_01(QWidget *parent)
 
 Level_01::~Level_01()
 {
-    delete chesnok_gray;
-    delete baklagan_gray;
-    delete repka_gray;
+    // for(int i=0; i==9; i++)
+    // {
+    //     delete ovoshi[i];
+    // }
+    for(int i=0; i==7; i++)
+    {
+        delete ovoshi_gray[i];
+    }
     delete button_next;
     delete button_back;
     delete background_lev01;
@@ -41,35 +46,45 @@ void Level_01::initial()
     button_next->move(WIDTH_SCREEN-WIDTH_SCREEN/12, HEIGHT_SCREEN/20);
     button_next->hide();
 
-    repka_gray = new PicObject(":/resource/lev_01/repka-gray.png", this);
-    repka_gray->resize_object(WIDTH_SCREEN/3, HEIGHT_SCREEN/3);
-    repka_gray->move(WIDTH_SCREEN/15, HEIGHT_SCREEN-HEIGHT_SCREEN/3);
-    repka_gray->show();
+    ovoshi_gray[0] = new PicObject(":/resource/lev_01/repka-gray.png", this);
+    ovoshi_gray[0]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    ovoshi_gray[0]->move(WIDTH_SCREEN/25, HEIGHT_SCREEN-HEIGHT_SCREEN/4);
+    ovoshi_gray[0]->show();
 
-    baklagan_gray = new PicObject(":/resource/lev_01/baklagan-gray.png", this);
-    baklagan_gray->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
-    baklagan_gray->move(WIDTH_SCREEN/60, HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
-    baklagan_gray->show();
+    ovoshi_gray[1] = new PicObject(":/resource/lev_01/baklagan-gray.png", this);
+    ovoshi_gray[1]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    ovoshi_gray[1]->move(WIDTH_SCREEN/60, HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
+    ovoshi_gray[1]->show();
 
-    chesnok_gray = new PicObject(":/resource/lev_01/chesnok-gray.png", this);
-    chesnok_gray->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
-    chesnok_gray->move(WIDTH_SCREEN-WIDTH_SCREEN/3, HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
-    chesnok_gray->show();
+    ovoshi_gray[2] = new PicObject(":/resource/lev_01/chesnok-gray.png", this);
+    ovoshi_gray[2]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
+    ovoshi_gray[2]->move(WIDTH_SCREEN/2+WIDTH_SCREEN/8, HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
+    ovoshi_gray[2]->show();
 
-    grusha_gray = new PicObject(":/resource/lev_01/grusha-gray.png", this);
-    grusha_gray->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
-    grusha_gray->move(WIDTH_SCREEN/2+WIDTH_SCREEN/3, HEIGHT_SCREEN/2+HEIGHT_SCREEN/4);
-    grusha_gray->show();
+    ovoshi_gray[3]= new PicObject(":/resource/lev_01/grusha-gray.png", this);
+    ovoshi_gray[3]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    ovoshi_gray[3]->move(WIDTH_SCREEN/2+WIDTH_SCREEN/3, HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
+    ovoshi_gray[3]->show();
 
-    morkovka_gray = new PicObject(":/resource/lev_01/morkovka-gray.png", this);
-    morkovka_gray->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
-    morkovka_gray->move(WIDTH_SCREEN/2-WIDTH_SCREEN/4, HEIGHT_SCREEN/2+HEIGHT_SCREEN/4);
-    morkovka_gray->show();
+    ovoshi_gray[4] = new PicObject(":/resource/lev_01/morkovka-gray.png", this);
+    ovoshi_gray[4]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    ovoshi_gray[4]->move(WIDTH_SCREEN/2-WIDTH_SCREEN/4, HEIGHT_SCREEN/2+HEIGHT_SCREEN/4);
+    ovoshi_gray[4]->show();
 
-    ogurec_gray = new PicObject(":/resource/lev_01/ogurec-gray.png", this);
-    ogurec_gray->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
-    ogurec_gray->move(WIDTH_SCREEN/2-WIDTH_SCREEN/20, HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
-    ogurec_gray->show();
+    ovoshi_gray[5] = new PicObject(":/resource/lev_01/ogurec-gray.png", this);
+    ovoshi_gray[5]->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
+    ovoshi_gray[5]->move(WIDTH_SCREEN/2-WIDTH_SCREEN/20, HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
+    ovoshi_gray[5]->show();
+
+    ovoshi_gray[6] = new PicObject(":/resource/lev_01/tomat-gray.png", this);
+    ovoshi_gray[6]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
+    ovoshi_gray[6]->move(WIDTH_SCREEN/2+WIDTH_SCREEN/5, HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
+    ovoshi_gray[6]->show();
+
+    ovoshi_gray[7] = new PicObject(":/resource/lev_01/tykva-gray.png", this);
+    ovoshi_gray[7]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    ovoshi_gray[7]->move(WIDTH_SCREEN/6, HEIGHT_SCREEN/2+HEIGHT_SCREEN/15);
+    ovoshi_gray[7]->show();
 }
 
 // ---------------- Получаем SCREEN_WIDTH ----------------------
