@@ -23,8 +23,8 @@ private:
     int HEIGHT_SCREEN = 0;
 
     QLabel          *background_lev01 = nullptr;            // Фон уровня 1
-    PicObject       *ovoshi[7];
-    PicObject       *ovoshi_gray[7];
+    PicObject       *ovoshi[8];
+    PicObject       *ovoshi_gray[8];
 
 public slots:
     void initial();                                         // инициализация

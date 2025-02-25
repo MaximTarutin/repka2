@@ -13,7 +13,7 @@ Level_01::~Level_01()
     // {
     //     delete ovoshi[i];
     // }
-    for(int i=0; i==7; i++)
+    for(int i=0; i==8; i++)
     {
         delete ovoshi_gray[i];
     }
@@ -58,7 +58,7 @@ void Level_01::initial()
 
     ovoshi_gray[2] = new PicObject(":/resource/lev_01/chesnok-gray.png", this);
     ovoshi_gray[2]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
-    ovoshi_gray[2]->move(WIDTH_SCREEN/2+WIDTH_SCREEN/8, HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
+    ovoshi_gray[2]->move(WIDTH_SCREEN/2+WIDTH_SCREEN/10, HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
     ovoshi_gray[2]->show();
 
     ovoshi_gray[3]= new PicObject(":/resource/lev_01/grusha-gray.png", this);
@@ -85,6 +85,11 @@ void Level_01::initial()
     ovoshi_gray[7]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
     ovoshi_gray[7]->move(WIDTH_SCREEN/6, HEIGHT_SCREEN/2+HEIGHT_SCREEN/15);
     ovoshi_gray[7]->show();
+
+    ovoshi_gray[8] = new PicObject(":/resource/lev_01/rediska-gray.png", this);
+    ovoshi_gray[8]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    ovoshi_gray[8]->move(WIDTH_SCREEN-WIDTH_SCREEN/9, HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
+    ovoshi_gray[8]->show();
 }
 
 // ---------------- Получаем SCREEN_WIDTH ----------------------
