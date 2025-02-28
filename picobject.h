@@ -96,10 +96,10 @@ public:
     ~PicObject();
 
     QPixmap     pixmap;
-    QPixmap     pixmap1;                                    // Временный pixmap
-    QTimer      *timer_move;                                // Таймер движения объекта
-    QMovie      *movie;                                     // Анимация
-    QPainter    *painter;
+    QPixmap     pixmap1;                                                // Временный pixmap
+    QTimer      *timer_move = nullptr;                                  // Таймер движения объекта
+    QMovie      *movie = nullptr;                                       // Анимация
+    QPainter    *painter = nullptr;
     int width_frame;
     int height_frame;
 

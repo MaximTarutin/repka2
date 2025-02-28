@@ -34,6 +34,21 @@ void Level_01::initial()
     QCursor cursorTarget = QCursor(QPixmap(":/resource/logo/cursor1.png"),0,0);
     this->setCursor(cursorTarget);
 
+    // Координаты объектов хранятся в списке
+
+    QList<QList<int>>  coordinates;
+    coordinates.append(QList<int>() << WIDTH_SCREEN/25 << HEIGHT_SCREEN-HEIGHT_SCREEN/4);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/60 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/10 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/3 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/4 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/4);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/20 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/5 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/6 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/15);
+    coordinates.append(QList<int>() << WIDTH_SCREEN-WIDTH_SCREEN/9 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
+
+    qDebug() << coordinates;
+
     button_back = new QPushButton(this);
     button_back->setStyleSheet("border-image: url(:/resource/lev_01/return.png);");
     button_back->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);

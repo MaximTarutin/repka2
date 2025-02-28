@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QPushButton>
+#include <QList>
 #include "picobject.h"
 
 
@@ -23,8 +24,9 @@ private:
     int HEIGHT_SCREEN = 0;
 
     QLabel          *background_lev01 = nullptr;            // Фон уровня 1
-    PicObject       *ovoshi[8];
-    PicObject       *ovoshi_gray[8];
+    PicObject       *ovoshi[9];
+    PicObject       *ovoshi_gray[9];
+
 
 public slots:
     void initial();                                         // инициализация

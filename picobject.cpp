@@ -31,7 +31,11 @@ PicObject::PicObject(QString path, int width, int height, QWidget *parent):QLabe
 
 PicObject::~PicObject()
 {
-    if (movie == (void*)0) delete movie;
+    if (movie == (void*)0)
+    {
+        delete movie;
+        movie = nullptr;
+    }
 }
 
 // Загрузка изображения
@@ -131,6 +135,7 @@ void PicObject::move_to_x_temp()
     timer_move->stop();
     disconnect(timer_move, &QTimer::timeout, this, &PicObject::move_to_x_temp);
     delete timer_move;
+    timer_move = nullptr;
     TEMP_X=0;
     TEMP_Y=0;
     TEMP_X1=0;
@@ -183,6 +188,7 @@ void PicObject::move_to_y_temp()
     timer_move->stop();
     disconnect(timer_move, &QTimer::timeout, this, &PicObject::move_to_y_temp);
     delete timer_move;
+    timer_move = nullptr;
     TEMP_X=0;
     TEMP_Y=0;
     TEMP_X1=0;
@@ -250,6 +256,7 @@ void PicObject::move_to_xy_temp()
             emit move_end();
             disconnect(timer_move, &QTimer::timeout, this, &PicObject::move_to_xy_temp);
             delete timer_move;
+            timer_move = nullptr;
         }
         return;
     }
@@ -263,6 +270,7 @@ void PicObject::move_to_xy_temp()
             emit move_end();
             disconnect(timer_move, &QTimer::timeout, this, &PicObject::move_to_xy_temp);
             delete timer_move;
+            timer_move = nullptr;
         }
         return;
     }
