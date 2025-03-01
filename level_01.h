@@ -27,6 +27,8 @@ private:
     PicObject       *ovoshi[9];
     PicObject       *ovoshi_gray[9];
 
+    int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
+
 
 public slots:
     void initial();                                         // инициализация
