@@ -38,6 +38,10 @@ int Level_01::rnd(int a, int b)
 
 void Level_01::initial()
 {
+    if(LEVEL_FLAG) return;
+
+    LEVEL_FLAG = true;
+
     background_lev01 = new QLabel(this);
     background_lev01->setStyleSheet("border-image: url(:/resource/lev_01/fon.jpg);");
     this->setCentralWidget(background_lev01);
@@ -51,59 +55,55 @@ void Level_01::initial()
     sklad->move(WIDTH_SCREEN-WIDTH_SCREEN/3, HEIGHT_SCREEN/20);
     sklad->show();
 
+    ptica = new PicObject(":/resource/lev_01/ptica.gif", this);
+    ptica->animation_start(WIDTH_SCREEN/10, HEIGHT_SCREEN/8);
+    ptica->move_to_x(0-ptica->width(),WIDTH_SCREEN+ptica->width(),0,40);
+    ptica->show();
+
     ovoshi[0] = new PicObject(":/resource/lev_01/repka.png", this);
     ovoshi[0]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
     ovoshi[0]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
                     sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
-    //ovoshi[0]->show();
 
     ovoshi[1] = new PicObject(":/resource/lev_01/baklagan.png", this);
     ovoshi[1]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
     ovoshi[1]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
                     sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
-    //ovoshi[1]->show();
 
     ovoshi[2] = new PicObject(":/resource/lev_01/chesnok.png", this);
     ovoshi[2]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
     ovoshi[2]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
                     sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
-    //ovoshi[2]->show();
 
     ovoshi[3] = new PicObject(":/resource/lev_01/grusha.png", this);
     ovoshi[3]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
     ovoshi[3]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
                     sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
-    //ovoshi[3]->show();
 
     ovoshi[4] = new PicObject(":/resource/lev_01/morkovka.png", this);
     ovoshi[4]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
     ovoshi[4]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
                     sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
-    //ovoshi[4]->show();
 
     ovoshi[5] = new PicObject(":/resource/lev_01/ogurec.png", this);
     ovoshi[5]->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
     ovoshi[5]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
                     sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
-    //ovoshi[5]->show();
 
     ovoshi[6] = new PicObject(":/resource/lev_01/tomat.png", this);
     ovoshi[6]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
     ovoshi[6]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
                     sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
-    //ovoshi[6]->show();
 
     ovoshi[7] = new PicObject(":/resource/lev_01/tykva.png", this);
     ovoshi[7]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
     ovoshi[7]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
                     sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
-    //ovoshi[7]->show();
 
     ovoshi[8] = new PicObject(":/resource/lev_01/rediska.png", this);
     ovoshi[8]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
     ovoshi[8]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
                     sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
-    //ovoshi[8]->show();
 
     // Координаты серых объектов хранятся в списке
 

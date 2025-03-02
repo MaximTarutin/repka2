@@ -60,7 +60,7 @@ void PicObject::resize_object(int w, int h)
 
 // Анимация объектов (gif) - старт
 
-void PicObject::animation_start()
+void PicObject::animation_start(int w, int h)
 {
     QString a = path_to_image.right(3);
     if (a=="gif")
@@ -68,6 +68,8 @@ void PicObject::animation_start()
         movie = new QMovie(path_to_image);
         setMovie(movie);
         movie->start();
+        resize(w,h);
+        movie->setScaledSize(QSize(w, h));
     }
 }
 

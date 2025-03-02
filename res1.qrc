@@ -35,5 +35,6 @@
         <file>resource/lev_01/baklagan-gray.png</file>
         <file>resource/lev_01/fon.jpg</file>
         <file>resource/lev_01/icon.png</file>
+        <file>resource/lev_01/ptica.gif</file>
     </qresource>
 </RCC>

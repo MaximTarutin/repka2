@@ -27,10 +27,14 @@ private:
     int x1[9];                                              // координаты серых овощей
     int y1[9];
 
+    bool LEVEL_FLAG = false;                                // false - уровень еще не запускался
+                                                            // true - уровень начали проходить
+
     QLabel          *background_lev01 = nullptr;            // Фон уровня 1
     PicObject       *ovoshi[9];                             // овощи
     PicObject       *ovoshi_gray[9];                        // серые овощи
     PicObject       *sklad;                                 // синий круг
+    PicObject       *ptica;                                 // летающая птица анимация
 
     int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
 
