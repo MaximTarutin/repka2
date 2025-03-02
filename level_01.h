@@ -22,10 +22,15 @@ public:
 private:
     int WIDTH_SCREEN = 0;                                   // Разрешение экрана
     int HEIGHT_SCREEN = 0;
+    int x[9];                                               // координаты овощей
+    int y[9];
+    int x1[9];                                              // координаты серых овощей
+    int y1[9];
 
     QLabel          *background_lev01 = nullptr;            // Фон уровня 1
-    PicObject       *ovoshi[9];
-    PicObject       *ovoshi_gray[9];
+    PicObject       *ovoshi[9];                             // овощи
+    PicObject       *ovoshi_gray[9];                        // серые овощи
+    PicObject       *sklad;                                 // синий круг
 
     int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
 

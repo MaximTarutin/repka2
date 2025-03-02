@@ -34,5 +34,6 @@
         <file>resource/lev_01/zuchka.png</file>
         <file>resource/lev_01/baklagan-gray.png</file>
         <file>resource/lev_01/fon.jpg</file>
+        <file>resource/lev_01/icon.png</file>
     </qresource>
 </RCC>
