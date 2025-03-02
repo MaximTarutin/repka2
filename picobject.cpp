@@ -2,7 +2,6 @@
 
 PicObject::PicObject(QWidget *parent):QLabel(parent)
 {
-    //setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     width_frame = width();
     height_frame = height();
 }
@@ -11,14 +10,12 @@ PicObject::PicObject(QString path, QWidget *parent):QLabel(parent)
 {
     width_frame = width();
     height_frame = height();
-    //setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     path_to_image = path;
     pixmap.load(path_to_image);
 }
 
 PicObject::PicObject(QString path, int width, int height, QWidget *parent):QLabel(parent)
 {
-    //setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     resize(width, height);
     width_frame = width;
     height_frame = height;
@@ -218,7 +215,6 @@ void PicObject::move_to_xy(int x, int x1, int y, int y1, int speed)
         TEMP_Y1 = y1;
         TEMP_K = (float(y)-y1)/(x-x1);
         TEMP_B = y1-(((float(y)-y1)/(x-x1))*x1);
-    qDebug() << TEMP_K << TEMP_B;
     connect(timer_move, &QTimer::timeout, this, &PicObject::move_to_xy_temp);
 }
 

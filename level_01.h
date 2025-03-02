@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QList>
+#include <QMouseEvent>
 #include "picobject.h"
 
 
@@ -22,19 +23,23 @@ public:
 private:
     int WIDTH_SCREEN = 0;                                   // Разрешение экрана
     int HEIGHT_SCREEN = 0;
+    int CURRENT_OBJECT = 0;                                 // текущий овощ
     int x[9];                                               // координаты овощей
     int y[9];
     int x1[9];                                              // координаты серых овощей
     int y1[9];
+    QList<int> value_i;                                     // список нумерации овощей
 
     bool LEVEL_FLAG = false;                                // false - уровень еще не запускался
                                                             // true - уровень начали проходить
+    bool HELP_FLAG = true;                                  // подсказка: true - активна
 
     QLabel          *background_lev01 = nullptr;            // Фон уровня 1
     PicObject       *ovoshi[9];                             // овощи
     PicObject       *ovoshi_gray[9];                        // серые овощи
     PicObject       *sklad;                                 // синий круг
     PicObject       *ptica;                                 // летающая птица анимация
+    PicObject       *help;                                  // подсказка
 
     int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
 
@@ -44,6 +49,12 @@ public slots:
     void get_width(int w);                                  // Получаем WIDTH_SCREEN
     void get_height(int h);                                 // Получаем HEIGHT_SCREEN
     void back_level();                                      // Возврат на главный экран
+
+private slots:
+    void help_move_end();                                   // окончание движения подсказки
+
+protected:
+    virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
 
 signals:
 };

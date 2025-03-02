@@ -10,6 +10,7 @@ Level_01::Level_01(QWidget *parent)
 
 Level_01::~Level_01()
 {
+    delete ptica;
     for(int i=0; i==8; i++)
     {
         delete ovoshi_gray[i];
@@ -52,7 +53,7 @@ void Level_01::initial()
 
     sklad = new PicObject(":/resource/lev_01/icon.png", this);
     sklad->resize_object(WIDTH_SCREEN/3, HEIGHT_SCREEN/3);
-    sklad->move(WIDTH_SCREEN-WIDTH_SCREEN/3, HEIGHT_SCREEN/20);
+    sklad->move(WIDTH_SCREEN-WIDTH_SCREEN/4, HEIGHT_SCREEN/20);
     sklad->show();
 
     ptica = new PicObject(":/resource/lev_01/ptica.gif", this);
@@ -168,7 +169,7 @@ void Level_01::initial()
 
     int temp = 0;
     int k = 0;
-    QList<int> value_i = {0,1,2,3,4,5,6,7,8};
+    value_i = {0,1,2,3,4,5,6,7,8};
 
     for(int i=0; i<9; i++)
     {
@@ -192,6 +193,12 @@ void Level_01::initial()
         ovoshi[*it]->show();      // на переднем плане первый элемент
         ++it;
     }
+
+    help = new PicObject(":/resource/lev_01/ruka.png", this);
+    help->resize_object(WIDTH_SCREEN/11, HEIGHT_SCREEN/11);
+    help_move_end();
+    help->show();
+    connect(help, &PicObject::move_end, this, &Level_01::help_move_end);
 }
 
 // ---------------- Получаем SCREEN_WIDTH ----------------------
@@ -213,4 +220,31 @@ void Level_01::get_height(int h)
 void Level_01::back_level()
 {
     this->close();
+}
+
+// ----------------- Окончание движения руки ----------------------
+
+void Level_01::help_move_end()
+{
+    help->hide();
+    help->move_to_xy(ovoshi[value_i[0]]->x(),
+                     ovoshi_gray[value_i[0]]->x(),
+                     ovoshi[value_i[0]]->y(),
+                     ovoshi_gray[value_i[0]]->y(), 5);
+    help->show();
+}
+
+// ----------------- Нажатие кнопки мышки -----------------------------
+
+void Level_01::mousePressEvent(QMouseEvent *pe)
+{
+    if(((pe->position().x() > ovoshi[CURRENT_OBJECT]->x())and
+       (pe->position().x() < ovoshi[CURRENT_OBJECT]->x()+ovoshi[CURRENT_OBJECT]->width()/2)and
+       (pe->position().y() > ovoshi[CURRENT_OBJECT]->y())and
+       (pe->position().y() < ovoshi[CURRENT_OBJECT]->y()+ovoshi[CURRENT_OBJECT]->height()/2)))
+    {
+        disconnect(help, &PicObject::move_end, this, &Level_01::help_move_end);
+        help->hide();
+    }
+    qDebug() << ovoshi[CURRENT_OBJECT]->width() << ovoshi[CURRENT_OBJECT]->x();
 }
