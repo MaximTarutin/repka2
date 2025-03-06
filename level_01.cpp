@@ -243,23 +243,60 @@ void Level_01::help_move_end()
 
 void Level_01::mousePressEvent(QMouseEvent *pe)
 {
-    if(((pe->position().x() > vegetable[CURRENT_OBJECT]->x())and
-       (pe->position().x() < vegetable[CURRENT_OBJECT]->x()+vegetable[CURRENT_OBJECT]->width()/2)and
-       (pe->position().y() > vegetable[CURRENT_OBJECT]->y())and
-       (pe->position().y() < vegetable[CURRENT_OBJECT]->y()+vegetable[CURRENT_OBJECT]->height()/2)))
+    if(((pe->position().x() > vegetable[value_i[CURRENT_OBJECT]]->x())and
+       (pe->position().x() < vegetable[value_i[CURRENT_OBJECT]]->x()+vegetable[CURRENT_OBJECT]->width()/2)and
+       (pe->position().y() > vegetable[value_i[CURRENT_OBJECT]]->y())and
+       (pe->position().y() < vegetable[value_i[CURRENT_OBJECT]]->y()+vegetable[CURRENT_OBJECT]->height()/2)))
     {
         disconnect(help, &PicObject::move_end, this, &Level_01::help_move_end);
         help->hide();
+        CURRENT_OBJECT_ACTIVE = true;
     }
-    qDebug() << vegetable[CURRENT_OBJECT]->width() << vegetable[CURRENT_OBJECT]->x();
+}
+
+// --------------------------------- Перемещение овощей ----------------------------------
+
+void Level_01::mouseMoveEvent(QMouseEvent *pe)
+{
+    if(CURRENT_OBJECT_ACTIVE)
+    {
+        vegetable[value_i[CURRENT_OBJECT]]->move(pe->position().x()-
+                                                 vegetable[value_i[CURRENT_OBJECT]]->width()/8,
+                                                 pe->position().y()-
+                                                 vegetable[value_i[CURRENT_OBJECT]]->height()/2);
+    }
+}
+
+// --------------------------------- Отпускаем кнопку мышки ----------------------------------
+
+void Level_01::mouseReleaseEvent(QMouseEvent *pe)
+{
+    pe->pos();
+    CURRENT_OBJECT_ACTIVE = false;
+    if(((pe->position().x() > vegetable_gray[value_i[CURRENT_OBJECT]]->x())and
+        (pe->position().x() < vegetable_gray[value_i[CURRENT_OBJECT]]->x()+
+         vegetable_gray[CURRENT_OBJECT]->width()/2)and
+        (pe->position().y() > vegetable_gray[value_i[CURRENT_OBJECT]]->y())and
+        (pe->position().y() < vegetable_gray[value_i[CURRENT_OBJECT]]->y()+
+         vegetable_gray[CURRENT_OBJECT]->height()/2)))
+    {
+        vegetable[value_i[CURRENT_OBJECT]]->move(vegetable_gray[value_i[CURRENT_OBJECT]]->x(),
+                                                 vegetable_gray[value_i[CURRENT_OBJECT]]->y());
+        CURRENT_OBJECT++;
+        if(CURRENT_OBJECT>8)
+        {
+            exit(31);
+        }
+    }
+
 }
 
 // --------------------- Полет птицы через случайный промежуток времени ------------------
 
 void Level_01::flight_bird()
 {
-    int i = rnd(0,100);
-    int j = rnd(0,100);
+    int i = rnd(0,150);
+    int j = rnd(0,150);
     if(i==j)
     {
         int bird_y = rnd(0, HEIGHT_SCREEN/10);

@@ -24,6 +24,8 @@ private:
     int WIDTH_SCREEN = 0;                                   // Разрешение экрана
     int HEIGHT_SCREEN = 0;
     int CURRENT_OBJECT = 0;                                 // текущий овощ
+    bool CURRENT_OBJECT_ACTIVE = false;                     // текущий овощ активен
+                                                            // курсор находится в пределах объекта
     int x[9];                                               // координаты овощей
     int y[9];
     int x1[9];                                              // координаты серых овощей
@@ -57,6 +59,8 @@ private slots:
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
+    virtual void mouseMoveEvent(QMouseEvent *pe);           // перетаскивание овощей
+    virtual void mouseReleaseEvent(QMouseEvent *pe);        // отпускаем кнопку мышки
 
 signals:
 };
