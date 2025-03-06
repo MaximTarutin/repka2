@@ -4,14 +4,19 @@ PicObject::PicObject(QWidget *parent):QLabel(parent)
 {
     width_frame = width();
     height_frame = height();
+    setScaledContents(true); //--------------------------------------------
+    setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored ); //--------------------------------
 }
 
 PicObject::PicObject(QString path, QWidget *parent):QLabel(parent)
 {
-    width_frame = width();
+    width_frame = width()-height();
     height_frame = height();
     path_to_image = path;
     pixmap.load(path_to_image);
+    setScaledContents(true); //--------------------------------------------
+    setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored ); //--------------------------------
+    //setFrameStyle(2);
 }
 
 PicObject::PicObject(QString path, int width, int height, QWidget *parent):QLabel(parent)
@@ -24,6 +29,8 @@ PicObject::PicObject(QString path, int width, int height, QWidget *parent):QLabe
     pixmap1 = pixmap;
     pixmap1 = pixmap.scaled( width, height, Qt::KeepAspectRatio);
     setPixmap(pixmap1);
+    setScaledContents(true); //------------------------------------------------------
+    setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored ); //----------------------------------------
 }
 
 PicObject::~PicObject()

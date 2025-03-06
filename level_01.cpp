@@ -54,7 +54,7 @@ void Level_01::initial()
     this->setCursor(cursorTarget);
 
     warehouse = new PicObject(":/resource/lev_01/icon.png", this);
-    warehouse->resize_object(WIDTH_SCREEN/3, HEIGHT_SCREEN/3);
+    warehouse->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/3);
     warehouse->move(WIDTH_SCREEN-WIDTH_SCREEN/4, HEIGHT_SCREEN/20);
     warehouse->show();
 
@@ -67,47 +67,47 @@ void Level_01::initial()
     connect(timer_bird, &QTimer::timeout, this, &Level_01::flight_bird);
 
     vegetable[0] = new PicObject(":/resource/lev_01/repka.png", this);
-    vegetable[0]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    vegetable[0]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/4);
     vegetable[0]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
                     warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[1] = new PicObject(":/resource/lev_01/baklagan.png", this);
-    vegetable[1]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable[1]->resize_object(WIDTH_SCREEN/19, HEIGHT_SCREEN/7);
     vegetable[1]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
                     warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[2] = new PicObject(":/resource/lev_01/chesnok.png", this);
-    vegetable[2]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
+    vegetable[2]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
     vegetable[2]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
                     warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[3] = new PicObject(":/resource/lev_01/grusha.png", this);
-    vegetable[3]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable[3]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
     vegetable[3]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
                     warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[4] = new PicObject(":/resource/lev_01/morkovka.png", this);
-    vegetable[4]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    vegetable[4]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/5);
     vegetable[4]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
                     warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[5] = new PicObject(":/resource/lev_01/ogurec.png", this);
-    vegetable[5]->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
+    vegetable[5]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/5);
     vegetable[5]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
                     warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[6] = new PicObject(":/resource/lev_01/tomat.png", this);
-    vegetable[6]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
+    vegetable[6]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/8);
     vegetable[6]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
                     warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[7] = new PicObject(":/resource/lev_01/tykva.png", this);
-    vegetable[7]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable[7]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/6);
     vegetable[7]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
                     warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[8] = new PicObject(":/resource/lev_01/rediska.png", this);
-    vegetable[8]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable[8]->resize_object(WIDTH_SCREEN/13, HEIGHT_SCREEN/6);
     vegetable[8]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
                     warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
@@ -137,39 +137,39 @@ void Level_01::initial()
     button_next->hide();
 
     vegetable_gray[0] = new PicObject(":/resource/lev_01/repka-gray.png", this);
-    vegetable_gray[0]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    vegetable_gray[0]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/4);
     vegetable_gray[0]->show();
 
     vegetable_gray[1] = new PicObject(":/resource/lev_01/baklagan-gray.png", this);
-    vegetable_gray[1]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable_gray[1]->resize_object(WIDTH_SCREEN/19, HEIGHT_SCREEN/7);
     vegetable_gray[1]->show();
 
     vegetable_gray[2] = new PicObject(":/resource/lev_01/chesnok-gray.png", this);
-    vegetable_gray[2]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
+    vegetable_gray[2]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
     vegetable_gray[2]->show();
 
     vegetable_gray[3]= new PicObject(":/resource/lev_01/grusha-gray.png", this);
-    vegetable_gray[3]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable_gray[3]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
     vegetable_gray[3]->show();
 
     vegetable_gray[4] = new PicObject(":/resource/lev_01/morkovka-gray.png", this);
-    vegetable_gray[4]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    vegetable_gray[4]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/5);
     vegetable_gray[4]->show();
 
     vegetable_gray[5] = new PicObject(":/resource/lev_01/ogurec-gray.png", this);
-    vegetable_gray[5]->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
+    vegetable_gray[5]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/5);
     vegetable_gray[5]->show();
 
     vegetable_gray[6] = new PicObject(":/resource/lev_01/tomat-gray.png", this);
-    vegetable_gray[6]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
+    vegetable_gray[6]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/8);
     vegetable_gray[6]->show();
 
     vegetable_gray[7] = new PicObject(":/resource/lev_01/tykva-gray.png", this);
-    vegetable_gray[7]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable_gray[7]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/6);
     vegetable_gray[7]->show();
 
     vegetable_gray[8] = new PicObject(":/resource/lev_01/rediska-gray.png", this);
-    vegetable_gray[8]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable_gray[8]->resize_object(WIDTH_SCREEN/13, HEIGHT_SCREEN/6);
     vegetable_gray[8]->show();
 
     int temp = 0;
@@ -200,7 +200,7 @@ void Level_01::initial()
     }
 
     help = new PicObject(":/resource/lev_01/ruka.png", this);
-    help->resize_object(WIDTH_SCREEN/11, HEIGHT_SCREEN/11);
+    help->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/11);
     help_move_end();
     help->show();
     connect(help, &PicObject::move_end, this, &Level_01::help_move_end);
@@ -235,7 +235,7 @@ void Level_01::help_move_end()
     help->move_to_xy(vegetable[value_i[0]]->x(),
                      vegetable_gray[value_i[0]]->x(),
                      vegetable[value_i[0]]->y(),
-                     vegetable_gray[value_i[0]]->y(), 5);
+                     vegetable_gray[value_i[0]]->y(), 8);
     help->show();
 }
 
@@ -244,9 +244,9 @@ void Level_01::help_move_end()
 void Level_01::mousePressEvent(QMouseEvent *pe)
 {
     if(((pe->position().x() > vegetable[value_i[CURRENT_OBJECT]]->x())and
-       (pe->position().x() < vegetable[value_i[CURRENT_OBJECT]]->x()+vegetable[CURRENT_OBJECT]->width()/2)and
+       (pe->position().x() < vegetable[value_i[CURRENT_OBJECT]]->x()+vegetable[value_i[CURRENT_OBJECT]]->width())and
        (pe->position().y() > vegetable[value_i[CURRENT_OBJECT]]->y())and
-       (pe->position().y() < vegetable[value_i[CURRENT_OBJECT]]->y()+vegetable[CURRENT_OBJECT]->height()/2)))
+       (pe->position().y() < vegetable[value_i[CURRENT_OBJECT]]->y()+vegetable[value_i[CURRENT_OBJECT]]->height())))
     {
         disconnect(help, &PicObject::move_end, this, &Level_01::help_move_end);
         help->hide();
@@ -261,7 +261,7 @@ void Level_01::mouseMoveEvent(QMouseEvent *pe)
     if(CURRENT_OBJECT_ACTIVE)
     {
         vegetable[value_i[CURRENT_OBJECT]]->move(pe->position().x()-
-                                                 vegetable[value_i[CURRENT_OBJECT]]->width()/8,
+                                                 vegetable[value_i[CURRENT_OBJECT]]->width()/2,
                                                  pe->position().y()-
                                                  vegetable[value_i[CURRENT_OBJECT]]->height()/2);
     }
@@ -272,13 +272,13 @@ void Level_01::mouseMoveEvent(QMouseEvent *pe)
 void Level_01::mouseReleaseEvent(QMouseEvent *pe)
 {
     pe->pos();
+    int x1_g = vegetable_gray[value_i[CURRENT_OBJECT]]->x();
+    int x2_g = vegetable_gray[value_i[CURRENT_OBJECT]]->x()+vegetable_gray[value_i[CURRENT_OBJECT]]->width();
+    int x1 = vegetable[value_i[CURRENT_OBJECT]]->x();
+    int x2 = vegetable[value_i[CURRENT_OBJECT]]->x()+vegetable[value_i[CURRENT_OBJECT]]->width();
+
     CURRENT_OBJECT_ACTIVE = false;
-    if(((pe->position().x() > vegetable_gray[value_i[CURRENT_OBJECT]]->x())and
-        (pe->position().x() < vegetable_gray[value_i[CURRENT_OBJECT]]->x()+
-         vegetable_gray[CURRENT_OBJECT]->width()/2)and
-        (pe->position().y() > vegetable_gray[value_i[CURRENT_OBJECT]]->y())and
-        (pe->position().y() < vegetable_gray[value_i[CURRENT_OBJECT]]->y()+
-         vegetable_gray[CURRENT_OBJECT]->height()/2)))
+    if((x2 > x1_g)&&(x1 < x2_g))
     {
         vegetable[value_i[CURRENT_OBJECT]]->move(vegetable_gray[value_i[CURRENT_OBJECT]]->x(),
                                                  vegetable_gray[value_i[CURRENT_OBJECT]]->y());
