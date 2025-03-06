@@ -10,14 +10,14 @@ Level_01::Level_01(QWidget *parent)
 
 Level_01::~Level_01()
 {
-    delete ptica;
+    delete bird;
     for(int i=0; i==8; i++)
     {
-        delete ovoshi_gray[i];
+        delete vegetable[i];
     }
     for(int i=0; i==8; i++)
     {
-        delete ovoshi_gray[i];
+        delete vegetable_gray[i];
     }
     delete button_next;
     delete button_back;
@@ -43,6 +43,8 @@ void Level_01::initial()
 
     LEVEL_FLAG = true;
 
+    timer_bird = new QTimer(this);
+
     background_lev01 = new QLabel(this);
     background_lev01->setStyleSheet("border-image: url(:/resource/lev_01/fon.jpg);");
     this->setCentralWidget(background_lev01);
@@ -51,60 +53,63 @@ void Level_01::initial()
     QCursor cursorTarget = QCursor(QPixmap(":/resource/logo/cursor1.png"),0,0);
     this->setCursor(cursorTarget);
 
-    sklad = new PicObject(":/resource/lev_01/icon.png", this);
-    sklad->resize_object(WIDTH_SCREEN/3, HEIGHT_SCREEN/3);
-    sklad->move(WIDTH_SCREEN-WIDTH_SCREEN/4, HEIGHT_SCREEN/20);
-    sklad->show();
+    warehouse = new PicObject(":/resource/lev_01/icon.png", this);
+    warehouse->resize_object(WIDTH_SCREEN/3, HEIGHT_SCREEN/3);
+    warehouse->move(WIDTH_SCREEN-WIDTH_SCREEN/4, HEIGHT_SCREEN/20);
+    warehouse->show();
 
-    ptica = new PicObject(":/resource/lev_01/ptica.gif", this);
-    ptica->animation_start(WIDTH_SCREEN/10, HEIGHT_SCREEN/8);
-    ptica->move_to_x(0-ptica->width(),WIDTH_SCREEN+ptica->width(),0,40);
-    ptica->show();
+    bird = new PicObject(":/resource/lev_01/ptica.gif", this);
+    bird->animation_start(WIDTH_SCREEN/10, HEIGHT_SCREEN/8);
+    bird->move_to_x(0-bird->width(),WIDTH_SCREEN+bird->width(),0,40);
+    bird->show();
 
-    ovoshi[0] = new PicObject(":/resource/lev_01/repka.png", this);
-    ovoshi[0]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
-    ovoshi[0]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
-                    sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
+    connect(bird, &PicObject::move_end, this, [this](){timer_bird->start(100);});  // если птица долетела до конца экрана
+    connect(timer_bird, &QTimer::timeout, this, &Level_01::flight_bird);
 
-    ovoshi[1] = new PicObject(":/resource/lev_01/baklagan.png", this);
-    ovoshi[1]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
-    ovoshi[1]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
-                    sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
+    vegetable[0] = new PicObject(":/resource/lev_01/repka.png", this);
+    vegetable[0]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    vegetable[0]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
+                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
-    ovoshi[2] = new PicObject(":/resource/lev_01/chesnok.png", this);
-    ovoshi[2]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
-    ovoshi[2]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
-                    sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
+    vegetable[1] = new PicObject(":/resource/lev_01/baklagan.png", this);
+    vegetable[1]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable[1]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
+                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
-    ovoshi[3] = new PicObject(":/resource/lev_01/grusha.png", this);
-    ovoshi[3]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
-    ovoshi[3]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
-                    sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
+    vegetable[2] = new PicObject(":/resource/lev_01/chesnok.png", this);
+    vegetable[2]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
+    vegetable[2]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
+                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
-    ovoshi[4] = new PicObject(":/resource/lev_01/morkovka.png", this);
-    ovoshi[4]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
-    ovoshi[4]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
-                    sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
+    vegetable[3] = new PicObject(":/resource/lev_01/grusha.png", this);
+    vegetable[3]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable[3]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
+                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
-    ovoshi[5] = new PicObject(":/resource/lev_01/ogurec.png", this);
-    ovoshi[5]->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
-    ovoshi[5]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
-                    sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
+    vegetable[4] = new PicObject(":/resource/lev_01/morkovka.png", this);
+    vegetable[4]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    vegetable[4]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
+                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
-    ovoshi[6] = new PicObject(":/resource/lev_01/tomat.png", this);
-    ovoshi[6]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
-    ovoshi[6]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
-                    sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
+    vegetable[5] = new PicObject(":/resource/lev_01/ogurec.png", this);
+    vegetable[5]->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
+    vegetable[5]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
+                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
-    ovoshi[7] = new PicObject(":/resource/lev_01/tykva.png", this);
-    ovoshi[7]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
-    ovoshi[7]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
-                    sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
+    vegetable[6] = new PicObject(":/resource/lev_01/tomat.png", this);
+    vegetable[6]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
+    vegetable[6]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
+                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
-    ovoshi[8] = new PicObject(":/resource/lev_01/rediska.png", this);
-    ovoshi[8]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
-    ovoshi[8]->move(sklad->x()+sklad->width()/2-ovoshi[0]->width()/2,
-                    sklad->y()+sklad->height()/2-ovoshi[0]->height()/2);
+    vegetable[7] = new PicObject(":/resource/lev_01/tykva.png", this);
+    vegetable[7]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable[7]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
+                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
+
+    vegetable[8] = new PicObject(":/resource/lev_01/rediska.png", this);
+    vegetable[8]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable[8]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
+                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     // Координаты серых объектов хранятся в списке
 
@@ -131,41 +136,41 @@ void Level_01::initial()
     button_next->move(WIDTH_SCREEN-WIDTH_SCREEN/12, HEIGHT_SCREEN/20);
     button_next->hide();
 
-    ovoshi_gray[0] = new PicObject(":/resource/lev_01/repka-gray.png", this);
-    ovoshi_gray[0]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
-    ovoshi_gray[0]->show();
+    vegetable_gray[0] = new PicObject(":/resource/lev_01/repka-gray.png", this);
+    vegetable_gray[0]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    vegetable_gray[0]->show();
 
-    ovoshi_gray[1] = new PicObject(":/resource/lev_01/baklagan-gray.png", this);
-    ovoshi_gray[1]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
-    ovoshi_gray[1]->show();
+    vegetable_gray[1] = new PicObject(":/resource/lev_01/baklagan-gray.png", this);
+    vegetable_gray[1]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable_gray[1]->show();
 
-    ovoshi_gray[2] = new PicObject(":/resource/lev_01/chesnok-gray.png", this);
-    ovoshi_gray[2]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
-    ovoshi_gray[2]->show();
+    vegetable_gray[2] = new PicObject(":/resource/lev_01/chesnok-gray.png", this);
+    vegetable_gray[2]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
+    vegetable_gray[2]->show();
 
-    ovoshi_gray[3]= new PicObject(":/resource/lev_01/grusha-gray.png", this);
-    ovoshi_gray[3]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
-    ovoshi_gray[3]->show();
+    vegetable_gray[3]= new PicObject(":/resource/lev_01/grusha-gray.png", this);
+    vegetable_gray[3]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable_gray[3]->show();
 
-    ovoshi_gray[4] = new PicObject(":/resource/lev_01/morkovka-gray.png", this);
-    ovoshi_gray[4]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
-    ovoshi_gray[4]->show();
+    vegetable_gray[4] = new PicObject(":/resource/lev_01/morkovka-gray.png", this);
+    vegetable_gray[4]->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    vegetable_gray[4]->show();
 
-    ovoshi_gray[5] = new PicObject(":/resource/lev_01/ogurec-gray.png", this);
-    ovoshi_gray[5]->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
-    ovoshi_gray[5]->show();
+    vegetable_gray[5] = new PicObject(":/resource/lev_01/ogurec-gray.png", this);
+    vegetable_gray[5]->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
+    vegetable_gray[5]->show();
 
-    ovoshi_gray[6] = new PicObject(":/resource/lev_01/tomat-gray.png", this);
-    ovoshi_gray[6]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
-    ovoshi_gray[6]->show();
+    vegetable_gray[6] = new PicObject(":/resource/lev_01/tomat-gray.png", this);
+    vegetable_gray[6]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/7);
+    vegetable_gray[6]->show();
 
-    ovoshi_gray[7] = new PicObject(":/resource/lev_01/tykva-gray.png", this);
-    ovoshi_gray[7]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
-    ovoshi_gray[7]->show();
+    vegetable_gray[7] = new PicObject(":/resource/lev_01/tykva-gray.png", this);
+    vegetable_gray[7]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable_gray[7]->show();
 
-    ovoshi_gray[8] = new PicObject(":/resource/lev_01/rediska-gray.png", this);
-    ovoshi_gray[8]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
-    ovoshi_gray[8]->show();
+    vegetable_gray[8] = new PicObject(":/resource/lev_01/rediska-gray.png", this);
+    vegetable_gray[8]->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/6);
+    vegetable_gray[8]->show();
 
     int temp = 0;
     int k = 0;
@@ -183,14 +188,14 @@ void Level_01::initial()
     {
         x1[i] = coordinates.at(value_i[i]).at(0);   // Расставляем серые овощи на поле
         y1[i] = coordinates.at(value_i[i]).at(1);
-        ovoshi_gray[i]->move(x1[i],y1[i]);
+        vegetable_gray[i]->move(x1[i],y1[i]);
     }
 
     QList<int>::const_reverse_iterator it = value_i.rbegin(); // читаем value_i с конца
     while (it != value_i.rend())
     {
-        ovoshi[*it]->raise();     // складываем овощи по списку value_i
-        ovoshi[*it]->show();      // на переднем плане первый элемент
+        vegetable[*it]->raise();     // складываем овощи по списку value_i
+        vegetable[*it]->show();      // на переднем плане первый элемент
         ++it;
     }
 
@@ -227,10 +232,10 @@ void Level_01::back_level()
 void Level_01::help_move_end()
 {
     help->hide();
-    help->move_to_xy(ovoshi[value_i[0]]->x(),
-                     ovoshi_gray[value_i[0]]->x(),
-                     ovoshi[value_i[0]]->y(),
-                     ovoshi_gray[value_i[0]]->y(), 5);
+    help->move_to_xy(vegetable[value_i[0]]->x(),
+                     vegetable_gray[value_i[0]]->x(),
+                     vegetable[value_i[0]]->y(),
+                     vegetable_gray[value_i[0]]->y(), 5);
     help->show();
 }
 
@@ -238,13 +243,29 @@ void Level_01::help_move_end()
 
 void Level_01::mousePressEvent(QMouseEvent *pe)
 {
-    if(((pe->position().x() > ovoshi[CURRENT_OBJECT]->x())and
-       (pe->position().x() < ovoshi[CURRENT_OBJECT]->x()+ovoshi[CURRENT_OBJECT]->width()/2)and
-       (pe->position().y() > ovoshi[CURRENT_OBJECT]->y())and
-       (pe->position().y() < ovoshi[CURRENT_OBJECT]->y()+ovoshi[CURRENT_OBJECT]->height()/2)))
+    if(((pe->position().x() > vegetable[CURRENT_OBJECT]->x())and
+       (pe->position().x() < vegetable[CURRENT_OBJECT]->x()+vegetable[CURRENT_OBJECT]->width()/2)and
+       (pe->position().y() > vegetable[CURRENT_OBJECT]->y())and
+       (pe->position().y() < vegetable[CURRENT_OBJECT]->y()+vegetable[CURRENT_OBJECT]->height()/2)))
     {
         disconnect(help, &PicObject::move_end, this, &Level_01::help_move_end);
         help->hide();
     }
-    qDebug() << ovoshi[CURRENT_OBJECT]->width() << ovoshi[CURRENT_OBJECT]->x();
+    qDebug() << vegetable[CURRENT_OBJECT]->width() << vegetable[CURRENT_OBJECT]->x();
 }
+
+// --------------------- Полет птицы через случайный промежуток времени ------------------
+
+void Level_01::flight_bird()
+{
+    int i = rnd(0,100);
+    int j = rnd(0,100);
+    if(i==j)
+    {
+        int bird_y = rnd(0, HEIGHT_SCREEN/10);
+        bird->move_to_x(0-bird->width(),WIDTH_SCREEN+bird->width(),bird_y,40);
+        bird->raise();
+        timer_bird->stop();
+    }
+}
+

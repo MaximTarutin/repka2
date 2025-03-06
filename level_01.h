@@ -8,8 +8,8 @@
 #include <QPushButton>
 #include <QList>
 #include <QMouseEvent>
+#include <QTimer>
 #include "picobject.h"
-
 
 class Level_01 : public QMainWindow
 {
@@ -35,11 +35,12 @@ private:
     bool HELP_FLAG = true;                                  // подсказка: true - активна
 
     QLabel          *background_lev01 = nullptr;            // Фон уровня 1
-    PicObject       *ovoshi[9];                             // овощи
-    PicObject       *ovoshi_gray[9];                        // серые овощи
-    PicObject       *sklad;                                 // синий круг
-    PicObject       *ptica;                                 // летающая птица анимация
+    PicObject       *vegetable[9];                             // овощи
+    PicObject       *vegetable_gray[9];                        // серые овощи
+    PicObject       *warehouse;                             // синий круг (склад)
+    PicObject       *bird;                                  // летающая птица анимация
     PicObject       *help;                                  // подсказка
+    QTimer          *timer_bird;                            // таймер частоты полета птицы
 
     int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
 
@@ -52,6 +53,7 @@ public slots:
 
 private slots:
     void help_move_end();                                   // окончание движения подсказки
+    void flight_bird();                                     // запускаем птицу
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
