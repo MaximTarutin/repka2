@@ -37,19 +37,20 @@ private:
 
     bool LEVEL_FLAG = false;                                // false - уровень еще не запускался
                                                             // true - уровень начали проходить
+    bool LEVEL_END = false;                                 // Пройден ли уровень
     bool HELP_FLAG = true;                                  // подсказка: true - активна
 
     QLabel          *background_lev01 = nullptr;            // Фон уровня 1
-    PicObject       *vegetable[9];                             // овощи
-    PicObject       *vegetable_gray[9];                        // серые овощи
+    PicObject       *vegetable[9];                          // овощи
+    PicObject       *vegetable_gray[9];                     // серые овощи
     PicObject       *warehouse;                             // синий круг (склад)
     PicObject       *bird;                                  // летающая птица анимация
     PicObject       *help;                                  // подсказка
+    PicObject       *repka;                                 // репка
     QTimer          *timer_bird;                            // таймер частоты полета птицы
-    QMediaPlayer    *aha;                                   // звук "ага"
-    QMediaPlayer    *no;                                    // звук "no"
+    QMediaPlayer    *sound;                                 // звук "ага"
     QAudioOutput    *output;                                // аудиовыход
-    QAudioOutput    *output1;                                // аудиовыход
+
     int rnd(int a, int b);                                  // случайное число в диапазоне от a до bт
 
 public slots:

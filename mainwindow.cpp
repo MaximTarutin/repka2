@@ -74,6 +74,9 @@ void MainWindow::initial()
 
 void MainWindow::exit_of_game()
 {
+    music->stop();
+    delete music;
+    delete audiooutput;
     exit(0);
 }
 

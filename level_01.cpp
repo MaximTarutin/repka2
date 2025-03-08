@@ -6,24 +6,16 @@ Level_01::Level_01(QWidget *parent)
     : QMainWindow(parent)
 {
     srand(time(NULL));
-    aha = new QMediaPlayer(this);
-    no = new QMediaPlayer(this);
+    sound = new QMediaPlayer(this);
     output = new QAudioOutput();
-    output1 = new QAudioOutput();
-    aha->setAudioOutput(output);
-    no->setAudioOutput(output1);
-    aha->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
-    no->setSource(QUrl("qrc:/resource/sound/nea.wav"));
-    output->setVolume(1);
+    sound->setAudioOutput(output);
     output->setVolume(1);
 }
 
 Level_01::~Level_01()
 {
-    delete aha;
-    delete no;
+    delete sound;
     delete output;
-    delete output1;
     delete timer_bird;
     delete bird;
     for(int i=0; i==8; i++)
@@ -228,6 +220,17 @@ void Level_01::get_height(int h)
 
 void Level_01::back_level()
 {
+    if(LEVEL_END)
+    {
+        for(int i=0; i<9; i++)
+        {
+            if (vegetable[i] == (void*)0) // если объект существует, то удаляем его
+            {
+                delete vegetable[i];
+                vegetable[i] = nullptr;
+            }
+        }
+    }
     this->close();
 }
 
@@ -252,7 +255,6 @@ void Level_01::mousePressEvent(QMouseEvent *pe)
        (pe->position().y() > vegetable[value_i[CURRENT_OBJECT]]->y())and
        (pe->position().y() < vegetable[value_i[CURRENT_OBJECT]]->y()+vegetable[value_i[CURRENT_OBJECT]]->height())))
     {
-        disconnect(help, &PicObject::move_end, this, &Level_01::help_move_end);
         help->hide();
         CURRENT_OBJECT_ACTIVE = true;
     }
@@ -276,6 +278,8 @@ void Level_01::mouseMoveEvent(QMouseEvent *pe)
 
 void Level_01::mouseReleaseEvent(QMouseEvent *pe)
 {
+    if(LEVEL_END) return;
+    button_back->setDisabled(true);
     pe->pos();
     int x1_g = vegetable_gray[value_i[CURRENT_OBJECT]]->x();
     int x2_g = vegetable_gray[value_i[CURRENT_OBJECT]]->x()+vegetable_gray[value_i[CURRENT_OBJECT]]->width();
@@ -294,14 +298,18 @@ void Level_01::mouseReleaseEvent(QMouseEvent *pe)
         vegetable[value_i[CURRENT_OBJECT]]->move(vegetable_gray[value_i[CURRENT_OBJECT]]->x(),
                                                  vegetable_gray[value_i[CURRENT_OBJECT]]->y());
         CURRENT_OBJECT++;
-        aha->play();
+        sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
+        sound->play();
         if(CURRENT_OBJECT>8)
         {
+            CURRENT_OBJECT=8;
+            LEVEL_END = true;
             victory();
         }
     } else
     {
-        no->play();
+        sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
+        sound->play();
         vegetable[value_i[CURRENT_OBJECT]]->move_to_xy(x1,x1_1,y1,y1_1, 1, 4);  // возвращаем овощ на место
     }
 
@@ -352,8 +360,16 @@ void Level_01::victory()
             break;
         }
         vegetable[i]->move_to_xy(x,x1,y,y1,0,4);
-        delete vegetable_gray[i];
+        delete vegetable_gray[i];       
     }
+
     delete warehouse;
+
+    repka = new PicObject(":/resource/lev_01/repka.png", this);
+    repka->show();
+    repka->move(WIDTH_SCREEN/25, HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
+    repka->resize_object(WIDTH_SCREEN/10*2, HEIGHT_SCREEN/4*2);
+
+    button_back->setDisabled(false);
 }
 
