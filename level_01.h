@@ -9,6 +9,8 @@
 #include <QList>
 #include <QMouseEvent>
 #include <QTimer>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "picobject.h"
 
 class Level_01 : public QMainWindow
@@ -44,9 +46,11 @@ private:
     PicObject       *bird;                                  // летающая птица анимация
     PicObject       *help;                                  // подсказка
     QTimer          *timer_bird;                            // таймер частоты полета птицы
-
-    int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
-
+    QMediaPlayer    *aha;                                   // звук "ага"
+    QMediaPlayer    *no;                                    // звук "no"
+    QAudioOutput    *output;                                // аудиовыход
+    QAudioOutput    *output1;                                // аудиовыход
+    int rnd(int a, int b);                                  // случайное число в диапазоне от a до bт
 
 public slots:
     void initial();                                         // инициализация
@@ -57,6 +61,7 @@ public slots:
 private slots:
     void help_move_end();                                   // окончание движения подсказки
     void flight_bird();                                     // запускаем птицу
+    void victory();                                         // победа
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки

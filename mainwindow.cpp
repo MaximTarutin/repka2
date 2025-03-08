@@ -12,12 +12,22 @@ MainWindow::MainWindow(QWidget *parent)
     screen_size();          // Присваиваем значения SCREEN_WIDTH и SCREEN_HEIGHT
     initial();
 
+
+    music = new QMediaPlayer(this);
+    audiooutput = new QAudioOutput();
+    music->setAudioOutput(audiooutput);
+    audiooutput->setVolume(0.3);
+    music->setSource(QUrl("qrc:/resource/sound/fon.mp3"));
+    music->play();
+
     connect(button_exit, &QPushButton::clicked, this, &MainWindow::exit_of_game);   // Выход из игры
     connect(button_start, &QPushButton::clicked, this, &MainWindow::start_level);   // Запуск текущего уровня
 }
 
 MainWindow::~MainWindow()
 {
+    delete music;
+    delete audiooutput;
     delete button_exit;
     delete button_start;
     delete background_logo;

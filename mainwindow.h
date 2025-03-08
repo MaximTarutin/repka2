@@ -7,6 +7,8 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QCursor>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "level_01.h"
 
 class MainWindow : public QMainWindow
@@ -25,6 +27,8 @@ private:
     QLabel              *background_logo = nullptr;                 // Фон
     QPushButton         *button_start = nullptr;                    // Кнопка старт
     QPushButton         *button_exit = nullptr;                     // Кнопка выход
+    QMediaPlayer        *music = nullptr;                           // фоновая музыка
+    QAudioOutput        *audiooutput = nullptr;                     // аудиовыход
 
     Level_01            *lev_01 = nullptr;
 

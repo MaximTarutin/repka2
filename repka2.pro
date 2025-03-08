@@ -42,4 +42,13 @@ DISTFILES += \
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/../repka2.pro
+
+
 }
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../lib/x86_64-linux-gnu/release/ -lssl
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../lib/x86_64-linux-gnu/debug/ -lssl
+else:unix: LIBS += -L$$PWD/../../../../../lib/x86_64-linux-gnu/ -lssl
+
+INCLUDEPATH += $$PWD/''
+DEPENDPATH += $$PWD/''

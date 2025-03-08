@@ -6,10 +6,24 @@ Level_01::Level_01(QWidget *parent)
     : QMainWindow(parent)
 {
     srand(time(NULL));
+    aha = new QMediaPlayer(this);
+    no = new QMediaPlayer(this);
+    output = new QAudioOutput();
+    output1 = new QAudioOutput();
+    aha->setAudioOutput(output);
+    no->setAudioOutput(output1);
+    aha->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
+    no->setSource(QUrl("qrc:/resource/sound/nea.wav"));
+    output->setVolume(1);
+    output->setVolume(1);
 }
 
 Level_01::~Level_01()
 {
+    delete aha;
+    delete no;
+    delete output;
+    delete output1;
     delete timer_bird;
     delete bird;
     for(int i=0; i==8; i++)
@@ -61,48 +75,36 @@ void Level_01::initial()
 
     vegetable[0] = new PicObject(":/resource/lev_01/repka.png", this);
     vegetable[0]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/4);
-    vegetable[0]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
-                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[1] = new PicObject(":/resource/lev_01/baklagan.png", this);
     vegetable[1]->resize_object(WIDTH_SCREEN/19, HEIGHT_SCREEN/7);
-    vegetable[1]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
-                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[2] = new PicObject(":/resource/lev_01/chesnok.png", this);
     vegetable[2]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
-    vegetable[2]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
-                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[3] = new PicObject(":/resource/lev_01/grusha.png", this);
     vegetable[3]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
-    vegetable[3]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
-                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[4] = new PicObject(":/resource/lev_01/morkovka.png", this);
     vegetable[4]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/5);
-    vegetable[4]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
-                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[5] = new PicObject(":/resource/lev_01/ogurec.png", this);
     vegetable[5]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/5);
-    vegetable[5]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
-                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[6] = new PicObject(":/resource/lev_01/tomat.png", this);
     vegetable[6]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/8);
-    vegetable[6]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
-                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[7] = new PicObject(":/resource/lev_01/tykva.png", this);
     vegetable[7]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/6);
-    vegetable[7]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
-                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
 
     vegetable[8] = new PicObject(":/resource/lev_01/rediska.png", this);
     vegetable[8]->resize_object(WIDTH_SCREEN/13, HEIGHT_SCREEN/6);
-    vegetable[8]->move(warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2,
-                    warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2);
+
+    for(int i=0; i<9; i++)
+    {
+        vegetable[i]->move(warehouse->x()+warehouse->width()/2-vegetable[i]->width()/2,
+                           warehouse->y()+warehouse->height()/2-vegetable[i]->height()/2);
+    }
 
     // Координаты серых объектов хранятся в списке
 
@@ -237,7 +239,7 @@ void Level_01::help_move_end()
     help->move_to_xy(vegetable[value_i[0]]->x(),
                      vegetable_gray[value_i[0]]->x(),
                      vegetable[value_i[0]]->y(),
-                     vegetable_gray[value_i[0]]->y(), 8);
+                     vegetable_gray[value_i[0]]->y(), 3);
     help->show();
 }
 
@@ -262,6 +264,7 @@ void Level_01::mouseMoveEvent(QMouseEvent *pe)
 {
     if(CURRENT_OBJECT_ACTIVE)
     {
+        vegetable[value_i[CURRENT_OBJECT]]->raise();
         vegetable[value_i[CURRENT_OBJECT]]->move(pe->position().x()-
                                                  vegetable[value_i[CURRENT_OBJECT]]->width()/2,
                                                  pe->position().y()-
@@ -279,22 +282,27 @@ void Level_01::mouseReleaseEvent(QMouseEvent *pe)
     int x1 = vegetable[value_i[CURRENT_OBJECT]]->x();
     int x1_1 = warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2;
     int x2 = vegetable[value_i[CURRENT_OBJECT]]->x()+vegetable[value_i[CURRENT_OBJECT]]->width();
+    int y1_g = vegetable_gray[value_i[CURRENT_OBJECT]]->y();
+    int y2_g = vegetable_gray[value_i[CURRENT_OBJECT]]->y()+vegetable_gray[value_i[CURRENT_OBJECT]]->height();
     int y1 = vegetable[value_i[CURRENT_OBJECT]]->y();
     int y1_1 = warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2;
+    int y2 = vegetable[value_i[CURRENT_OBJECT]]->y()+vegetable[value_i[CURRENT_OBJECT]]->height();
 
     CURRENT_OBJECT_ACTIVE = false;
-    if((x2 > x1_g)&&(x1 < x2_g))
+    if((x2>x1_g)&&(x1<x2_g)&&(y2>y1_g)&&(y1<y2_g))
     {
         vegetable[value_i[CURRENT_OBJECT]]->move(vegetable_gray[value_i[CURRENT_OBJECT]]->x(),
                                                  vegetable_gray[value_i[CURRENT_OBJECT]]->y());
         CURRENT_OBJECT++;
+        aha->play();
         if(CURRENT_OBJECT>8)
         {
-            exit(31);
+            victory();
         }
     } else
     {
-        vegetable[value_i[CURRENT_OBJECT]]->move_to_xy(x1,x1_1,y1,y1_1, 0);  // возвращаем овощ на место
+        no->play();
+        vegetable[value_i[CURRENT_OBJECT]]->move_to_xy(x1,x1_1,y1,y1_1, 1, 4);  // возвращаем овощ на место
     }
 
 }
@@ -312,5 +320,40 @@ void Level_01::flight_bird()
         bird->raise();
         timer_bird->stop();
     }
+}
+
+// ---------------------------------- Победа ----------------------------------------------
+
+void Level_01::victory()
+{
+    int x1, y1;         // конечные координаты
+    int x, y;           // начальные координаты
+    int direction;      // направление движения овощей
+
+    for(int i=0; i<9; i++)
+    {
+        direction = rnd(0,3);
+        x = vegetable[i]->x();
+        y = vegetable[i]->y();
+
+        switch(direction)
+        {
+        case 0: x1 = rnd(WIDTH_SCREEN, WIDTH_SCREEN*2);
+                y1 = rnd(HEIGHT_SCREEN, HEIGHT_SCREEN*2);
+            break;
+        case 1: x1 = rnd(WIDTH_SCREEN, WIDTH_SCREEN*2);
+                y1 = rnd(-HEIGHT_SCREEN, -HEIGHT_SCREEN*2);
+            break;
+        case 2: x1 = rnd(-WIDTH_SCREEN*2, -WIDTH_SCREEN);
+                y1 = rnd(-HEIGHT_SCREEN*2, -HEIGHT_SCREEN);
+            break;
+        case 3: x1 = rnd(-WIDTH_SCREEN, -WIDTH_SCREEN*2);
+                y1 = rnd(HEIGHT_SCREEN, HEIGHT_SCREEN*2);
+            break;
+        }
+        vegetable[i]->move_to_xy(x,x1,y,y1,0,4);
+        delete vegetable_gray[i];
+    }
+    delete warehouse;
 }
 
