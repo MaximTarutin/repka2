@@ -51,6 +51,8 @@ void PicObject::load(QString path)
     pixmap1 = pixmap;
     pixmap1 = pixmap.scaled( width(), height(), Qt::KeepAspectRatio);
     setPixmap(pixmap1);
+    setScaledContents(true); //------------------------------------------------------
+    setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored ); //----------------------------------------
 }
 
 // Изменение размера объекта
@@ -60,6 +62,8 @@ void PicObject::resize_object(int w, int h)
     resize(w,h);
     pixmap1 = pixmap.scaled(w, h, Qt::KeepAspectRatio);
     setPixmap(pixmap1);
+    setScaledContents(true); //------------------------------------------------------
+    setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored ); //----------------------------------------
 }
 
 // Анимация объектов (gif) - старт
@@ -94,6 +98,8 @@ void PicObject::rotate_object(int angle)
     pixmap1 = pixmap1.transformed(trans);
     pixmap1 = pixmap1.scaled(width(), height(), Qt::KeepAspectRatio);
     setPixmap(pixmap1);
+    setScaledContents(true); //------------------------------------------------------
+    setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored ); //----------------------------------------
     emit changig_angle();
 }
 
@@ -296,4 +302,6 @@ void PicObject::opacity(int opacity)
     pixmap1 = pixmap1.scaled( width(), height(), Qt::KeepAspectRatio);
     setPixmap(pixmap1);
     pixmap = pixmap1;
+    setScaledContents(true); //------------------------------------------------------
+    setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored ); //----------------------------------------
 }

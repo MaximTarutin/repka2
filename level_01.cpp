@@ -10,6 +10,7 @@ Level_01::Level_01(QWidget *parent)
 
 Level_01::~Level_01()
 {
+    delete timer_bird;
     delete bird;
     for(int i=0; i==8; i++)
     {
@@ -39,7 +40,7 @@ int Level_01::rnd(int a, int b)
 
 void Level_01::initial()
 {
-    if(LEVEL_FLAG) return;
+    if(LEVEL_FLAG) return;                  // Если уровень уже запускался, то пропускаем инициализацию
 
     LEVEL_FLAG = true;
 
@@ -57,14 +58,6 @@ void Level_01::initial()
     warehouse->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/3);
     warehouse->move(WIDTH_SCREEN-WIDTH_SCREEN/4, HEIGHT_SCREEN/20);
     warehouse->show();
-
-    bird = new PicObject(":/resource/lev_01/ptica.gif", this);
-    bird->animation_start(WIDTH_SCREEN/10, HEIGHT_SCREEN/8);
-    bird->move_to_x(0-bird->width(),WIDTH_SCREEN+bird->width(),0,40);
-    bird->show();
-
-    connect(bird, &PicObject::move_end, this, [this](){timer_bird->start(100);});  // если птица долетела до конца экрана
-    connect(timer_bird, &QTimer::timeout, this, &Level_01::flight_bird);
 
     vegetable[0] = new PicObject(":/resource/lev_01/repka.png", this);
     vegetable[0]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/4);
@@ -113,16 +106,15 @@ void Level_01::initial()
 
     // Координаты серых объектов хранятся в списке
 
-    QList<QList<int>>  coordinates;
-    coordinates.append(QList<int>() << WIDTH_SCREEN/25 << HEIGHT_SCREEN-HEIGHT_SCREEN/4);
-    coordinates.append(QList<int>() << WIDTH_SCREEN/60 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
-    coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/10 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
-    coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/3 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
-    coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/4 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/4);
-    coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/20 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
-    coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/5 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
-    coordinates.append(QList<int>() << WIDTH_SCREEN/6 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/15);
-    coordinates.append(QList<int>() << WIDTH_SCREEN-WIDTH_SCREEN/9 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
+    coordinates_g.append(QList<int>() << WIDTH_SCREEN/25 << HEIGHT_SCREEN-HEIGHT_SCREEN/4);
+    coordinates_g.append(QList<int>() << WIDTH_SCREEN/60 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
+    coordinates_g.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/10 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
+    coordinates_g.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/3 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
+    coordinates_g.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/4 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/4);
+    coordinates_g.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/20 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
+    coordinates_g.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/5 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
+    coordinates_g.append(QList<int>() << WIDTH_SCREEN/6 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/15);
+    coordinates_g.append(QList<int>() << WIDTH_SCREEN-WIDTH_SCREEN/9 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
 
     button_back = new QPushButton(this);
     button_back->setStyleSheet("border-image: url(:/resource/lev_01/return.png);");
@@ -186,8 +178,8 @@ void Level_01::initial()
 
     for(int i=0; i<9; i++)
     {
-        x1[i] = coordinates.at(value_i[i]).at(0);   // Расставляем серые овощи на поле
-        y1[i] = coordinates.at(value_i[i]).at(1);
+        x1[i] = coordinates_g.at(value_i[i]).at(0);   // Расставляем серые овощи на поле
+        y1[i] = coordinates_g.at(value_i[i]).at(1);
         vegetable_gray[i]->move(x1[i],y1[i]);
     }
 
@@ -204,6 +196,16 @@ void Level_01::initial()
     help_move_end();
     help->show();
     connect(help, &PicObject::move_end, this, &Level_01::help_move_end);
+
+    bird = new PicObject(":/resource/lev_01/ptica.gif", this);
+    bird->animation_start(WIDTH_SCREEN/10, HEIGHT_SCREEN/8);
+    bird->move_to_x(0-bird->width(),WIDTH_SCREEN+bird->width(),0,40);
+    bird->show();
+    bird->raise();
+
+    connect(bird, &PicObject::move_end, this, [this](){timer_bird->start(100);});  // если птица долетела до конца экрана
+    connect(timer_bird, &QTimer::timeout, this, &Level_01::flight_bird);
+
 }
 
 // ---------------- Получаем SCREEN_WIDTH ----------------------
@@ -275,7 +277,10 @@ void Level_01::mouseReleaseEvent(QMouseEvent *pe)
     int x1_g = vegetable_gray[value_i[CURRENT_OBJECT]]->x();
     int x2_g = vegetable_gray[value_i[CURRENT_OBJECT]]->x()+vegetable_gray[value_i[CURRENT_OBJECT]]->width();
     int x1 = vegetable[value_i[CURRENT_OBJECT]]->x();
+    int x1_1 = warehouse->x()+warehouse->width()/2-vegetable[0]->width()/2;
     int x2 = vegetable[value_i[CURRENT_OBJECT]]->x()+vegetable[value_i[CURRENT_OBJECT]]->width();
+    int y1 = vegetable[value_i[CURRENT_OBJECT]]->y();
+    int y1_1 = warehouse->y()+warehouse->height()/2-vegetable[0]->height()/2;
 
     CURRENT_OBJECT_ACTIVE = false;
     if((x2 > x1_g)&&(x1 < x2_g))
@@ -287,6 +292,9 @@ void Level_01::mouseReleaseEvent(QMouseEvent *pe)
         {
             exit(31);
         }
+    } else
+    {
+        vegetable[value_i[CURRENT_OBJECT]]->move_to_xy(x1,x1_1,y1,y1_1, 0);  // возвращаем овощ на место
     }
 
 }

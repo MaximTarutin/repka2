@@ -31,6 +31,7 @@ private:
     int x1[9];                                              // координаты серых овощей
     int y1[9];
     QList<int> value_i;                                     // список нумерации овощей
+    QList<QList<int>>  coordinates_g;                       // координаты серых овощей
 
     bool LEVEL_FLAG = false;                                // false - уровень еще не запускался
                                                             // true - уровень начали проходить
