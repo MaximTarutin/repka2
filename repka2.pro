@@ -10,12 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     level_01.cpp \
+    level_02.cpp \
     main.cpp \
     mainwindow.cpp \
     picobject.cpp
 
 HEADERS += \
     level_01.h \
+    level_02.h \
     mainwindow.h \
     picobject.h
 
@@ -27,6 +29,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     res.qrc \
     res1.qrc \
+    res2.qrc \
     res_sound.qrc
 
 DISTFILES += \
@@ -37,7 +40,22 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
     android/gradlew.bat \
-    android/res/values/libs.xml
+    android/res/values/libs.xml \
+    resource/lev_02/dedka.png \
+    resource/lev_02/fomka.png \
+    resource/lev_02/fon.png \
+    resource/lev_02/level_2.jpg \
+    resource/lev_02/leyka.png \
+    resource/lev_02/lopata.png \
+    resource/lev_02/molotok.png \
+    resource/lev_02/mysl.png \
+    resource/lev_02/repa.png \
+    resource/lev_02/salut.gif \
+    resource/lev_02/saray.jpg \
+    resource/lev_02/serp.png \
+    resource/lev_02/topor.png \
+    resource/lev_02/vedro.png \
+    resource/lev_02/vily.png
 
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {
     ANDROID_PACKAGE_SOURCE_DIR = \

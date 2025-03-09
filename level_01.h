@@ -28,12 +28,12 @@ private:
     int CURRENT_OBJECT = 0;                                 // текущий овощ
     bool CURRENT_OBJECT_ACTIVE = false;                     // текущий овощ активен
                                                             // курсор находится в пределах объекта
-    int x[9];                                               // координаты овощей
-    int y[9];
-    int x1[9];                                              // координаты серых овощей
-    int y1[9];
-    QList<int> value_i;                                     // список нумерации овощей
-    QList<QList<int>>  coordinates_g;                       // координаты серых овощей
+    int x[9] = {};                                          // координаты овощей
+    int y[9] = {};
+    int x1[9] = {};                                         // координаты серых овощей
+    int y1[9] = {};
+    QList<int> value_i = {};                                // список нумерации овощей
+    QList<QList<int>>  coordinates_g = {};                  // координаты серых овощей
 
     bool LEVEL_FLAG = false;                                // false - уровень еще не запускался
                                                             // true - уровень начали проходить
@@ -41,17 +41,19 @@ private:
     bool HELP_FLAG = true;                                  // подсказка: true - активна
 
     QLabel          *background_lev01 = nullptr;            // Фон уровня 1
-    PicObject       *vegetable[9];                          // овощи
-    PicObject       *vegetable_gray[9];                     // серые овощи
-    PicObject       *warehouse;                             // синий круг (склад)
-    PicObject       *bird;                                  // летающая птица анимация
-    PicObject       *help;                                  // подсказка
-    PicObject       *repka;                                 // репка
-    QTimer          *timer_bird;                            // таймер частоты полета птицы
-    QMediaPlayer    *sound;                                 // звук "ага"
-    QAudioOutput    *output;                                // аудиовыход
+    PicObject       *vegetable[9] = {};                     // овощи
+    PicObject       *vegetable_gray[9] = {};                // серые овощи
+    PicObject       *warehouse = nullptr;                   // синий круг (склад)
+    PicObject       *bird = nullptr;                        // летающая птица анимация
+    PicObject       *help = nullptr;                        // подсказка
+    PicObject       *repka = nullptr;                       // репка
+    QTimer          *timer_bird = nullptr;                  // таймер частоты полета птицы
+    QMediaPlayer    *sound = nullptr;                       // звук "ага"
+    QAudioOutput    *output = nullptr;                      // аудиовыход
 
-    int rnd(int a, int b);                                  // случайное число в диапазоне от a до bт
+    int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
+    void mix_vegetables();                                  // перемешать список нумерации овощей
+    void animation_level();                                 // анимация уровня
 
 public slots:
     void initial();                                         // инициализация
@@ -70,6 +72,7 @@ protected:
     virtual void mouseReleaseEvent(QMouseEvent *pe);        // отпускаем кнопку мышки
 
 signals:
+    void next_level();                                 // посылает номер следующего уровня
 };
 
 #endif // LEVEL_01_H

@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resource/lev_02/dedka.png</file>
+        <file>resource/lev_02/fomka.png</file>
+        <file>resource/lev_02/fon.png</file>
+        <file>resource/lev_02/level_2.jpg</file>
+        <file>resource/lev_02/leyka.png</file>
+        <file>resource/lev_02/lopata.png</file>
+        <file>resource/lev_02/molotok.png</file>
+        <file>resource/lev_02/mysl.png</file>
+        <file>resource/lev_02/repa.png</file>
+        <file>resource/lev_02/salut.gif</file>
+        <file>resource/lev_02/saray.jpg</file>
+        <file>resource/lev_02/serp.png</file>
+        <file>resource/lev_02/topor.png</file>
+        <file>resource/lev_02/vedro.png</file>
+        <file>resource/lev_02/vily.png</file>
+    </qresource>
+</RCC>

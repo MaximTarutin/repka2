@@ -10,6 +10,7 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include "level_01.h"
+#include "level_02.h"
 
 class MainWindow : public QMainWindow
 {
@@ -30,7 +31,9 @@ private:
     QMediaPlayer        *music = nullptr;                           // фоновая музыка
     QAudioOutput        *audiooutput = nullptr;                     // аудиовыход
 
-    Level_01            *lev_01 = nullptr;
+    Level_01            *lev_01 = nullptr;                          // первый уровень
+    Level_02            *lev_02 = nullptr;                          // второй уровень
+
 
     int WIDTH_SCREEN = 0;                                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                                          // Высота экрана
@@ -44,9 +47,6 @@ private:
 private slots:
     void exit_of_game();                                            // Выход из игры
     void start_level();
-
-
-
 
 };
 #endif // MAINWINDOW_H

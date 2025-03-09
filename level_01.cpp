@@ -1,7 +1,6 @@
 #include "level_01.h"
 #include <ctime>
 
-
 Level_01::Level_01(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -41,6 +40,19 @@ int Level_01::rnd(int a, int b)
     return k;
 }
 
+// ---------------- Получаем SCREEN_WIDTH ----------------------
+
+void Level_01::get_width(int w)
+{
+    WIDTH_SCREEN = w;
+}
+
+// ---------------- Получаем SCREEN_HEIGHT ----------------------
+
+void Level_01::get_height(int h)
+{
+    HEIGHT_SCREEN = h;
+}
 
 // ------------------- Инициализация --------------------------
 
@@ -65,30 +77,34 @@ void Level_01::initial()
     warehouse->move(WIDTH_SCREEN-WIDTH_SCREEN/4, HEIGHT_SCREEN/20);
     warehouse->show();
 
+    button_back = new QPushButton(this);
+    button_back->setStyleSheet("border-image: url(:/resource/lev_01/return.png);");
+    button_back->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
+    button_back->move(WIDTH_SCREEN/30, HEIGHT_SCREEN/20);
+    button_back->show();
+
+    button_next = new QPushButton(this);
+    button_next->setStyleSheet("border-image: url(:/resource/lev_01/next.png);");
+    button_next->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
+    button_next->move(WIDTH_SCREEN-WIDTH_SCREEN/12, HEIGHT_SCREEN/20);
+    button_next->hide();
+
     vegetable[0] = new PicObject(":/resource/lev_01/repka.png", this);
     vegetable[0]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/4);
-
     vegetable[1] = new PicObject(":/resource/lev_01/baklagan.png", this);
     vegetable[1]->resize_object(WIDTH_SCREEN/19, HEIGHT_SCREEN/7);
-
     vegetable[2] = new PicObject(":/resource/lev_01/chesnok.png", this);
     vegetable[2]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
-
     vegetable[3] = new PicObject(":/resource/lev_01/grusha.png", this);
     vegetable[3]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
-
     vegetable[4] = new PicObject(":/resource/lev_01/morkovka.png", this);
     vegetable[4]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/5);
-
     vegetable[5] = new PicObject(":/resource/lev_01/ogurec.png", this);
     vegetable[5]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/5);
-
     vegetable[6] = new PicObject(":/resource/lev_01/tomat.png", this);
     vegetable[6]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/8);
-
     vegetable[7] = new PicObject(":/resource/lev_01/tykva.png", this);
     vegetable[7]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/6);
-
     vegetable[8] = new PicObject(":/resource/lev_01/rediska.png", this);
     vegetable[8]->resize_object(WIDTH_SCREEN/13, HEIGHT_SCREEN/6);
 
@@ -110,65 +126,32 @@ void Level_01::initial()
     coordinates_g.append(QList<int>() << WIDTH_SCREEN/6 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/15);
     coordinates_g.append(QList<int>() << WIDTH_SCREEN-WIDTH_SCREEN/9 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
 
-    button_back = new QPushButton(this);
-    button_back->setStyleSheet("border-image: url(:/resource/lev_01/return.png);");
-    button_back->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
-    button_back->move(WIDTH_SCREEN/30, HEIGHT_SCREEN/20);
-    button_back->show();
-
-    button_next = new QPushButton(this);
-    button_next->setStyleSheet("border-image: url(:/resource/lev_01/next.png);");
-    button_next->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
-    button_next->move(WIDTH_SCREEN-WIDTH_SCREEN/12, HEIGHT_SCREEN/20);
-    button_next->hide();
 
     vegetable_gray[0] = new PicObject(":/resource/lev_01/repka-gray.png", this);
     vegetable_gray[0]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/4);
-    vegetable_gray[0]->show();
-
     vegetable_gray[1] = new PicObject(":/resource/lev_01/baklagan-gray.png", this);
     vegetable_gray[1]->resize_object(WIDTH_SCREEN/19, HEIGHT_SCREEN/7);
-    vegetable_gray[1]->show();
-
     vegetable_gray[2] = new PicObject(":/resource/lev_01/chesnok-gray.png", this);
     vegetable_gray[2]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
-    vegetable_gray[2]->show();
-
     vegetable_gray[3]= new PicObject(":/resource/lev_01/grusha-gray.png", this);
     vegetable_gray[3]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
-    vegetable_gray[3]->show();
-
     vegetable_gray[4] = new PicObject(":/resource/lev_01/morkovka-gray.png", this);
     vegetable_gray[4]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/5);
-    vegetable_gray[4]->show();
-
     vegetable_gray[5] = new PicObject(":/resource/lev_01/ogurec-gray.png", this);
     vegetable_gray[5]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/5);
-    vegetable_gray[5]->show();
-
     vegetable_gray[6] = new PicObject(":/resource/lev_01/tomat-gray.png", this);
     vegetable_gray[6]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/8);
-    vegetable_gray[6]->show();
-
     vegetable_gray[7] = new PicObject(":/resource/lev_01/tykva-gray.png", this);
     vegetable_gray[7]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/6);
-    vegetable_gray[7]->show();
-
     vegetable_gray[8] = new PicObject(":/resource/lev_01/rediska-gray.png", this);
     vegetable_gray[8]->resize_object(WIDTH_SCREEN/13, HEIGHT_SCREEN/6);
-    vegetable_gray[8]->show();
-
-    int temp = 0;
-    int k = 0;
-    value_i = {0,1,2,3,4,5,6,7,8};
 
     for(int i=0; i<9; i++)
     {
-        k = rnd(0,8);
-        temp = value_i[k];
-        value_i[k] = value_i[i];        // Перемешиваем список овощей
-        value_i[i] = temp;
+        vegetable_gray[i]->show();
     }
+
+    mix_vegetables(); // перемешаем овощи
 
     for(int i=0; i<9; i++)
     {
@@ -183,8 +166,30 @@ void Level_01::initial()
         vegetable[*it]->raise();     // складываем овощи по списку value_i
         vegetable[*it]->show();      // на переднем плане первый элемент
         ++it;
-    }
+    }    
+    animation_level();      // запускаем анимацию на уровне
+}
 
+// ---------------- Перемешаем список нумерации овощей --------------------------
+
+void Level_01::mix_vegetables()
+{
+    int temp = 0;
+    int k = 0;
+    value_i = {0,1,2,3,4,5,6,7,8};      // порядок овощей
+    for(int i=0; i<9; i++)
+    {
+        k = rnd(0,8);
+        temp = value_i[k];
+        value_i[k] = value_i[i];        // Перемешиваем список овощей
+        value_i[i] = temp;
+    }
+}
+
+// ----------------- Анимация на уровне --------------------------
+
+void Level_01::animation_level()
+{
     help = new PicObject(":/resource/lev_01/ruka.png", this);
     help->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/11);
     help_move_end();
@@ -199,39 +204,6 @@ void Level_01::initial()
 
     connect(bird, &PicObject::move_end, this, [this](){timer_bird->start(100);});  // если птица долетела до конца экрана
     connect(timer_bird, &QTimer::timeout, this, &Level_01::flight_bird);
-
-}
-
-// ---------------- Получаем SCREEN_WIDTH ----------------------
-
-void Level_01::get_width(int w)
-{
-    WIDTH_SCREEN = w;
-}
-
-// ---------------- Получаем SCREEN_HEIGHT ----------------------
-
-void Level_01::get_height(int h)
-{
-    HEIGHT_SCREEN = h;
-}
-
-// ---------------- Возврат на главный экран --------------------
-
-void Level_01::back_level()
-{
-    if(LEVEL_END)
-    {
-        for(int i=0; i<9; i++)
-        {
-            if (vegetable[i] == (void*)0) // если объект существует, то удаляем его
-            {
-                delete vegetable[i];
-                vegetable[i] = nullptr;
-            }
-        }
-    }
-    this->close();
 }
 
 // ----------------- Окончание движения руки ----------------------
@@ -246,6 +218,39 @@ void Level_01::help_move_end()
     help->show();
 }
 
+// --------------------- Полет птицы через случайный промежуток времени ------------------
+
+void Level_01::flight_bird()
+{
+    int i = rnd(0,150);
+    int j = rnd(0,150);
+    if(i==j)
+    {
+        int bird_y = rnd(0, HEIGHT_SCREEN/10);
+        bird->move_to_x(0-bird->width(),WIDTH_SCREEN+bird->width(),bird_y,40);
+        bird->raise();
+        timer_bird->stop();
+    }
+}
+
+// ---------------- Возврат на главный экран --------------------
+
+void Level_01::back_level()
+{
+    if(LEVEL_END)
+    {
+        for(int i=0; i<9; i++)
+        {
+            if (vegetable[i] != (void*)0) // если объект существует, то удаляем его
+            {
+                delete vegetable[i];
+                vegetable[i] = nullptr;
+            }
+        }
+    }
+    this->close();
+}
+
 // ----------------- Нажатие кнопки мышки -----------------------------
 
 void Level_01::mousePressEvent(QMouseEvent *pe)
@@ -255,7 +260,12 @@ void Level_01::mousePressEvent(QMouseEvent *pe)
        (pe->position().y() > vegetable[value_i[CURRENT_OBJECT]]->y())and
        (pe->position().y() < vegetable[value_i[CURRENT_OBJECT]]->y()+vegetable[value_i[CURRENT_OBJECT]]->height())))
     {
-        help->hide();
+        if (help != (void*)0)
+        {
+            disconnect(help, &PicObject::move_end, this, &Level_01::help_move_end);
+            delete help;
+            help=nullptr;
+        }
         CURRENT_OBJECT_ACTIVE = true;
     }
 }
@@ -279,7 +289,6 @@ void Level_01::mouseMoveEvent(QMouseEvent *pe)
 void Level_01::mouseReleaseEvent(QMouseEvent *pe)
 {
     if(LEVEL_END) return;
-    button_back->setDisabled(true);
     pe->pos();
     int x1_g = vegetable_gray[value_i[CURRENT_OBJECT]]->x();
     int x2_g = vegetable_gray[value_i[CURRENT_OBJECT]]->x()+vegetable_gray[value_i[CURRENT_OBJECT]]->width();
@@ -315,21 +324,6 @@ void Level_01::mouseReleaseEvent(QMouseEvent *pe)
 
 }
 
-// --------------------- Полет птицы через случайный промежуток времени ------------------
-
-void Level_01::flight_bird()
-{
-    int i = rnd(0,150);
-    int j = rnd(0,150);
-    if(i==j)
-    {
-        int bird_y = rnd(0, HEIGHT_SCREEN/10);
-        bird->move_to_x(0-bird->width(),WIDTH_SCREEN+bird->width(),bird_y,40);
-        bird->raise();
-        timer_bird->stop();
-    }
-}
-
 // ---------------------------------- Победа ----------------------------------------------
 
 void Level_01::victory()
@@ -360,16 +354,19 @@ void Level_01::victory()
             break;
         }
         vegetable[i]->move_to_xy(x,x1,y,y1,0,4);
-        delete vegetable_gray[i];       
+        delete vegetable_gray[i];
+        vegetable_gray[i] = nullptr;
     }
 
     delete warehouse;
+    warehouse = nullptr;
 
     repka = new PicObject(":/resource/lev_01/repka.png", this);
     repka->show();
     repka->move(WIDTH_SCREEN/25, HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
     repka->resize_object(WIDTH_SCREEN/10*2, HEIGHT_SCREEN/4*2);
-
-    button_back->setDisabled(false);
+    LEVEL_END = false;
+    button_next->show();
+    emit next_level();
 }
 
