@@ -21,6 +21,7 @@ Level_02::~Level_02()
     }
     delete mysl;
     delete dedka;
+    delete cell;
 }
 
 // ------------------- Инициализация ------------------------------------
@@ -57,6 +58,10 @@ void Level_02::initial()
     mysl->move(dedka->width()/2, dedka->height());
     mysl->show();
 
+    cell = new PicObject(":/resource/lev_02/fon.png", this);
+    cell->resize_object(WIDTH_SCREEN/2, HEIGHT_SCREEN/10);
+    cell->move(WIDTH_SCREEN/2-WIDTH_SCREEN/4,HEIGHT_SCREEN/30);
+    cell->show();
 
     instruments[0] = new PicObject(":/resource/lev_02/fomka.png", this);
     instruments[0]->resize_object(WIDTH_SCREEN/14, HEIGHT_SCREEN/10);
@@ -69,14 +74,20 @@ void Level_02::initial()
     instruments[4] = new PicObject(":/resource/lev_02/serp.png", this);
     instruments[4]->resize_object(WIDTH_SCREEN/21, HEIGHT_SCREEN/12);
     instruments[5] = new PicObject(":/resource/lev_02/topor.png", this);
+    instruments[5]->resize_object(WIDTH_SCREEN/26, HEIGHT_SCREEN/12);
     instruments[6] = new PicObject(":/resource/lev_02/vedro.png", this);
+    instruments[6]->resize_object(WIDTH_SCREEN/26, HEIGHT_SCREEN/12);
     instruments[7] = new PicObject(":/resource/lev_02/vily.png", this);
+    instruments[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/8);
 
-    coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/44 << HEIGHT_SCREEN/7);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/8 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/5);
     coordinates.append(QList<int>() << WIDTH_SCREEN/3 << HEIGHT_SCREEN-HEIGHT_SCREEN/6);
     coordinates.append(QList<int>() << WIDTH_SCREEN-WIDTH_SCREEN/5 << HEIGHT_SCREEN-HEIGHT_SCREEN/6);
     coordinates.append(QList<int>() << WIDTH_SCREEN/2 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/17);
     coordinates.append(QList<int>() << WIDTH_SCREEN-WIDTH_SCREEN/4 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/17);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/5 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/12);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/12 << HEIGHT_SCREEN-HEIGHT_SCREEN/5);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/5 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/5);
 
     instruments[0]->move(coordinates.at(0).at(0), coordinates.at(0).at(1));
     instruments[0]->show();
@@ -88,6 +99,12 @@ void Level_02::initial()
     instruments[3]->show();
     instruments[4]->move(coordinates.at(4).at(0), coordinates.at(4).at(1));
     instruments[4]->show();
+    instruments[5]->move(coordinates.at(5).at(0), coordinates.at(5).at(1));
+    instruments[5]->show();
+    instruments[6]->move(coordinates.at(6).at(0), coordinates.at(6).at(1));
+    instruments[6]->show();
+    instruments[7]->move(coordinates.at(7).at(0), coordinates.at(7).at(1));
+    instruments[7]->show();
 }
 
 // ------------------ Получаем ширину и высоту экрана ----------------------
