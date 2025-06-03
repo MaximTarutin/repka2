@@ -84,12 +84,12 @@ void MainWindow::exit_of_game()
 
 void MainWindow::start_level()
 {
-    //CURRENT_LEVEL=2;
+    CURRENT_LEVEL=2;
     this->hide();
     switch(CURRENT_LEVEL)
     {
     case 1:
-        if(lev_01==(void*)0)
+        if(lev_01==(void*)0)   // Если объект не существует, то создаем его
         {
             lev_01 = new Level_01();
             connect(this, &MainWindow::width_scr, lev_01, &Level_01::get_width);        // Получаем разрешение экрана для всех
@@ -101,8 +101,7 @@ void MainWindow::start_level()
         connect(lev_01->button_back, &QPushButton::clicked, this, [this](){
                 lev_01->back_level(); this->showFullScreen();});
         connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
-                lev_01->close(); lev_02->showFullScreen();}); // Сделать массив уровней, и открывать текущий уровень
-        connect(lev_01, &Level_01::next_level, this, [this](){CURRENT_LEVEL=2; qDebug() << CURRENT_LEVEL;});
+            lev_01->close(); CURRENT_LEVEL=2; start_level();});
         break;
     case 2:
         if(lev_02==(void*)0)
@@ -115,7 +114,7 @@ void MainWindow::start_level()
         lev_02->showFullScreen();
         lev_02->initial();
         connect(lev_02->button_back, &QPushButton::clicked, this, [this](){
-            lev_02->back_level(); lev_01->showFullScreen();});
+                lev_02->back_level(); lev_01->showFullScreen();});
         break;
     }
 }

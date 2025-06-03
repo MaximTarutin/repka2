@@ -34,7 +34,6 @@ private:
     Level_01            *lev_01 = nullptr;                          // первый уровень
     Level_02            *lev_02 = nullptr;                          // второй уровень
 
-
     int WIDTH_SCREEN = 0;                                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                                          // Высота экрана
     int CURRENT_LEVEL = 1;                                          // Текущий уровень

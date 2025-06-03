@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QLabel>
 #include <QPushButton>
+#include "picobject.h"
 
 class Level_02 : public QMainWindow
 {
@@ -25,8 +26,15 @@ public slots:
 private:
     int WIDTH_SCREEN = 0;                                   // Разрешение экрана
     int HEIGHT_SCREEN = 0;
+    int x[8] = {};                                          // Координаты инструментов
+    int y[8] = {};
 
-    QLabel      *background_lev02 = nullptr;                // Фон уровня
+    QLabel      *background_lev02 = nullptr;                // Фон уровня    
+    PicObject   *instruments[8] = {};                       // Инструменты
+    PicObject   *dedka = nullptr;                           // Дедка
+    PicObject   *mysl = nullptr;                            // Мысль дедки
+    PicObject   *cell = nullptr;                            // Ячейка, куда складывается инструмент
+    QList<QList<int>>  coordinates = {};                    // Координаты инструмента
 
 signals:
 };

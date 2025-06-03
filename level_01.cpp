@@ -126,7 +126,6 @@ void Level_01::initial()
     coordinates_g.append(QList<int>() << WIDTH_SCREEN/6 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/15);
     coordinates_g.append(QList<int>() << WIDTH_SCREEN-WIDTH_SCREEN/9 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
 
-
     vegetable_gray[0] = new PicObject(":/resource/lev_01/repka-gray.png", this);
     vegetable_gray[0]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/4);
     vegetable_gray[1] = new PicObject(":/resource/lev_01/baklagan-gray.png", this);
@@ -365,8 +364,8 @@ void Level_01::victory()
     repka->show();
     repka->move(WIDTH_SCREEN/25, HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
     repka->resize_object(WIDTH_SCREEN/10*2, HEIGHT_SCREEN/4*2);
-    LEVEL_END = false;
-    button_next->show();
+    LEVEL_END = true;
     emit next_level();
+    button_next->show();
 }
 
