@@ -5,6 +5,11 @@ Level_02::Level_02(QWidget *parent)
     : QMainWindow{parent}
 {
     srand(time(NULL));
+    for(int i=0; i<8; i++)
+    {
+        x[i]=0;
+        y[i]=0;
+    }
 }
 
 Level_02::~Level_02()
@@ -22,6 +27,29 @@ Level_02::~Level_02()
     delete mysl;
     delete dedka;
     delete cell;
+}
+
+//------------------ генератор случайных чисел в диапазоне от a до b -----------------------
+
+int Level_02::rnd(int a, int b)
+{
+    int k;
+    b=b-a+1;
+    k   =   rand()%b+a;
+    return k;
+}
+
+
+// ------------------ Получаем ширину и высоту экрана ----------------------
+
+void Level_02::get_width(int w)
+{
+    WIDTH_SCREEN = w;
+}
+
+void Level_02::get_height(int h)
+{
+    HEIGHT_SCREEN = h;
 }
 
 // ------------------- Инициализация ------------------------------------
@@ -89,34 +117,44 @@ void Level_02::initial()
     coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/12 << HEIGHT_SCREEN-HEIGHT_SCREEN/5);
     coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/5 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/5);
 
-    instruments[0]->move(coordinates.at(0).at(0), coordinates.at(0).at(1));
-    instruments[0]->show();
-    instruments[1]->move(coordinates.at(1).at(0), coordinates.at(1).at(1));
-    instruments[1]->show();
-    instruments[2]->move(coordinates.at(2).at(0), coordinates.at(2).at(1));
-    instruments[2]->show();
-    instruments[3]->move(coordinates.at(3).at(0), coordinates.at(3).at(1));
-    instruments[3]->show();
-    instruments[4]->move(coordinates.at(4).at(0), coordinates.at(4).at(1));
-    instruments[4]->show();
-    instruments[5]->move(coordinates.at(5).at(0), coordinates.at(5).at(1));
-    instruments[5]->show();
-    instruments[6]->move(coordinates.at(6).at(0), coordinates.at(6).at(1));
-    instruments[6]->show();
-    instruments[7]->move(coordinates.at(7).at(0), coordinates.at(7).at(1));
-    instruments[7]->show();
+    // instruments[0]->move(coordinates.at(0).at(0), coordinates.at(0).at(1));
+    // instruments[1]->move(coordinates.at(1).at(0), coordinates.at(1).at(1));
+    // instruments[2]->move(coordinates.at(2).at(0), coordinates.at(2).at(1));
+    // instruments[3]->move(coordinates.at(3).at(0), coordinates.at(3).at(1));
+    // instruments[4]->move(coordinates.at(4).at(0), coordinates.at(4).at(1));
+    // instruments[5]->move(coordinates.at(5).at(0), coordinates.at(5).at(1));
+    // instruments[6]->move(coordinates.at(6).at(0), coordinates.at(6).at(1));
+    // instruments[7]->move(coordinates.at(7).at(0), coordinates.at(7).at(1));
+
+    for(int i=0; i<8; i++)
+    {
+        instruments[i]->show();
+    }
+
+    mix_instruments();
+
+    for(int i=0; i<8; i++)
+    {
+        x[i] = coordinates.at(value_i[i]).at(0);   // Расставляем серые овощи на поле
+        y[i] = coordinates.at(value_i[i]).at(1);
+        instruments[i]->move(x[i],y[i]);
+    }
 }
 
-// ------------------ Получаем ширину и высоту экрана ----------------------
+// ---------------- Перемешаем список нумерации инструмента --------------------------
 
-void Level_02::get_width(int w)
+void Level_02::mix_instruments()
 {
-    WIDTH_SCREEN = w;
-}
-
-void Level_02::get_height(int h)
-{
-    HEIGHT_SCREEN = h;
+    int temp = 0;
+    int k = 0;
+    value_i = {0,1,2,3,4,5,6,7};      // порядок овощей
+    for(int i=0; i<8; i++)
+    {
+        k = rnd(0,7);
+        temp = value_i[k];
+        value_i[k] = value_i[i];        // Перемешиваем список овощей
+        value_i[i] = temp;
+    }
 }
 
 // -------------------- Возврат на 1 уровень -------------------------------
@@ -125,6 +163,7 @@ void Level_02::back_level()
 {
     this->close();
 }
+
 
 
 

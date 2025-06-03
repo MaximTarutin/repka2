@@ -29,12 +29,16 @@ private:
     int x[8] = {};                                          // Координаты инструментов
     int y[8] = {};
 
+    int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
+    void mix_instruments();                                 // перемешать список нумерации инструмента
+
     QLabel      *background_lev02 = nullptr;                // Фон уровня    
     PicObject   *instruments[8] = {};                       // Инструменты
     PicObject   *dedka = nullptr;                           // Дедка
     PicObject   *mysl = nullptr;                            // Мысль дедки
     PicObject   *cell = nullptr;                            // Ячейка, куда складывается инструмент
     QList<QList<int>>  coordinates = {};                    // Координаты инструмента
+    QList<int> value_i = {};                                // список нумерации инструмента
 
 signals:
 };
