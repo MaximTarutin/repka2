@@ -48,7 +48,7 @@ private:
     PicObject       *help = nullptr;                        // подсказка
     PicObject       *repka = nullptr;                       // репка
     QTimer          *timer_bird = nullptr;                  // таймер частоты полета птицы
-    QMediaPlayer    *sound = nullptr;                       // звук "ага"
+    QMediaPlayer    *sound = nullptr;                       // звук "ага" или "noo"
     QAudioOutput    *output = nullptr;                      // аудиовыход
 
     int rnd(int a, int b);                                  // случайное число в диапазоне от a до b

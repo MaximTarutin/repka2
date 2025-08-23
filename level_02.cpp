@@ -23,10 +23,20 @@ Level_02::~Level_02()
     for(int i=0; i==7; i++)
     {
         delete instruments[i];
+        instruments[i] = nullptr;
+        delete instruments_mysl[i];
+        instruments_mysl[i] = nullptr;
     }
     delete mysl;
+    mysl = nullptr;
     delete dedka;
+    dedka = nullptr;
     delete cell;
+    cell = nullptr;
+    delete sound;
+    sound = nullptr;
+    delete output;
+    output = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -63,6 +73,11 @@ void Level_02::initial()
 
     QCursor cursorTarget = QCursor(QPixmap(":/resource/logo/cursor1.png"),0,0);
     this->setCursor(cursorTarget);
+
+    sound = new QMediaPlayer(this);
+    output = new QAudioOutput();
+    sound->setAudioOutput(output);
+    output->setVolume(1);
 
     button_back = new QPushButton(this);
     button_back->setStyleSheet("border-image: url(:/resource/lev_01/return.png);");
@@ -108,6 +123,24 @@ void Level_02::initial()
     instruments[7] = new PicObject(":/resource/lev_02/vily.png", this);
     instruments[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/8);
 
+    instruments_mysl[0] = new PicObject(":/resource/lev_02/fomka.png", this);
+    instruments_mysl[0]->resize_object(WIDTH_SCREEN/18, HEIGHT_SCREEN/14);
+    instruments_mysl[1] = new PicObject(":/resource/lev_02/leyka.png", this);
+    instruments_mysl[1]->resize_object(WIDTH_SCREEN/17, HEIGHT_SCREEN/14);
+    instruments_mysl[2] = new PicObject(":/resource/lev_02/lopata.png", this);
+    instruments_mysl[2]->resize_object(WIDTH_SCREEN/14, HEIGHT_SCREEN/10);
+    instruments_mysl[3] = new PicObject(":/resource/lev_02/molotok.png", this);
+    instruments_mysl[3]->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/16);
+    instruments_mysl[4] = new PicObject(":/resource/lev_02/serp.png", this);
+    instruments_mysl[4]->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/16);
+    instruments_mysl[5] = new PicObject(":/resource/lev_02/topor.png", this);
+    instruments_mysl[5]->resize_object(WIDTH_SCREEN/30, HEIGHT_SCREEN/16);
+    instruments_mysl[6] = new PicObject(":/resource/lev_02/vedro.png", this);
+    instruments_mysl[6]->resize_object(WIDTH_SCREEN/26, HEIGHT_SCREEN/12);
+    instruments_mysl[7] = new PicObject(":/resource/lev_02/vily.png", this);
+    instruments_mysl[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/8);
+
+
     coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/8 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/5);
     coordinates.append(QList<int>() << WIDTH_SCREEN/3 << HEIGHT_SCREEN-HEIGHT_SCREEN/6);
     coordinates.append(QList<int>() << WIDTH_SCREEN-WIDTH_SCREEN/5 << HEIGHT_SCREEN-HEIGHT_SCREEN/6);
@@ -117,28 +150,22 @@ void Level_02::initial()
     coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/12 << HEIGHT_SCREEN-HEIGHT_SCREEN/5);
     coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/5 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/5);
 
-    // instruments[0]->move(coordinates.at(0).at(0), coordinates.at(0).at(1));
-    // instruments[1]->move(coordinates.at(1).at(0), coordinates.at(1).at(1));
-    // instruments[2]->move(coordinates.at(2).at(0), coordinates.at(2).at(1));
-    // instruments[3]->move(coordinates.at(3).at(0), coordinates.at(3).at(1));
-    // instruments[4]->move(coordinates.at(4).at(0), coordinates.at(4).at(1));
-    // instruments[5]->move(coordinates.at(5).at(0), coordinates.at(5).at(1));
-    // instruments[6]->move(coordinates.at(6).at(0), coordinates.at(6).at(1));
-    // instruments[7]->move(coordinates.at(7).at(0), coordinates.at(7).at(1));
-
     for(int i=0; i<8; i++)
     {
         instruments[i]->show();
+        instruments_mysl[i]->setParent(mysl);
     }
 
     mix_instruments();
 
     for(int i=0; i<8; i++)
     {
-        x[i] = coordinates.at(value_i[i]).at(0);   // Расставляем серые овощи на поле
+        x[i] = coordinates.at(value_i[i]).at(0);   // Расставляем инструмент
         y[i] = coordinates.at(value_i[i]).at(1);
         instruments[i]->move(x[i],y[i]);
     }
+
+    mysl_deda(STEP_NUMBER);
 }
 
 // ---------------- Перемешаем список нумерации инструмента --------------------------
@@ -147,14 +174,72 @@ void Level_02::mix_instruments()
 {
     int temp = 0;
     int k = 0;
-    value_i = {0,1,2,3,4,5,6,7};      // порядок овощей
+    value_i = {0,1,2,3,4,5,6,7};        // порядок инструмента
+    value_m = {0,1,2,3,4,5,6,7};        // порядок очередности инструмента в мысли
+
     for(int i=0; i<8; i++)
     {
         k = rnd(0,7);
         temp = value_i[k];
-        value_i[k] = value_i[i];        // Перемешиваем список овощей
+        value_i[k] = value_i[i];        // Перемешиваем список инструмента
         value_i[i] = temp;
     }
+
+    for(int i=0; i<8; i++)              // Определяем порядок появления инструмента в мысли
+    {
+        k = rnd(0,7);
+        temp = value_m[k];
+        value_m[k] = value_m[i];
+        value_m[i] = temp;
+    }
+}
+
+// --------------------- Отображаем о чем думает дед ----------------------
+
+void Level_02::mysl_deda(int step)
+{
+    instruments_mysl[value_m[step]]->move(mysl->width()/4, mysl->height()/4);
+    instruments_mysl[value_m[step]]->show();
+}
+
+// --------------------- Кликаем по предмету --------------------------------
+
+void Level_02::mousePressEvent(QMouseEvent *pe)
+{
+    if((pe->x() >= instruments[value_m[STEP_NUMBER]]->x())&&
+        (pe->x() <= instruments[value_m[STEP_NUMBER]]->x()+instruments[value_m[STEP_NUMBER]]->width())&&
+        (pe->y() >= instruments[value_m[STEP_NUMBER]]->y())&&
+        (pe->y() <= instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height()))
+    {
+        if(STEP_NUMBER == 7)
+        {
+            instruments[value_m[7]]->move(100,100);     // Победа
+            instruments_mysl[value_m[7]]->hide();
+            victory();
+            return;
+        }
+        else
+        {
+            instruments_mysl[value_m[STEP_NUMBER]]->hide();
+            instruments[value_m[STEP_NUMBER]]->resize_object(cell->height(), cell->height());
+            instruments[value_m[STEP_NUMBER]]->move(cell->x(), cell->y());
+            sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
+            sound->play();
+            STEP_NUMBER++;
+            mysl_deda(STEP_NUMBER);
+        }
+    } else
+    {
+        sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
+        sound->play();
+    }
+}
+
+// ---------------------- Победа -----------------------------------
+
+void Level_02::victory()
+{
+    exit(87);
 }
 
 // -------------------- Возврат на 1 уровень -------------------------------

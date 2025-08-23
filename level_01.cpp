@@ -14,20 +14,26 @@ Level_01::Level_01(QWidget *parent)
 Level_01::~Level_01()
 {
     delete sound;
+    sound = nullptr;
     delete output;
+    output = nullptr;
     delete timer_bird;
+    timer_bird = nullptr;
     delete bird;
+    bird = nullptr;
     for(int i=0; i==8; i++)
     {
         delete vegetable[i];
-    }
-    for(int i=0; i==8; i++)
-    {
+        vegetable[i] = nullptr;
         delete vegetable_gray[i];
+        vegetable_gray[i] = nullptr;
     }
     delete button_next;
+    button_next = nullptr;
     delete button_back;
+    button_back = nullptr;
     delete background_lev01;
+    background_lev01 = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------

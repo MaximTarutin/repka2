@@ -5,6 +5,8 @@
 #include <QObject>
 #include <QLabel>
 #include <QPushButton>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "picobject.h"
 
 class Level_02 : public QMainWindow
@@ -28,17 +30,27 @@ private:
     int HEIGHT_SCREEN = 0;
     int x[8] = {};                                          // Координаты инструментов
     int y[8] = {};
+    int STEP_NUMBER = 0;                                    // номер хода игрока
 
     int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
     void mix_instruments();                                 // перемешать список нумерации инструмента
+    void mysl_deda(int step);                               // О чем думает дед, отображаем в мысли
+    void victory();
 
     QLabel      *background_lev02 = nullptr;                // Фон уровня    
     PicObject   *instruments[8] = {};                       // Инструменты
+    PicObject   *instruments_mysl[8] = {};                  // Инструменты в мысли
     PicObject   *dedka = nullptr;                           // Дедка
     PicObject   *mysl = nullptr;                            // Мысль дедки
     PicObject   *cell = nullptr;                            // Ячейка, куда складывается инструмент
     QList<QList<int>>  coordinates = {};                    // Координаты инструмента
     QList<int> value_i = {};                                // список нумерации инструмента
+    QList<int> value_m = {};                                // список нумерации инструмента в мысли
+    QMediaPlayer    *sound = nullptr;                       // звуки
+    QAudioOutput    *output = nullptr;                      // аудиовыход
+
+protected:
+    virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
 
 signals:
 };
