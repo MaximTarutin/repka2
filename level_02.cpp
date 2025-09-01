@@ -128,7 +128,7 @@ void Level_02::initial()
     instruments_mysl[1] = new PicObject(":/resource/lev_02/leyka.png", this);
     instruments_mysl[1]->resize_object(WIDTH_SCREEN/17, HEIGHT_SCREEN/14);
     instruments_mysl[2] = new PicObject(":/resource/lev_02/lopata.png", this);
-    instruments_mysl[2]->resize_object(WIDTH_SCREEN/14, HEIGHT_SCREEN/10);
+    instruments_mysl[2]->resize_object(WIDTH_SCREEN/14, HEIGHT_SCREEN/12);
     instruments_mysl[3] = new PicObject(":/resource/lev_02/molotok.png", this);
     instruments_mysl[3]->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/16);
     instruments_mysl[4] = new PicObject(":/resource/lev_02/serp.png", this);
@@ -138,7 +138,7 @@ void Level_02::initial()
     instruments_mysl[6] = new PicObject(":/resource/lev_02/vedro.png", this);
     instruments_mysl[6]->resize_object(WIDTH_SCREEN/26, HEIGHT_SCREEN/12);
     instruments_mysl[7] = new PicObject(":/resource/lev_02/vily.png", this);
-    instruments_mysl[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/8);
+    instruments_mysl[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
 
 
     coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/8 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/5);
@@ -206,6 +206,8 @@ void Level_02::mysl_deda(int step)
 
 void Level_02::mousePressEvent(QMouseEvent *pe)
 {
+    static int step = cell->width()/50;  // расстояние между инструментами расставленных в ячейке
+
     if((pe->x() >= instruments[value_m[STEP_NUMBER]]->x())&&
         (pe->x() <= instruments[value_m[STEP_NUMBER]]->x()+instruments[value_m[STEP_NUMBER]]->width())&&
         (pe->y() >= instruments[value_m[STEP_NUMBER]]->y())&&
@@ -213,16 +215,17 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
     {
         if(STEP_NUMBER == 7)
         {
-            instruments[value_m[7]]->move(100,100);     // Победа
+            instruments[value_m[7]]->move(cell->x()+step, cell->y()+cell->height()/20);     // Победа
             instruments_mysl[value_m[7]]->hide();
             victory();
-            return;
         }
         else
         {
             instruments_mysl[value_m[STEP_NUMBER]]->hide();
-            instruments[value_m[STEP_NUMBER]]->resize_object(cell->height(), cell->height());
-            instruments[value_m[STEP_NUMBER]]->move(cell->x(), cell->y());
+            instruments[value_m[STEP_NUMBER]]->resize_object(instruments_mysl[value_m[STEP_NUMBER]]->width(),
+                                                             instruments_mysl[value_m[STEP_NUMBER]]->height());
+            instruments[value_m[STEP_NUMBER]]->move(cell->x()+step, cell->y()+cell->height()/10);
+            step+=instruments_mysl[value_m[STEP_NUMBER]]->width()+cell->width()/50;
             sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
             sound->play();
             STEP_NUMBER++;
@@ -239,7 +242,9 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
 
 void Level_02::victory()
 {
-    exit(87);
+    firework = new PicObject(":/resource/lev_02/salut.gif", this);
+    firework->show();
+    firework->animation_start(WIDTH_SCREEN/2, HEIGHT_SCREEN/2);
 }
 
 // -------------------- Возврат на 1 уровень -------------------------------

@@ -43,6 +43,7 @@ private:
     PicObject   *dedka = nullptr;                           // Дедка
     PicObject   *mysl = nullptr;                            // Мысль дедки
     PicObject   *cell = nullptr;                            // Ячейка, куда складывается инструмент
+    PicObject   *firework = nullptr;                        // Анимация феерверка при победе
     QList<QList<int>>  coordinates = {};                    // Координаты инструмента
     QList<int> value_i = {};                                // список нумерации инструмента
     QList<int> value_m = {};                                // список нумерации инструмента в мысли
