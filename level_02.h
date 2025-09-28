@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QTimer>
 #include "picobject.h"
 
 class Level_02 : public QMainWindow
@@ -16,7 +17,6 @@ public:
     explicit Level_02(QWidget *parent = nullptr);
     ~Level_02();
 
-    QPushButton     *button_next = nullptr;                 // Кнопка следующий уровень
     QPushButton     *button_back = nullptr;                 // Кнопка назад
 
 public slots:
@@ -49,11 +49,13 @@ private:
     QList<int> value_m = {};                                // список нумерации инструмента в мысли
     QMediaPlayer    *sound = nullptr;                       // звуки
     QAudioOutput    *output = nullptr;                      // аудиовыход
+    QTimer       *timer_firework = nullptr;                 // Таймер салюта
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
 
 signals:
+    void next_level();                                      // сигнал следующий уровень
 };
 
 #endif // LEVEL_02_H

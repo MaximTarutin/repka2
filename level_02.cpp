@@ -14,8 +14,6 @@ Level_02::Level_02(QWidget *parent)
 
 Level_02::~Level_02()
 {
-    delete button_next;
-    button_next = nullptr;
     delete button_back;
     button_back = nullptr;
     delete background_lev02;
@@ -85,12 +83,6 @@ void Level_02::initial()
     button_back->move(WIDTH_SCREEN/30, HEIGHT_SCREEN/20);
     button_back->show();
 
-    button_next = new QPushButton(this);
-    button_next->setStyleSheet("border-image: url(:/resource/lev_01/next.png);");
-    button_next->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
-    button_next->move(WIDTH_SCREEN-WIDTH_SCREEN/12, HEIGHT_SCREEN/20);
-    button_next->hide();
-
     dedka = new PicObject(":/resource/lev_02/dedka.png", this);
     dedka->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/3);
     dedka->move(0,HEIGHT_SCREEN-dedka->height());
@@ -140,6 +132,11 @@ void Level_02::initial()
     instruments_mysl[7] = new PicObject(":/resource/lev_02/vily.png", this);
     instruments_mysl[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
 
+    for(int i=0; i<8; i++)
+    {
+        instruments[i]->hide();
+        instruments_mysl[i]->hide();
+    }
 
     coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/8 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/5);
     coordinates.append(QList<int>() << WIDTH_SCREEN/3 << HEIGHT_SCREEN-HEIGHT_SCREEN/6);
@@ -217,6 +214,8 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
         {
             instruments[value_m[7]]->move(cell->x()+step, cell->y()+cell->height()/20);     // Победа
             instruments_mysl[value_m[7]]->hide();
+            instruments[value_m[STEP_NUMBER]]->resize_object(instruments_mysl[value_m[7]]->width(),
+                                                             instruments_mysl[value_m[7]]->height());
             victory();
         }
         else
@@ -224,7 +223,8 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
             instruments_mysl[value_m[STEP_NUMBER]]->hide();
             instruments[value_m[STEP_NUMBER]]->resize_object(instruments_mysl[value_m[STEP_NUMBER]]->width(),
                                                              instruments_mysl[value_m[STEP_NUMBER]]->height());
-            instruments[value_m[STEP_NUMBER]]->move(cell->x()+step, cell->y()+cell->height()/10);
+            instruments[value_m[STEP_NUMBER]]->move_to_xy(instruments[value_m[STEP_NUMBER]]->x(), cell->x()+step,
+                                                          instruments[value_m[STEP_NUMBER]]->y(), cell->y()+cell->height()/10, 1);
             step+=instruments_mysl[value_m[STEP_NUMBER]]->width()+cell->width()/50;
             sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
             sound->play();
@@ -242,6 +242,11 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
 
 void Level_02::victory()
 {
+    sound->setSource(QUrl("qrc:/resource/sound/salut.mp3"));
+    sound->play();
+    timer_firework = new QTimer(this);
+    timer_firework->start(11000);
+    connect(timer_firework, &QTimer::timeout, this, [this](){this->close();emit next_level();});
     firework = new PicObject(":/resource/lev_02/salut.gif", this);
     firework->show();
     firework->animation_start(WIDTH_SCREEN/2, HEIGHT_SCREEN/2);

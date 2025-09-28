@@ -84,7 +84,6 @@ void MainWindow::exit_of_game()
 
 void MainWindow::start_level()
 {
-    CURRENT_LEVEL=2;
     this->hide();
     switch(CURRENT_LEVEL)
     {
@@ -109,12 +108,20 @@ void MainWindow::start_level()
             lev_02 = new Level_02();
             connect(this, &MainWindow::width_scr, lev_02, &Level_02::get_width);
             connect(this, &MainWindow::height_scr, lev_02, &Level_02::get_height);
+            connect(lev_02, &Level_02::next_level, this, [this](){
+                CURRENT_LEVEL=3; lev_01->show();                                        // Если ловим сигнал, прибавляем номер уровня
+                connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
+                    CURRENT_LEVEL=3; start_level();});});           // при победе 2 уровня кнопка button_next перейдет на 3 уровень
+
             screen_size();
+            lev_02->initial();
         }
         lev_02->showFullScreen();
-        lev_02->initial();
         connect(lev_02->button_back, &QPushButton::clicked, this, [this](){
                 lev_02->back_level(); lev_01->showFullScreen();});
+
+        break;
+    case 3: exit(3);
         break;
     }
 }

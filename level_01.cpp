@@ -365,13 +365,23 @@ void Level_01::victory()
 
     delete warehouse;
     warehouse = nullptr;
+    view_rdbvgkm(1);
 
-    repka = new PicObject(":/resource/lev_01/repka.png", this);
-    repka->show();
-    repka->move(WIDTH_SCREEN/25, HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
-    repka->resize_object(WIDTH_SCREEN/10*2, HEIGHT_SCREEN/4*2);
-    LEVEL_END = true;
-    emit next_level();
-    button_next->show();
 }
 
+// ----------------------- Вырисовываем цепочку Р-Д-Б-В-Ж-К-М ----------------------------------
+
+void Level_01::view_rdbvgkm(int current_level)
+{
+    switch(current_level)
+    {
+    case 1:
+        repka = new PicObject(":/resource/lev_01/repka.png", this);
+        repka->show();
+        repka->move(WIDTH_SCREEN/25, HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
+        repka->resize_object(WIDTH_SCREEN/10*2, HEIGHT_SCREEN/4*2);
+        LEVEL_END = true;
+        button_next->show();
+        break;
+    }
+}
