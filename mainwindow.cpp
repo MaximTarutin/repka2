@@ -112,7 +112,8 @@ void MainWindow::start_level()
             connect(lev_02, &Level_02::next_level, this, [this](){
                 CURRENT_LEVEL=3; lev_01->show();                                    // Если ловим сигнал, прибавляем номер уровня
                 connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
-                    CURRENT_LEVEL=3; delete lev_02; start_level();});});            // при победе 2 уровня кнопка button_next перейдет
+                    CURRENT_LEVEL=3; delete lev_02; lev_02 = nullptr;
+                    start_level();});});                                            // при победе 2 уровня кнопка button_next перейдет
                                                                                     // на 3 уровень
 
             screen_size();

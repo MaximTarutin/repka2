@@ -35,8 +35,8 @@ Level_02::~Level_02()
     sound = nullptr;
     delete output;
     output = nullptr;
-    delete spider;
-    spider = nullptr;
+    delete timer_spider;
+    timer_spider = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -165,6 +165,7 @@ void Level_02::initial()
     }
 
     mysl_deda(STEP_NUMBER);
+    animation_level();
 }
 
 // ---------------- Перемешаем список нумерации инструмента --------------------------
@@ -261,6 +262,18 @@ void Level_02::back_level()
     this->close();
 }
 
+// -------------------- Анимация на уровне ----------------------------------
+
+void Level_02::animation_level()
+{
+    qDebug() << "1234567890-1234567890123456789";
+     spider = new PicObject(":/resource/lev_02/spider.gif", this);
+     spider->animation_start(WIDTH_SCREEN/20, HEIGHT_SCREEN/3);
+     spider->move(WIDTH_SCREEN/2+WIDTH_SCREEN/6, HEIGHT_SCREEN/2-HEIGHT_SCREEN/3);
+     spider->show();
+     spider->raise();
+
+}
 
 
 
