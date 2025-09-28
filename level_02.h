@@ -50,6 +50,7 @@ private:
     QMediaPlayer    *sound = nullptr;                       // звуки
     QAudioOutput    *output = nullptr;                      // аудиовыход
     QTimer       *timer_firework = nullptr;                 // Таймер салюта
+    QTimer       *spider = nullptr;
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки

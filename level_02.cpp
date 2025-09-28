@@ -35,6 +35,8 @@ Level_02::~Level_02()
     sound = nullptr;
     delete output;
     output = nullptr;
+    delete spider;
+    spider = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -205,10 +207,10 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
 {
     static int step = cell->width()/50;  // расстояние между инструментами расставленных в ячейке
 
-    if((pe->x() >= instruments[value_m[STEP_NUMBER]]->x())&&
-        (pe->x() <= instruments[value_m[STEP_NUMBER]]->x()+instruments[value_m[STEP_NUMBER]]->width())&&
-        (pe->y() >= instruments[value_m[STEP_NUMBER]]->y())&&
-        (pe->y() <= instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height()))
+    if((pe->position().x() >= instruments[value_m[STEP_NUMBER]]->x())&&
+        (pe->position().x() <= instruments[value_m[STEP_NUMBER]]->x()+instruments[value_m[STEP_NUMBER]]->width())&&
+        (pe->position().y() >= instruments[value_m[STEP_NUMBER]]->y())&&
+        (pe->position().y() <= instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height()))
     {
         if(STEP_NUMBER == 7)
         {
