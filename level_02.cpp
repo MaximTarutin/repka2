@@ -37,6 +37,12 @@ Level_02::~Level_02()
     output = nullptr;
     delete timer_spider;
     timer_spider = nullptr;
+    delete spider;
+    spider = nullptr;
+    delete tarakan;
+    tarakan = nullptr;
+    delete timer_tarakan;
+    timer_tarakan = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -266,13 +272,38 @@ void Level_02::back_level()
 
 void Level_02::animation_level()
 {
-    qDebug() << "1234567890-1234567890123456789";
+     timer_tarakan = new QTimer(this);
+
      spider = new PicObject(":/resource/lev_02/spider.gif", this);
      spider->animation_start(WIDTH_SCREEN/20, HEIGHT_SCREEN/3);
-     spider->move(WIDTH_SCREEN/2+WIDTH_SCREEN/6, HEIGHT_SCREEN/2-HEIGHT_SCREEN/3);
+     //spider->move(WIDTH_SCREEN/2+WIDTH_SCREEN/6, HEIGHT_SCREEN/2-HEIGHT_SCREEN/3);
+     spider->move(rnd(WIDTH_SCREEN/2-WIDTH_SCREEN/3, WIDTH_SCREEN-WIDTH_SCREEN/20),HEIGHT_SCREEN/2-HEIGHT_SCREEN/3);
      spider->show();
      spider->raise();
 
+     tarakan = new PicObject(":/resource/lev_02/tarakan.gif", this);
+     tarakan->animation_start(WIDTH_SCREEN/15, HEIGHT_SCREEN/10);
+     tarakan->move_to_x(WIDTH_SCREEN/6, WIDTH_SCREEN-WIDTH_SCREEN/6, HEIGHT_SCREEN-HEIGHT_SCREEN/10, 40);
+     tarakan->show();
+     tarakan->raise();
+
+     connect(tarakan, &PicObject::move_end, this, [this](){tarakan->hide(); timer_tarakan->start(100);});
+     connect(timer_tarakan, &QTimer::timeout, this, &Level_02::run_tarakan);
+}
+
+// ------------------------ Бег таракана ---------------------------------------
+
+void Level_02::run_tarakan()
+{
+    int i = rnd(0,150);
+    int j = rnd(0,150);
+    if(i==j)
+    {
+        tarakan->move_to_x(WIDTH_SCREEN/6, WIDTH_SCREEN-WIDTH_SCREEN/6, HEIGHT_SCREEN-HEIGHT_SCREEN/10, 40);
+        tarakan->show();
+        tarakan->raise();
+        timer_tarakan->stop();
+    }
 }
 
 

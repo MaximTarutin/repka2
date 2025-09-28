@@ -37,6 +37,7 @@ private:
     void mysl_deda(int step);                               // О чем думает дед, отображаем в мысли
     void victory();                                         // Победа
     void animation_level();                                 // Анимация на уровне
+    void run_tarakan();                                     // бег таракана
 
     QLabel      *background_lev02 = nullptr;                // Фон уровня    
     PicObject   *instruments[8] = {};                       // Инструменты
@@ -46,6 +47,7 @@ private:
     PicObject   *cell = nullptr;                            // Ячейка, куда складывается инструмент
     PicObject   *firework = nullptr;                        // Анимация феерверка при победе
     PicObject   *spider = nullptr;                          // Анимация паука
+    PicObject   *tarakan = nullptr;                         // Анимация таракана
     QList<QList<int>>  coordinates = {};                    // Координаты инструмента
     QList<int> value_i = {};                                // список нумерации инструмента
     QList<int> value_m = {};                                // список нумерации инструмента в мысли
@@ -53,6 +55,7 @@ private:
     QAudioOutput    *output = nullptr;                      // аудиовыход
     QTimer       *timer_firework = nullptr;                 // Таймер салюта
     QTimer       *timer_spider = nullptr;                   // Таймер паука
+    QTimer       *timer_tarakan = nullptr;                  // Таймер таракана
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
