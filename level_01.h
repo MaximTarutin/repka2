@@ -47,6 +47,7 @@ private:
     PicObject       *bird = nullptr;                        // летающая птица анимация
     PicObject       *help = nullptr;                        // подсказка
     PicObject       *repka = nullptr;                       // репка
+    PicObject       *dedka = nullptr;                       // дедка
     QTimer          *timer_bird = nullptr;                  // таймер частоты полета птицы
     QMediaPlayer    *sound = nullptr;                       // звук "ага" или "noo"
     QAudioOutput    *output = nullptr;                      // аудиовыход

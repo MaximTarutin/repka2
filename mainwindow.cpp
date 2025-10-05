@@ -102,6 +102,9 @@ void MainWindow::start_level()
                 lev_01->back_level(); this->showFullScreen();});
         connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
             lev_01->close(); CURRENT_LEVEL=2; start_level();});
+
+        //lev_01->view_rdbvgkm(1); lev_01->view_rdbvgkm(2);
+
         break;
     case 2:
         if(lev_02==(void*)0)
@@ -110,7 +113,7 @@ void MainWindow::start_level()
             connect(this, &MainWindow::width_scr, lev_02, &Level_02::get_width);
             connect(this, &MainWindow::height_scr, lev_02, &Level_02::get_height);
             connect(lev_02, &Level_02::next_level, this, [this](){
-                CURRENT_LEVEL=3; lev_01->show();                                    // Если ловим сигнал, прибавляем номер уровня
+                CURRENT_LEVEL=3; lev_01->show(); lev_01->view_rdbvgkm(2);           // Если ловим сигнал, прибавляем номер уровня
                 connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
                     CURRENT_LEVEL=3; delete lev_02; lev_02 = nullptr;
                     start_level();});});                                            // при победе 2 уровня кнопка button_next перейдет

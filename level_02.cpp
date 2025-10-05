@@ -43,6 +43,10 @@ Level_02::~Level_02()
     tarakan = nullptr;
     delete timer_tarakan;
     timer_tarakan = nullptr;
+    delete timer_hand;
+    timer_hand = nullptr;
+    delete hand;
+    hand = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -172,6 +176,15 @@ void Level_02::initial()
 
     mysl_deda(STEP_NUMBER);
     animation_level();
+
+    hand = new PicObject(":/resource/lev_01/ruka.png", this);
+    hand->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
+    hand->show();
+
+    timer_hand = new QTimer(this);
+    timer_hand->start(3);
+
+    connect(timer_hand, &QTimer::timeout, this, &Level_02::help);
 }
 
 // ---------------- Перемешаем список нумерации инструмента --------------------------
@@ -208,10 +221,38 @@ void Level_02::mysl_deda(int step)
     instruments_mysl[value_m[step]]->show();
 }
 
+// ---------------------- Подсказка на первом шаге --------------------------
+
+void Level_02::help()
+{
+    static int k=0;
+    static int y=instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height();
+    static int x=instruments[value_m[STEP_NUMBER]]->x();
+    hand->move(x, y);
+    if(k==0)
+    {
+        y--;
+        if(y<=instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height()) k=1;
+    } else
+    {
+        y++;
+        if(y>=instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height()+100) k=0;
+    }
+}
+
 // --------------------- Кликаем по предмету --------------------------------
 
 void Level_02::mousePressEvent(QMouseEvent *pe)
 {
+    if(hand)
+    {
+        timer_hand->stop();
+        delete timer_hand;
+        timer_hand = nullptr;
+        delete hand;
+        hand = nullptr;
+    }
+
     static int step = cell->width()/50;  // расстояние между инструментами расставленных в ячейке
 
     if((pe->position().x() >= instruments[value_m[STEP_NUMBER]]->x())&&
@@ -276,7 +317,6 @@ void Level_02::animation_level()
 
      spider = new PicObject(":/resource/lev_02/spider.gif", this);
      spider->animation_start(WIDTH_SCREEN/20, HEIGHT_SCREEN/3);
-     //spider->move(WIDTH_SCREEN/2+WIDTH_SCREEN/6, HEIGHT_SCREEN/2-HEIGHT_SCREEN/3);
      spider->move(rnd(WIDTH_SCREEN/2-WIDTH_SCREEN/3, WIDTH_SCREEN-WIDTH_SCREEN/20),HEIGHT_SCREEN/2-HEIGHT_SCREEN/3);
      spider->show();
      spider->raise();

@@ -34,6 +34,8 @@ Level_01::~Level_01()
     button_back = nullptr;
     delete background_lev01;
     background_lev01 = nullptr;
+    delete dedka;
+    dedka = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -358,7 +360,9 @@ void Level_01::victory()
                 y1 = rnd(HEIGHT_SCREEN, HEIGHT_SCREEN*2);
             break;
         }
-        vegetable[i]->move_to_xy(x,x1,y,y1,0,4);
+        vegetable[i]->move_to_xy(x,x1,y,y1,2,4);
+        sound->setSource(QUrl("qrc:/resource/sound/repka.wav"));
+        sound->play();
         delete vegetable_gray[i];
         vegetable_gray[i] = nullptr;
     }
@@ -383,5 +387,12 @@ void Level_01::view_rdbvgkm(int current_level)
         LEVEL_END = true;
         button_next->show();
         break;
+    case 2:
+        dedka = new PicObject(":/resource/lev_01/dedka.png", this);
+        dedka->show();
+        dedka->move(repka->x()+repka->width(), HEIGHT_SCREEN/2);
+        dedka->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/2);
+        break;
     }
+
 }

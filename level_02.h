@@ -24,6 +24,7 @@ public slots:
     void get_width(int w);                                  // Получаем WIDTH_SCREEN
     void get_height(int h);                                 // Получаем HEIGHT_SCREEN
     void back_level();                                      // возвращаемся на 1 уровень
+    void help();                                            // подсказка
 
 private:
     int WIDTH_SCREEN = 0;                                   // Разрешение экрана
@@ -48,6 +49,8 @@ private:
     PicObject   *firework = nullptr;                        // Анимация феерверка при победе
     PicObject   *spider = nullptr;                          // Анимация паука
     PicObject   *tarakan = nullptr;                         // Анимация таракана
+    PicObject   *hand = nullptr;                            // Рука-подсказка
+
     QList<QList<int>>  coordinates = {};                    // Координаты инструмента
     QList<int> value_i = {};                                // список нумерации инструмента
     QList<int> value_m = {};                                // список нумерации инструмента в мысли
@@ -55,7 +58,8 @@ private:
     QAudioOutput    *output = nullptr;                      // аудиовыход
     QTimer       *timer_firework = nullptr;                 // Таймер салюта
     QTimer       *timer_spider = nullptr;                   // Таймер паука
-    QTimer       *timer_tarakan = nullptr;                  // Таймер таракана
+    QTimer       *timer_tarakan = nullptr;                  // Таймер таракан
+    QTimer       *timer_hand = nullptr;                     // Таймер подсказки
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
