@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     level_01.cpp \
     level_02.cpp \
+    level_03.cpp \
     main.cpp \
     mainwindow.cpp \
     picobject.cpp
@@ -18,6 +19,7 @@ SOURCES += \
 HEADERS += \
     level_01.h \
     level_02.h \
+    level_03.h \
     mainwindow.h \
     picobject.h
 
@@ -30,6 +32,7 @@ RESOURCES += \
     res.qrc \
     res1.qrc \
     res2.qrc \
+    res3.qrc \
     res_sound.qrc
 
 DISTFILES += \

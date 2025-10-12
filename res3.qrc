@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resource/lev_03/babka.png</file>
+        <file>resource/lev_03/egs.png</file>
+        <file>resource/lev_03/kolobok.png</file>
+        <file>resource/lev_03/level_3.jpg</file>
+        <file>resource/lev_03/milk.png</file>
+        <file>resource/lev_03/muka.png</file>
+        <file>resource/lev_03/oil.png</file>
+        <file>resource/lev_03/pechka.png</file>
+        <file>resource/lev_03/sol.png</file>
+        <file>resource/lev_03/stol.png</file>
+        <file>resource/lev_03/tazik-01.png</file>
+        <file>resource/lev_03/tazik-02.png</file>
+        <file>resource/lev_03/tazik-03.png</file>
+        <file>resource/lev_03/tazik-04.png</file>
+        <file>resource/lev_03/tazik-05.png</file>
+        <file>resource/lev_03/tazik-06.png</file>
+        <file>resource/lev_03/venchik.png</file>
+    </qresource>
+</RCC>
