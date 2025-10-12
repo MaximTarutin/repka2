@@ -41,6 +41,7 @@ void MainWindow::screen_size()
     HEIGHT_SCREEN = QGuiApplication::primaryScreen()->geometry().height();
     emit width_scr(WIDTH_SCREEN);
     emit height_scr(HEIGHT_SCREEN);
+    //qDebug() << WIDTH_SCREEN << HEIGHT_SCREEN;
 }
 
 // ---------------------- Инициализация --------------------------------------
@@ -102,9 +103,6 @@ void MainWindow::start_level()
                 lev_01->back_level(); this->showFullScreen();});
         connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
             lev_01->close(); CURRENT_LEVEL=2; start_level();});
-
-        //lev_01->view_rdbvgkm(1); lev_01->view_rdbvgkm(2);
-
         break;
     case 2:
         if(lev_02==(void*)0)
@@ -115,7 +113,7 @@ void MainWindow::start_level()
             connect(lev_02, &Level_02::next_level, this, [this](){
                 CURRENT_LEVEL=3; lev_01->show(); lev_01->view_rdbvgkm(2);           // Если ловим сигнал, прибавляем номер уровня
                 connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
-                    CURRENT_LEVEL=3; delete lev_02; lev_02 = nullptr;
+                    CURRENT_LEVEL=3; delete lev_02; lev_02 = nullptr;               // Объект lev_02 уничтожается
                     start_level();});});                                            // при победе 2 уровня кнопка button_next перейдет
                                                                                     // на 3 уровень
 
@@ -127,7 +125,16 @@ void MainWindow::start_level()
                 lev_02->back_level(); lev_01->showFullScreen();});
 
         break;
-    case 3: exit(3);
+    case 3:
+        if(lev_03==(void*)0)
+        {
+            lev_03 = new Level_03();
+            connect(this, &MainWindow::width_scr, lev_03, &Level_03::get_width);
+            connect(this, &MainWindow::height_scr, lev_03, &Level_03::get_height);
+            screen_size();
+            lev_03->initial();
+        }
+        lev_03->showFullScreen();
         break;
     }
 }

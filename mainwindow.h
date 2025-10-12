@@ -11,6 +11,7 @@
 #include <QAudioOutput>
 #include "level_01.h"
 #include "level_02.h"
+#include "level_03.h"
 
 class MainWindow : public QMainWindow
 {
@@ -33,10 +34,11 @@ private:
 
     Level_01            *lev_01 = nullptr;                          // первый уровень
     Level_02            *lev_02 = nullptr;                          // второй уровень
+    Level_03            *lev_03 = nullptr;                          // третий уровень
 
     int WIDTH_SCREEN = 0;                                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                                          // Высота экрана
-    int CURRENT_LEVEL = 1;                                          // Текущий уровень
+    int CURRENT_LEVEL = 3;                                          // Текущий уровень
 
     void screen_size();                                             // Получаем разрешение экрана и
                                                                     // определяем результаты в переменные

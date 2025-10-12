@@ -20,7 +20,7 @@ public:
     QPushButton     *button_back = nullptr;                 // Кнопка назад
 
 public slots:
-    void initial();             // Инициализация уровня
+    void initial();                                         // Инициализация уровня
     void get_width(int w);                                  // Получаем WIDTH_SCREEN
     void get_height(int h);                                 // Получаем HEIGHT_SCREEN
     void back_level();                                      // возвращаемся на 1 уровень
