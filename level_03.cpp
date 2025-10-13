@@ -29,6 +29,8 @@ Level_03::~Level_03()
     {
         delete tazik[i];
         tazik[i] = nullptr;
+        delete produkt[i];
+        produkt[i] = nullptr;
     }
 }
 
@@ -96,14 +98,32 @@ void Level_03::initial()
 
     for(int i=1; i<=5; i++)
     {
-        tazik[i]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/8);
-        tazik[i]->move(table->x()+table->width()/4,
+        tazik[i]->resize_object(WIDTH_SCREEN/16, HEIGHT_SCREEN/12);
+        tazik[i]->move(table->x()+table->width()/3,
                        table->y()-tazik[i]->height()/2-tazik[i]->height()/6);
         tazik[i]->hide();
     }
 
     produkt[0] = new PicObject(":/resource/lev_03/milk.png", this);
-    produkt[0]->resize_object(WIDTH_SCREEN/14, HEIGHT_SCREEN/10);
+    produkt[0]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt[1] = new PicObject(":/resource/lev_03/oil.png", this);
+    produkt[1]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt[2] = new PicObject(":/resource/lev_03/egs.png", this);
+    produkt[2]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/15);
+    produkt[3] = new PicObject(":/resource/lev_03/muka.png", this);
+    produkt[3]->resize_object(WIDTH_SCREEN/30, HEIGHT_SCREEN/15);
+    produkt[4] = new PicObject(":/resource/lev_03/sol.png", this);
+    produkt[4]->resize_object(WIDTH_SCREEN/50, HEIGHT_SCREEN/20);
+    produkt[5] = new PicObject(":/resource/lev_03/venchik.png", this);
+    produkt[5]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
 
+    // Составляем список координат где будут расположены предметы
+
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/8 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/60);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/5 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/60);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/3-WIDTH_SCREEN/13 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/5-HEIGHT_SCREEN/65);
+    coordinates.append(QList<int>() << WIDTH_SCREEN/6 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/4);
+    coordinates.append(QList<int>() << WIDTH_SCREEN-WIDTH_SCREEN/15 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/4);
 
 }
