@@ -69,6 +69,9 @@
  *--------------------------------------------------------------------------------------*
  *   void changig_angle();                                                              *
  *   - Сигнал изменения угла поворота объекта                                           *
+ *--------------------------------------------------------------------------------------*
+ *   void clicked(QMouseEvent *event);                                                  *
+ *   - Сигнал клика мышки по объекту
  ****************************************************************************************/
 
 
@@ -86,6 +89,7 @@
 #include <QEvent>
 #include <QPaintEvent>
 #include <QImage>
+#include <QMouseEvent>
 
 class PicObject : public QLabel
 {
@@ -131,6 +135,7 @@ signals:
     void changing_xy();                                     // Сигнал при изменении координат в методах move_to_...
     void changing_opacity_signal();                         // Сигнал при изменении прозрачности
     void changig_angle();                                   // Сигнал изменения угла поворота объектаСигнал окончания перемещения
+    void clicked(QMouseEvent *);                            // Сигнал по клику мышки по объекту
 
 
 private:
@@ -143,6 +148,9 @@ private:
     void move_to_x_temp();                                  // Временная функция перемещения по x
     void move_to_y_temp();                                  // Временная функция перемещения по y
     void move_to_xy_temp();                                 // Временная функция перемещения по xy
+
+protected:
+    void mousePressEvent (QMouseEvent *event);               // при нажатии кнопки мыши по объекту испускает сигнал clicked
 };
 
 #endif // PICOBJECT_H

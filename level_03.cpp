@@ -172,6 +172,8 @@ void Level_03::initial()
     produkt[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
     produkt[7]->hide();
 
+    //connect(produkt[1], &PicObject::clicked, this, [](){exit(86);});
+
     // Составляем список координат где будут расположены предметы
 
     coordinates.append(QList<int>() << 0 << 0);

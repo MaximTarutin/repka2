@@ -305,3 +305,8 @@ void PicObject::opacity(int opacity)
     setScaledContents(true); //------------------------------------------------------
     setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored ); //----------------------------------------
 }
+
+void PicObject::mousePressEvent(QMouseEvent *event)
+{
+    emit clicked(event);
+}
