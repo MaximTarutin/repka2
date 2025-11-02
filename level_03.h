@@ -7,6 +7,7 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include <QPushButton>
+#include <QMouseEvent>
 #include "picobject.h"
 
 class Level_03 : public QMainWindow
@@ -22,8 +23,15 @@ public slots:
     void get_height(int h);                     // Получаем HEIGHT_SCREEN
 
 private:
-    int     WIDTH_SCREEN = 0;                   // Ширина экрана
-    int     HEIGHT_SCREEN = 0;                  // Высота экрана
+    int WIDTH_SCREEN = 0;                       // Ширина экрана
+    int HEIGHT_SCREEN = 0;                      // Высота экрана
+    int NUMBER = 0;                             // Номер ингридиента в мыслях бабки
+    int x[6] = {};                              // Координаты продуктов
+    int y[6] = {};
+
+    int  rnd(int a, int b);                     // Случайные числа в диапазоне от a до b
+    void mix_ingridients();                     // перемешиваем список ингридиентов
+    void set_mysl();                            // показываем о чем думает бабка
 
     QLabel          *background = nullptr;      // Фон уровня
     QMediaPlayer    *sound = nullptr;           // Проигрыватель
@@ -32,13 +40,27 @@ private:
     PicObject       *table = nullptr;           // Стол
     PicObject       *babka = nullptr;           // Бабка
     PicObject       *mysl = nullptr;            // Мысль бабки
-    PicObject       *tazik[5] = {};             // Состояния тазика по мере наполняемости продуктами
-    PicObject       *produkt[5] = {};           // Продукты
-    PicObject       *produkt_mysl[5] = {};      // Продукты в мысли
+    PicObject       *tazik[6] = {};             // Состояния тазика по мере наполняемости продуктами
+    PicObject       *kolobok = nullptr;         // Колобок
+    PicObject       *produkt[8] = {};           // Продукты
+    PicObject       *produkt_mysl[8] = {};      // Продукты в мысли:
+                                                // 0 - тазик
+                                                // 1 - молоко
+                                                // 2 - масло
+                                                // 3 - яйца
+                                                // 4 - мука
+                                                // 5 - соль
+                                                // 6 - венчик
+                                                // 7 - колобок
 
-    QList<QList<int>>  coordinates = {};        // Координаты инструмента (список в списке - [[a,b],[a,b],...,[a,b]])
+    QList<QList<int>>  coordinates = {};        // Список координаты продуктов (список в списке - [[a,b],[a,b],...,[a,b]])
     QList<int>  produkt_value = {};             // Список нумерации продукты
     QList<int>  produkt_mysl_value = {};        // Список нумерации продукты в мысли
+
+protected:
+    virtual void MousePressEvent(QMouseEvent *pe);
+    virtual void MouseMoveEvent(QMouseEvent *pe);
+    virtual void MouseReleaseEvent(QMouseEvent *pe);
 
 signals:
 };

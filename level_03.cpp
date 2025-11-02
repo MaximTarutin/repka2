@@ -25,13 +25,30 @@ Level_03::~Level_03()
     mysl = nullptr;
     delete babka;
     babka = nullptr;
-    for(int i=0; i<5; i++)
+    delete kolobok;
+    kolobok = nullptr;
+    for(int i=0; i<=5; i++)
     {
         delete tazik[i];
-        tazik[i] = nullptr;
+        tazik[i] = nullptr;        
+    }
+    for(int i=0; i<=7; i++)
+    {
+        delete produkt_mysl[i];
+        produkt_mysl[i] = nullptr;
         delete produkt[i];
         produkt[i] = nullptr;
     }
+}
+
+//------------------ генератор случайных чисел в диапазоне от a до b -----------------------
+
+int Level_03::rnd(int a, int b)
+{
+    int k;
+    b=b-a+1;
+    k   =   rand()%b+a;
+    return k;
 }
 
 // ------------------ Получаем ширину и высоту экрана ----------------------
@@ -51,6 +68,9 @@ void Level_03::get_height(int h)
 
 void Level_03::initial()
 {
+    produkt_value = {0,1,2,3,4,5,6,7};
+    produkt_mysl_value = {0,1,2,3,4,5,6,7};
+
     background = new QLabel(this);
     background->setStyleSheet("border-image: url(:/resource/lev_03/level_3.jpg);");
     this->setCentralWidget(background);
@@ -85,6 +105,10 @@ void Level_03::initial()
     mysl->move(babka->x()+babka->width()/2, babka->y()-mysl->height());
     mysl->show();
 
+    kolobok = new PicObject(":/resource/lev_03/kolobok.png", this);
+    kolobok->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
+    kolobok->hide();
+
     tazik[0] = new PicObject(":/resource/lev_03/tazik-01.png", this);       // Пустой тазик
     tazik[1] = new PicObject(":/resource/lev_03/tazik-02.png", this);       // Тазик с молоком
     tazik[2] = new PicObject(":/resource/lev_03/tazik-03.png", this);       // Тазик добавили масло
@@ -92,11 +116,7 @@ void Level_03::initial()
     tazik[4] = new PicObject(":/resource/lev_03/tazik-05.png", this);       // Тазик добавили муку и соль
     tazik[5] = new PicObject(":/resource/lev_03/tazik-06.png", this);       // тазик со взбитым тестом
 
-    tazik[0]->resize_object(WIDTH_SCREEN/16, HEIGHT_SCREEN/12);
-    tazik[0]->move(WIDTH_SCREEN/30, HEIGHT_SCREEN-HEIGHT_SCREEN/3+HEIGHT_SCREEN/10);
-    tazik[0]->show();
-
-    for(int i=1; i<=5; i++)
+    for(int i=0; i<=5; i++)
     {
         tazik[i]->resize_object(WIDTH_SCREEN/16, HEIGHT_SCREEN/12);
         tazik[i]->move(table->x()+table->width()/3,
@@ -104,26 +124,124 @@ void Level_03::initial()
         tazik[i]->hide();
     }
 
-    produkt[0] = new PicObject(":/resource/lev_03/milk.png", this);
-    produkt[0]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
-    produkt[1] = new PicObject(":/resource/lev_03/oil.png", this);
+    // ингридиенты о чем думает бабка
+
+    produkt_mysl[0] = new PicObject(":/resource/lev_03/tazik-01.png", mysl);
+    produkt_mysl[0]->resize_object(WIDTH_SCREEN/16, HEIGHT_SCREEN/12);
+    produkt_mysl[1] = new PicObject(":/resource/lev_03/milk.png", mysl);
+    produkt_mysl[1]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt_mysl[2] = new PicObject(":/resource/lev_03/oil.png", mysl);
+    produkt_mysl[2]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt_mysl[3] = new PicObject(":/resource/lev_03/egs.png", mysl);
+    produkt_mysl[3]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/15);
+    produkt_mysl[4] = new PicObject(":/resource/lev_03/muka.png", mysl);
+    produkt_mysl[4]->resize_object(WIDTH_SCREEN/30, HEIGHT_SCREEN/15);
+    produkt_mysl[5] = new PicObject(":/resource/lev_03/sol.png", mysl);
+    produkt_mysl[5]->resize_object(WIDTH_SCREEN/50, HEIGHT_SCREEN/20);
+    produkt_mysl[6] = new PicObject(":/resource/lev_03/venchik.png", mysl);
+    produkt_mysl[6]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt_mysl[7] = new PicObject(":/resource/lev_03/kolobok.png", mysl);
+    produkt_mysl[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
+
+    for(int i=0; i<=7; i++)
+    {
+        produkt_mysl[i]->hide();
+        produkt_mysl[i]->move(mysl->width()/2-produkt_mysl[i]->width()/2,
+                              mysl->height()/3-produkt_mysl[i]->height()/2);
+    }
+    produkt_mysl[0]->show();
+
+    // ингридиенты
+
+    produkt[0] = new PicObject(":/resource/lev_03/tazik-01.png", this);
+    produkt[0]->resize_object(WIDTH_SCREEN/16, HEIGHT_SCREEN/12);
+    produkt[0]->move(WIDTH_SCREEN/30, HEIGHT_SCREEN-HEIGHT_SCREEN/3+HEIGHT_SCREEN/10);
+    produkt[1] = new PicObject(":/resource/lev_03/milk.png", this);
     produkt[1]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
-    produkt[2] = new PicObject(":/resource/lev_03/egs.png", this);
-    produkt[2]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/15);
-    produkt[3] = new PicObject(":/resource/lev_03/muka.png", this);
-    produkt[3]->resize_object(WIDTH_SCREEN/30, HEIGHT_SCREEN/15);
-    produkt[4] = new PicObject(":/resource/lev_03/sol.png", this);
-    produkt[4]->resize_object(WIDTH_SCREEN/50, HEIGHT_SCREEN/20);
-    produkt[5] = new PicObject(":/resource/lev_03/venchik.png", this);
-    produkt[5]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt[2] = new PicObject(":/resource/lev_03/oil.png", this);
+    produkt[2]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt[3] = new PicObject(":/resource/lev_03/egs.png", this);
+    produkt[3]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/15);
+    produkt[4] = new PicObject(":/resource/lev_03/muka.png", this);
+    produkt[4]->resize_object(WIDTH_SCREEN/30, HEIGHT_SCREEN/15);
+    produkt[5] = new PicObject(":/resource/lev_03/sol.png", this);
+    produkt[5]->resize_object(WIDTH_SCREEN/50, HEIGHT_SCREEN/20);
+    produkt[6] = new PicObject(":/resource/lev_03/venchik.png", this);
+    produkt[6]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt[7] = new PicObject(":/resource/lev_03/kolobok.png", this);
+    produkt[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
+    produkt[7]->hide();
 
     // Составляем список координат где будут расположены предметы
 
+    coordinates.append(QList<int>() << 0 << 0);
     coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/8 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/60);
     coordinates.append(QList<int>() << WIDTH_SCREEN/2 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
     coordinates.append(QList<int>() << WIDTH_SCREEN/2+WIDTH_SCREEN/5 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/60);
     coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/3-WIDTH_SCREEN/13 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/5-HEIGHT_SCREEN/65);
     coordinates.append(QList<int>() << WIDTH_SCREEN/6 << HEIGHT_SCREEN/2+HEIGHT_SCREEN/4);
     coordinates.append(QList<int>() << WIDTH_SCREEN-WIDTH_SCREEN/15 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/4);
+    coordinates.append(QList<int>() << 0 << 0);
+
+    mix_ingridients();
+
+    // Расставляем ингридиенты
+
+    for(int i=1; i<=6; i++)
+    {
+        x[i] = coordinates.at(produkt_value[i]).at(0);
+        y[i] = coordinates.at(produkt_value[i]).at(1);
+        produkt[i]->move(x[i], y[i]);
+        produkt[i]->show();
+    }
+
+}
+
+// ----------------------- Перемешиваем ингридиенты ------------------------------
+
+void Level_03::mix_ingridients()
+{
+    int k;
+    int temp;
+    for(int i=1; i<=6; i++)
+    {
+        k = rnd(1,6);
+        temp = produkt_value[k];
+        produkt_value[k] = produkt_value[i];
+        produkt_value[i] = temp;
+    }
+}
+
+// ----------------------- Показываем о чем думает бабка -----------------------------
+
+// void Level_03::set_mysl()
+// {
+//     if(NUMBER > 0)
+//     {
+//         delete produkt_mysl[NUMBER-1];
+//     } else
+//     {
+
+//     }
+// }
+
+// ---------------------- Нажатие кнопки мышки --------------------------------
+
+void Level_03::MousePressEvent(QMouseEvent *pe)
+{
+
+}
+
+// ----------------------- Отпускание кнопки мышки -----------------------------
+
+void Level_03::MouseReleaseEvent(QMouseEvent *pe)
+{
+
+}
+
+// ----------------------- Перемещение предметов -------------------------------
+
+void Level_03::MouseMoveEvent(QMouseEvent *pe)
+{
 
 }
