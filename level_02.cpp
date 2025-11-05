@@ -76,18 +76,26 @@ void Level_02::get_height(int h)
 
 void Level_02::initial()
 {
+    // ---- фон ---
+
     background_lev02 = new QLabel(this);
     background_lev02->setStyleSheet("border-image: url(:/resource/lev_02/saray.jpg);");
     this->setCentralWidget(background_lev02);
     background_lev02->show();
 
+    // ------ курсор -------
+
     QCursor cursorTarget = QCursor(QPixmap(":/resource/logo/cursor1.png"),0,0);
     this->setCursor(cursorTarget);
+
+    // --- звук ----
 
     sound = new QMediaPlayer(this);
     output = new QAudioOutput();
     sound->setAudioOutput(output);
     output->setVolume(1);
+
+    // ---- создаем объекты -----
 
     button_back = new QPushButton(this);
     button_back->setStyleSheet("border-image: url(:/resource/lev_01/return.png);");
@@ -192,8 +200,11 @@ void Level_02::initial()
         instruments[i]->move(x[i],y[i]);
     }
 
-    mysl_deda(STEP_NUMBER);
-    animation_level();
+    mysl_deda(STEP_NUMBER); // о чем думает дед
+
+    animation_level();  // анимация уровня
+
+    // ----- подсказка --------
 
     hand = new PicObject(":/resource/lev_01/ruka.png", this);
     hand->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
@@ -201,6 +212,8 @@ void Level_02::initial()
 
     timer_hand = new QTimer(this);
     timer_hand->start(3);
+
+    // ---- сигналы и слоты -------
 
     connect(timer_hand, &QTimer::timeout, this, &Level_02::help);    
     connect(instruments[0], &PicObject::clicked, this, &Level_02::mousePressEvent);
@@ -291,12 +304,9 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
             if(STEP_NUMBER == 7)
             {
                 current_mysl->move(cell->x()+step, cell->y()+cell->height()/20);    // Победа
-                //instruments[value_m[7]]->move(cell->x()+step, cell->y()+cell->height()/20);
                 instruments_mysl[value_m[7]]->hide();
                 current_mysl->resize_object(current_mysl->width(),
                                             current_mysl->height());
-                //instruments[value_m[STEP_NUMBER]]->resize_object(instruments_mysl[value_m[7]]->width(),
-                                                                // instruments_mysl[value_m[7]]->height());
                 victory();
             }
             else
