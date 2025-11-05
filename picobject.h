@@ -135,7 +135,9 @@ signals:
     void changing_xy();                                     // Сигнал при изменении координат в методах move_to_...
     void changing_opacity_signal();                         // Сигнал при изменении прозрачности
     void changig_angle();                                   // Сигнал изменения угла поворота объектаСигнал окончания перемещения
-    void clicked(QMouseEvent *);                            // Сигнал по клику мышки по объекту
+     void clicked(QMouseEvent *);                            // Сигнал по клику мышки по объекту
+    // void moved(QMouseEvent *);
+    // void released(QMouseEvent *);
 
 
 private:
@@ -149,8 +151,10 @@ private:
     void move_to_y_temp();                                  // Временная функция перемещения по y
     void move_to_xy_temp();                                 // Временная функция перемещения по xy
 
-protected:
-    void mousePressEvent (QMouseEvent *event);               // при нажатии кнопки мыши по объекту испускает сигнал clicked
+ protected:
+     virtual void mousePressEvent (QMouseEvent *event);               // при нажатии кнопки мыши по объекту испускает сигнал clicked
+//     virtual void mouseMoveEvent (QMouseEvent *event);
+//     virtual void mouseReleaseEvent (QMouseEvent *event);
 };
 
 #endif // PICOBJECT_H

@@ -26,6 +26,7 @@ private:
     int WIDTH_SCREEN = 0;                       // Ширина экрана
     int HEIGHT_SCREEN = 0;                      // Высота экрана
     int NUMBER = 0;                             // Номер ингридиента в мыслях бабки
+    int CURRENT_PRODUKT = 100;                  // Номер выбранного продукта (100 - продукт не выбран)
     int x[6] = {};                              // Координаты продуктов
     int y[6] = {};
 
@@ -58,9 +59,9 @@ private:
     QList<int>  produkt_mysl_value = {};        // Список нумерации продукты в мысли
 
 protected:
-    virtual void MousePressEvent(QMouseEvent *pe);
-    virtual void MouseMoveEvent(QMouseEvent *pe);
-    virtual void MouseReleaseEvent(QMouseEvent *pe);
+    virtual void mousePressEvent(QMouseEvent *pe);
+    virtual void mouseMoveEvent(QMouseEvent *pe);
+    virtual void mouseReleaseEvent(QMouseEvent *pe);
 
 signals:
 };

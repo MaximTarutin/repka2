@@ -99,24 +99,43 @@ void Level_01::initial()
 
     vegetable[0] = new PicObject(":/resource/lev_01/repka.png", this);
     vegetable[0]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/4);
+    vegetable[0]->setObjectName("repka");
     vegetable[1] = new PicObject(":/resource/lev_01/baklagan.png", this);
     vegetable[1]->resize_object(WIDTH_SCREEN/19, HEIGHT_SCREEN/7);
+    vegetable[1]->setObjectName("baklagan");
     vegetable[2] = new PicObject(":/resource/lev_01/chesnok.png", this);
     vegetable[2]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
+    vegetable[2]->setObjectName("chesnok");
     vegetable[3] = new PicObject(":/resource/lev_01/grusha.png", this);
     vegetable[3]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/6);
+    vegetable[3]->setObjectName("grusha");
     vegetable[4] = new PicObject(":/resource/lev_01/morkovka.png", this);
     vegetable[4]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/5);
+    vegetable[4]->setObjectName("morkovka");
     vegetable[5] = new PicObject(":/resource/lev_01/ogurec.png", this);
     vegetable[5]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/5);
+    vegetable[5]->setObjectName("ogurec");
     vegetable[6] = new PicObject(":/resource/lev_01/tomat.png", this);
     vegetable[6]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/8);
+    vegetable[6]->setObjectName("tomat");
     vegetable[7] = new PicObject(":/resource/lev_01/tykva.png", this);
     vegetable[7]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/6);
+    vegetable[7]->setObjectName("tykva");
     vegetable[8] = new PicObject(":/resource/lev_01/rediska.png", this);
     vegetable[8]->resize_object(WIDTH_SCREEN/13, HEIGHT_SCREEN/6);
+    vegetable[8]->setObjectName("rediska");
 
-    for(int i=0; i<9; i++)
+    connect(vegetable[0], &PicObject::clicked, this, &Level_01::mousePressEvent);
+    connect(vegetable[1], &PicObject::clicked, this, &Level_01::mousePressEvent);
+    connect(vegetable[2], &PicObject::clicked, this, &Level_01::mousePressEvent);
+    connect(vegetable[3], &PicObject::clicked, this, &Level_01::mousePressEvent);
+    connect(vegetable[4], &PicObject::clicked, this, &Level_01::mousePressEvent);
+    connect(vegetable[5], &PicObject::clicked, this, &Level_01::mousePressEvent);
+    connect(vegetable[6], &PicObject::clicked, this, &Level_01::mousePressEvent);
+    connect(vegetable[7], &PicObject::clicked, this, &Level_01::mousePressEvent);
+    connect(vegetable[8], &PicObject::clicked, this, &Level_01::mousePressEvent);
+
+    for(int i=0; i<9; i++)      // Помещаем овощи в круг
     {
         vegetable[i]->move(warehouse->x()+warehouse->width()/2-vegetable[i]->width()/2,
                            warehouse->y()+warehouse->height()/2-vegetable[i]->height()/2);
@@ -267,12 +286,6 @@ void Level_01::mousePressEvent(QMouseEvent *pe)
        (pe->position().y() > vegetable[value_i[CURRENT_OBJECT]]->y())and
        (pe->position().y() < vegetable[value_i[CURRENT_OBJECT]]->y()+vegetable[value_i[CURRENT_OBJECT]]->height())))
     {
-        if (help != (void*)0)
-        {
-            disconnect(help, &PicObject::move_end, this, &Level_01::help_move_end);
-            delete help;
-            help=nullptr;
-        }
         CURRENT_OBJECT_ACTIVE = true;
     }
 }
@@ -281,7 +294,8 @@ void Level_01::mousePressEvent(QMouseEvent *pe)
 
 void Level_01::mouseMoveEvent(QMouseEvent *pe)
 {
-    if(CURRENT_OBJECT_ACTIVE)
+    qDebug() << pe->position().x() << pe->position().y();
+    if(!CURRENT_OBJECT_ACTIVE)
     {
         vegetable[value_i[CURRENT_OBJECT]]->raise();
         vegetable[value_i[CURRENT_OBJECT]]->move(pe->position().x()-
@@ -311,6 +325,12 @@ void Level_01::mouseReleaseEvent(QMouseEvent *pe)
     CURRENT_OBJECT_ACTIVE = false;
     if((x2>x1_g)&&(x1<x2_g)&&(y2>y1_g)&&(y1<y2_g))
     {
+        if (help != (void*)0)
+        {
+            disconnect(help, &PicObject::move_end, this, &Level_01::help_move_end);
+            delete help;
+            help=nullptr;
+        }
         vegetable[value_i[CURRENT_OBJECT]]->move(vegetable_gray[value_i[CURRENT_OBJECT]]->x(),
                                                  vegetable_gray[value_i[CURRENT_OBJECT]]->y());
         CURRENT_OBJECT++;

@@ -112,43 +112,61 @@ void Level_02::initial()
 
     instruments[0] = new PicObject(":/resource/lev_02/fomka.png", this);
     instruments[0]->resize_object(WIDTH_SCREEN/14, HEIGHT_SCREEN/10);
+    instruments[0]->setObjectName("fomka");
     instruments[1] = new PicObject(":/resource/lev_02/leyka.png", this);
     instruments[1]->resize_object(WIDTH_SCREEN/13, HEIGHT_SCREEN/10);
+    instruments[1]->setObjectName("leyka");
     instruments[2] = new PicObject(":/resource/lev_02/lopata.png", this);
     instruments[2]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/6);
+    instruments[2]->setObjectName("lopata");
     instruments[3] = new PicObject(":/resource/lev_02/molotok.png", this);
     instruments[3]->resize_object(WIDTH_SCREEN/21, HEIGHT_SCREEN/12);
+    instruments[3]->setObjectName("molotok");
     instruments[4] = new PicObject(":/resource/lev_02/serp.png", this);
     instruments[4]->resize_object(WIDTH_SCREEN/21, HEIGHT_SCREEN/12);
+    instruments[4]->setObjectName("serp");
     instruments[5] = new PicObject(":/resource/lev_02/topor.png", this);
     instruments[5]->resize_object(WIDTH_SCREEN/26, HEIGHT_SCREEN/12);
+    instruments[5]->setObjectName("topor");
     instruments[6] = new PicObject(":/resource/lev_02/vedro.png", this);
     instruments[6]->resize_object(WIDTH_SCREEN/26, HEIGHT_SCREEN/12);
+    instruments[6]->setObjectName("vedro");
     instruments[7] = new PicObject(":/resource/lev_02/vily.png", this);
     instruments[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/8);
+    instruments[7]->setObjectName("vily");
 
     instruments_mysl[0] = new PicObject(":/resource/lev_02/fomka.png", this);
     instruments_mysl[0]->resize_object(WIDTH_SCREEN/18, HEIGHT_SCREEN/14);
+    instruments_mysl[0]->setObjectName("mysl_fomka");
     instruments_mysl[1] = new PicObject(":/resource/lev_02/leyka.png", this);
     instruments_mysl[1]->resize_object(WIDTH_SCREEN/17, HEIGHT_SCREEN/14);
+    instruments_mysl[1]->setObjectName("mysl_leyka");
     instruments_mysl[2] = new PicObject(":/resource/lev_02/lopata.png", this);
     instruments_mysl[2]->resize_object(WIDTH_SCREEN/14, HEIGHT_SCREEN/12);
+    instruments_mysl[2]->setObjectName("mysl_lopata");
     instruments_mysl[3] = new PicObject(":/resource/lev_02/molotok.png", this);
     instruments_mysl[3]->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/16);
+    instruments_mysl[3]->setObjectName("mysl_molotok");
     instruments_mysl[4] = new PicObject(":/resource/lev_02/serp.png", this);
     instruments_mysl[4]->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/16);
+    instruments_mysl[4]->setObjectName("mysl_serp");
     instruments_mysl[5] = new PicObject(":/resource/lev_02/topor.png", this);
     instruments_mysl[5]->resize_object(WIDTH_SCREEN/30, HEIGHT_SCREEN/16);
+    instruments_mysl[5]->setObjectName("mysl_topor");
     instruments_mysl[6] = new PicObject(":/resource/lev_02/vedro.png", this);
     instruments_mysl[6]->resize_object(WIDTH_SCREEN/26, HEIGHT_SCREEN/12);
+    instruments_mysl[6]->setObjectName("mysl_vedro");
     instruments_mysl[7] = new PicObject(":/resource/lev_02/vily.png", this);
     instruments_mysl[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
+    instruments_mysl[7]->setObjectName("mysl_vily");
 
     for(int i=0; i<8; i++)
     {
         instruments[i]->hide();
         instruments_mysl[i]->hide();
     }
+
+    // Список координат инструмента
 
     coordinates.append(QList<int>() << WIDTH_SCREEN/2-WIDTH_SCREEN/8 << HEIGHT_SCREEN/2-HEIGHT_SCREEN/5);
     coordinates.append(QList<int>() << WIDTH_SCREEN/3 << HEIGHT_SCREEN-HEIGHT_SCREEN/6);
@@ -165,7 +183,7 @@ void Level_02::initial()
         instruments_mysl[i]->setParent(mysl);
     }
 
-    mix_instruments();
+    mix_instruments();  // Перемешиваем инструмент
 
     for(int i=0; i<8; i++)
     {
@@ -184,7 +202,15 @@ void Level_02::initial()
     timer_hand = new QTimer(this);
     timer_hand->start(3);
 
-    connect(timer_hand, &QTimer::timeout, this, &Level_02::help);
+    connect(timer_hand, &QTimer::timeout, this, &Level_02::help);    
+    connect(instruments[0], &PicObject::clicked, this, &Level_02::mousePressEvent);
+    connect(instruments[1], &PicObject::clicked, this, &Level_02::mousePressEvent);
+    connect(instruments[2], &PicObject::clicked, this, &Level_02::mousePressEvent);
+    connect(instruments[3], &PicObject::clicked, this, &Level_02::mousePressEvent);
+    connect(instruments[4], &PicObject::clicked, this, &Level_02::mousePressEvent);
+    connect(instruments[5], &PicObject::clicked, this, &Level_02::mousePressEvent);
+    connect(instruments[6], &PicObject::clicked, this, &Level_02::mousePressEvent);
+    connect(instruments[7], &PicObject::clicked, this, &Level_02::mousePressEvent);
 }
 
 // ---------------- Перемешаем список нумерации инструмента --------------------------
@@ -244,7 +270,7 @@ void Level_02::help()
 
 void Level_02::mousePressEvent(QMouseEvent *pe)
 {
-    if(hand)
+    if(hand)    // Убираем подсказку после первого клика
     {
         timer_hand->stop();
         delete timer_hand;
@@ -252,34 +278,44 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
         delete hand;
         hand = nullptr;
     }
-
-    static int step = cell->width()/50;  // расстояние между инструментами расставленных в ячейке
-
-    if((pe->position().x() >= instruments[value_m[STEP_NUMBER]]->x())&&
-        (pe->position().x() <= instruments[value_m[STEP_NUMBER]]->x()+instruments[value_m[STEP_NUMBER]]->width())&&
-        (pe->position().y() >= instruments[value_m[STEP_NUMBER]]->y())&&
-        (pe->position().y() <= instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height()))
+    if(QObject::sender())   // Узнаем какой объект подал сигнал сlicked()
     {
-        if(STEP_NUMBER == 7)
+        static int step = cell->width()/50;  // расстояние между инструментами расставленных в ячейке
+
+        QString nameobj = QObject::sender()->objectName();
+        QString current_mysl_name = instruments[value_m[STEP_NUMBER]]->objectName();
+        PicObject* current_mysl = this->findChild<PicObject*>(nameobj);
+
+        if(nameobj==current_mysl_name)
         {
-            instruments[value_m[7]]->move(cell->x()+step, cell->y()+cell->height()/20);     // Победа
-            instruments_mysl[value_m[7]]->hide();
-            instruments[value_m[STEP_NUMBER]]->resize_object(instruments_mysl[value_m[7]]->width(),
-                                                             instruments_mysl[value_m[7]]->height());
-            victory();
-        }
-        else
+            if(STEP_NUMBER == 7)
+            {
+                current_mysl->move(cell->x()+step, cell->y()+cell->height()/20);    // Победа
+                //instruments[value_m[7]]->move(cell->x()+step, cell->y()+cell->height()/20);
+                instruments_mysl[value_m[7]]->hide();
+                current_mysl->resize_object(current_mysl->width(),
+                                            current_mysl->height());
+                //instruments[value_m[STEP_NUMBER]]->resize_object(instruments_mysl[value_m[7]]->width(),
+                                                                // instruments_mysl[value_m[7]]->height());
+                victory();
+            }
+            else
+            {
+                instruments_mysl[value_m[STEP_NUMBER]]->hide();
+                instruments[value_m[STEP_NUMBER]]->resize_object(instruments_mysl[value_m[STEP_NUMBER]]->width(),
+                                                                 instruments_mysl[value_m[STEP_NUMBER]]->height());
+                instruments[value_m[STEP_NUMBER]]->move_to_xy(instruments[value_m[STEP_NUMBER]]->x(), cell->x()+step,
+                                                              instruments[value_m[STEP_NUMBER]]->y(), cell->y()+cell->height()/10, 1);
+                step+=instruments_mysl[value_m[STEP_NUMBER]]->width()+cell->width()/50;
+                sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
+                sound->play();
+                STEP_NUMBER++;
+                mysl_deda(STEP_NUMBER);
+            }
+        } else
         {
-            instruments_mysl[value_m[STEP_NUMBER]]->hide();
-            instruments[value_m[STEP_NUMBER]]->resize_object(instruments_mysl[value_m[STEP_NUMBER]]->width(),
-                                                             instruments_mysl[value_m[STEP_NUMBER]]->height());
-            instruments[value_m[STEP_NUMBER]]->move_to_xy(instruments[value_m[STEP_NUMBER]]->x(), cell->x()+step,
-                                                          instruments[value_m[STEP_NUMBER]]->y(), cell->y()+cell->height()/10, 1);
-            step+=instruments_mysl[value_m[STEP_NUMBER]]->width()+cell->width()/50;
-            sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
+            sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
             sound->play();
-            STEP_NUMBER++;
-            mysl_deda(STEP_NUMBER);
         }
     } else
     {

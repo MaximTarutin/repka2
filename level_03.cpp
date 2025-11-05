@@ -2,6 +2,7 @@
 #include "qmediaplayer.h"
 #include "qpushbutton.h"
 #include <ctime>
+#include <QMouseEvent>
 
 Level_03::Level_03(QWidget *parent)
     : QMainWindow{parent}
@@ -197,6 +198,24 @@ void Level_03::initial()
         produkt[i]->show();
     }
 
+    // connect(produkt[0], &PicObject::clicked, this, &Level_03::mousePressEvent);
+    // connect(produkt[1], &PicObject::clicked, this,  [this](){CURRENT_PRODUKT=1;});
+    // connect(produkt[1], &PicObject::clicked, this,  [this](){CURRENT_PRODUKT=1;});
+    // connect(produkt[2], &PicObject::clicked, this,  [this](){CURRENT_PRODUKT=2;});
+    // connect(produkt[3], &PicObject::clicked, this,  [this](){CURRENT_PRODUKT=3;});
+    // connect(produkt[4], &PicObject::clicked, this,  [this](){CURRENT_PRODUKT=4;});
+    // connect(produkt[5], &PicObject::clicked, this,  [this](){CURRENT_PRODUKT=5;});
+    // connect(produkt[6], &PicObject::clicked, this,  [this](){CURRENT_PRODUKT=6;});
+    // connect(produkt[7], &PicObject::clicked, this,  [this](){CURRENT_PRODUKT=7;});
+
+    // connect(produkt[0], &PicObject::clicked, this, &Level_03::mousePressEvent);
+    // connect(produkt[1], &PicObject::clicked, this, &Level_03::mousePressEvent);
+    // connect(produkt[2], &PicObject::clicked, this, &Level_03::mousePressEvent);
+    // connect(produkt[3], &PicObject::clicked, this, &Level_03::mousePressEvent);
+    // connect(produkt[4], &PicObject::clicked, this, &Level_03::mousePressEvent);
+    // connect(produkt[5], &PicObject::clicked, this, &Level_03::mousePressEvent);
+    // connect(produkt[6], &PicObject::clicked, this, &Level_03::mousePressEvent);
+    // connect(produkt[7], &PicObject::clicked, this, &Level_03::mousePressEvent);
 }
 
 // ----------------------- Перемешиваем ингридиенты ------------------------------
@@ -229,21 +248,21 @@ void Level_03::mix_ingridients()
 
 // ---------------------- Нажатие кнопки мышки --------------------------------
 
-void Level_03::MousePressEvent(QMouseEvent *pe)
+void Level_03::mousePressEvent(QMouseEvent *pe)
 {
 
 }
 
 // ----------------------- Отпускание кнопки мышки -----------------------------
 
-void Level_03::MouseReleaseEvent(QMouseEvent *pe)
+void Level_03::mouseReleaseEvent(QMouseEvent *pe)
 {
 
 }
 
 // ----------------------- Перемещение предметов -------------------------------
 
-void Level_03::MouseMoveEvent(QMouseEvent *pe)
+void Level_03::mouseMoveEvent(QMouseEvent *pe)
 {
 
 }

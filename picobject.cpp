@@ -310,3 +310,13 @@ void PicObject::mousePressEvent(QMouseEvent *event)
 {
     emit clicked(event);
 }
+
+// void PicObject::mouseMoveEvent(QMouseEvent *event)
+// {
+//     emit moved(event);
+// }
+
+// void PicObject::mouseReleaseEvent(QMouseEvent *event)
+// {
+//     emit released(event);
+// }
