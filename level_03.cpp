@@ -150,30 +150,36 @@ void Level_03::initial()
         produkt_mysl[i]->move(mysl->width()/2-produkt_mysl[i]->width()/2,
                               mysl->height()/3-produkt_mysl[i]->height()/2);
     }
-    produkt_mysl[0]->show();
+    //produkt_mysl[0]->show();
 
     // ингридиенты
 
     produkt[0] = new PicObject(":/resource/lev_03/tazik-01.png", this);
     produkt[0]->resize_object(WIDTH_SCREEN/16, HEIGHT_SCREEN/12);
     produkt[0]->move(WIDTH_SCREEN/30, HEIGHT_SCREEN-HEIGHT_SCREEN/3+HEIGHT_SCREEN/10);
+    produkt[0]->setObjectName("tazik");
     produkt[1] = new PicObject(":/resource/lev_03/milk.png", this);
     produkt[1]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt[0]->setObjectName("milk");
     produkt[2] = new PicObject(":/resource/lev_03/oil.png", this);
     produkt[2]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt[2]->setObjectName("oil");
     produkt[3] = new PicObject(":/resource/lev_03/egs.png", this);
     produkt[3]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/15);
+    produkt[3]->setObjectName("egs");
     produkt[4] = new PicObject(":/resource/lev_03/muka.png", this);
     produkt[4]->resize_object(WIDTH_SCREEN/30, HEIGHT_SCREEN/15);
+    produkt[4]->setObjectName("muka");
     produkt[5] = new PicObject(":/resource/lev_03/sol.png", this);
     produkt[5]->resize_object(WIDTH_SCREEN/50, HEIGHT_SCREEN/20);
+    produkt[5]->setObjectName("sol");
     produkt[6] = new PicObject(":/resource/lev_03/venchik.png", this);
     produkt[6]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
+    produkt[6]->setObjectName("venchik");
     produkt[7] = new PicObject(":/resource/lev_03/kolobok.png", this);
     produkt[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
+    produkt[7]->setObjectName("kolobok");
     produkt[7]->hide();
-
-    //connect(produkt[1], &PicObject::clicked, this, [](){exit(86);});
 
     // Составляем список координат где будут расположены предметы
 
@@ -197,6 +203,8 @@ void Level_03::initial()
         produkt[i]->move(x[i], y[i]);
         produkt[i]->show();
     }
+
+    set_mysl();
 
     connect(produkt[0], &PicObject::clicked, this, &Level_03::mousePressEvent);
     connect(produkt[1], &PicObject::clicked, this, &Level_03::mousePressEvent);
@@ -225,16 +233,13 @@ void Level_03::mix_ingridients()
 
 // ----------------------- Показываем о чем думает бабка -----------------------------
 
-// void Level_03::set_mysl()
-// {
-//     if(NUMBER > 0)
-//     {
-//         delete produkt_mysl[NUMBER-1];
-//     } else
-//     {
-
-//     }
-// }
+void Level_03::set_mysl()
+{
+    if(NUMBER>=0 && NUMBER<=7)
+    {
+        produkt_mysl[NUMBER]->show();
+    }
+}
 
 // ---------------------- Нажатие кнопки мышки --------------------------------
 

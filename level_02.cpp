@@ -297,16 +297,17 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
 
         QString nameobj = QObject::sender()->objectName();
         QString current_mysl_name = instruments[value_m[STEP_NUMBER]]->objectName();
-        PicObject* current_mysl = this->findChild<PicObject*>(nameobj);
+        //PicObject* current_mysl = this->findChild<PicObject*>(nameobj);
 
         if(nameobj==current_mysl_name)
         {
-            if(STEP_NUMBER == 7)
+            if(STEP_NUMBER == 7)    // Если победа
             {
-                current_mysl->move(cell->x()+step, cell->y()+cell->height()/20);    // Победа
                 instruments_mysl[value_m[7]]->hide();
-                current_mysl->resize_object(current_mysl->width(),
-                                            current_mysl->height());
+                instruments[value_m[7]]->resize_object(instruments_mysl[value_m[7]]->width(),
+                                                       instruments_mysl[value_m[7]]->height());
+                instruments[value_m[7]]->move_to_xy(instruments[value_m[7]]->x(), cell->x()+step,
+                                                    instruments[value_m[7]]->y(), cell->y()+cell->height()/10, 1);
                 victory();
             }
             else
@@ -342,10 +343,21 @@ void Level_02::victory()
     sound->play();
     timer_firework = new QTimer(this);
     timer_firework->start(11000);
-    connect(timer_firework, &QTimer::timeout, this, [this](){this->close();emit next_level();});
+    connect(timer_firework, &QTimer::timeout, this, [this]()
+            {
+                for(int i=0; i<=7; i++)
+                {
+                    delete instruments[i];
+                    delete instruments_mysl[i];
+                    instruments[i] = nullptr;
+                    instruments_mysl[i] = nullptr;
+                }
+                this->close();
+                emit next_level();
+            });
     firework = new PicObject(":/resource/lev_02/salut.gif", this);
     firework->show();
-    firework->animation_start(WIDTH_SCREEN/2, HEIGHT_SCREEN/2);
+    firework->animation_start(WIDTH_SCREEN/2, HEIGHT_SCREEN/2);    
 }
 
 // -------------------- Возврат на 1 уровень -------------------------------
