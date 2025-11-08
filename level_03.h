@@ -41,7 +41,7 @@ private:
     PicObject       *table = nullptr;           // Стол
     PicObject       *babka = nullptr;           // Бабка
     PicObject       *mysl = nullptr;            // Мысль бабки
-    PicObject       *tazik[6] = {};             // Состояния тазика по мере наполняемости продуктами
+    PicObject       *tazik[8] = {};             // Состояния тазика по мере наполняемости продуктами
     PicObject       *kolobok = nullptr;         // Колобок
     PicObject       *produkt[8] = {};           // Продукты
     PicObject       *produkt_mysl[8] = {};      // Продукты в мысли:
@@ -54,6 +54,7 @@ private:
                                                 // 6 - венчик
                                                 // 7 - колобок
 
+    QString         name_active_object;         // имя объекта по которому кликнули мышкой
     QList<QList<int>>  coordinates = {};        // Список координаты продуктов (список в списке - [[a,b],[a,b],...,[a,b]])
     QList<int>  produkt_value = {};             // Список нумерации продукты
     QList<int>  produkt_mysl_value = {};        // Список нумерации продукты в мысли

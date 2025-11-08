@@ -294,7 +294,6 @@ void Level_01::mousePressEvent(QMouseEvent *pe)
 
 void Level_01::mouseMoveEvent(QMouseEvent *pe)
 {
-    qDebug() << pe->position().x() << pe->position().y();
     if(!CURRENT_OBJECT_ACTIVE)
     {
         vegetable[value_i[CURRENT_OBJECT]]->raise();
