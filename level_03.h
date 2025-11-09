@@ -36,13 +36,13 @@ private:
     int  rnd(int a, int b);                     // Случайные числа в диапазоне от a до b
     void mix_ingridients();                     // перемешиваем список ингридиентов
     void set_mysl();                            // показываем о чем думает бабка
-    void victory();                             // Победа
 
     QLabel          *background = nullptr;      // Фон уровня
     QMediaPlayer    *sound = nullptr;           // Проигрыватель
     QAudioOutput    *output = nullptr;          // Аудиовыход
     QPushButton     *button_back = nullptr;     // Кнопка назад
     QTimer          *timer_show_kolobok;        // Таймер появления колобка
+    QTimer          *timer_victory;             // Таймер анимации при победе
     PicObject       *table = nullptr;           // Стол
     PicObject       *babka = nullptr;           // Бабка
     PicObject       *mysl = nullptr;            // Мысль бабки
@@ -71,6 +71,7 @@ protected:
 
 private slots:
     void show_kolobok();                        // Колобок появляется на столе
+    void victory();                             // Победа
 
 signals:
 };

@@ -258,7 +258,7 @@ void Level_03::set_mysl()
 
 // ---------------------- Нажатие кнопки мышки --------------------------------
 
-void Level_03::mousePressEvent(QMouseEvent *pe)
+void Level_03::mousePressEvent(QMouseEvent *)
 {
     if(QObject::sender())
     {
@@ -356,33 +356,63 @@ void Level_03::mouseMoveEvent(QMouseEvent *pe)
 
 void Level_03::show_kolobok()
 {
-    // static int w = 200;
-    // static int h = 200;
-    // w--;
-    // h--;
-    // if(w<=20)
-    // {
-    //     w=20;
-    // }
-    // if(h<=12)
-    // {
-    //     h=12;
-    //     timer_show_kolobok->stop();
-    //     disconnect(timer_show_kolobok, &QTimer::timeout, this, &Level_03::show_kolobok);
-    //     delete timer_show_kolobok;
-    //     timer_show_kolobok = nullptr;
-    // }
-    // kolobok->resize_object(WIDTH_SCREEN/w, HEIGHT_SCREEN/h);
-
     static int opacity = 0;
     opacity++;
     kolobok->opacity(opacity);
     kolobok->show();
+    if(opacity>=255)
+    {
+        timer_show_kolobok->stop();
+        disconnect(timer_show_kolobok, &QTimer::timeout, this, &Level_03::show_kolobok);
+        delete timer_show_kolobok;
+        timer_show_kolobok = nullptr;
+        timer_victory = new QTimer(this);
+        timer_victory->start(4);
+        connect(timer_victory, &QTimer::timeout, this, &Level_03::victory);
+    }
 }
 
 // ------------------------ Победа ---------------------------------------
 
 void Level_03::victory()
 {
+    static int x = kolobok->x();
+    static int y = kolobok->y();
+    static bool FLAG_X = true;
+    static bool FLAG_Y = true;
+    static int index = 0;
 
+    index++;
+
+    if(index >= 5000) exit(22);
+
+    if(FLAG_X&&FLAG_Y)
+    {
+        x+=2;
+        y+=2;
+        if(x>=WIDTH_SCREEN) FLAG_X = false;
+        if(y>=HEIGHT_SCREEN) FLAG_Y = false;
+    }
+    if(!FLAG_X&&FLAG_Y)
+    {
+        x-=2;
+        y+=2;
+        if(x<=0) FLAG_X = true;
+        if(y>=HEIGHT_SCREEN) FLAG_Y = false;
+    }
+    if(FLAG_X&&!FLAG_Y)
+    {
+        x+=2;
+        y-=2;
+        if(x>=WIDTH_SCREEN) FLAG_X =  false;
+        if(y<=0) FLAG_Y = true;
+    }
+    if(!FLAG_X&&!FLAG_Y)
+    {
+        x-=2;
+        y-=2;
+        if(x<=0) FLAG_X = true;
+        if(y<=0) FLAG_Y = true;
+    }
+    kolobok->move(x,y);
 }
