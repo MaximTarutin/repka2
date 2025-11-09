@@ -28,17 +28,14 @@ Level_03::~Level_03()
     babka = nullptr;
     delete kolobok;
     kolobok = nullptr;
-    for(int i=0; i<=5; i++)
-    {
-        delete tazik[i];
-        tazik[i] = nullptr;        
-    }
     for(int i=0; i<=7; i++)
     {
         delete produkt_mysl[i];
         produkt_mysl[i] = nullptr;
         delete produkt[i];
         produkt[i] = nullptr;
+        delete tazik[i];
+        tazik[i] = nullptr;
     }
 }
 
@@ -111,15 +108,23 @@ void Level_03::initial()
     kolobok->hide();
 
     tazik[0] = new PicObject(":/resource/lev_03/tazik-01.png", this);       // Пустой тазик
+    tazik[0]->setObjectName("tazik-0");
     tazik[1] = new PicObject(":/resource/lev_03/tazik-02.png", this);       // Тазик с молоком
+    tazik[1]->setObjectName("tazik-1");
     tazik[2] = new PicObject(":/resource/lev_03/tazik-03.png", this);       // Тазик добавили масло
+    tazik[2]->setObjectName("tazik-2");
     tazik[3] = new PicObject(":/resource/lev_03/tazik-04.png", this);       // Тазик добавили яйца
+    tazik[3]->setObjectName("tazik-3");
     tazik[4] = new PicObject(":/resource/lev_03/tazik-05.png", this);       // Тазик добавили муку
+    tazik[4]->setObjectName("tazik-4");
     tazik[5] = new PicObject(":/resource/lev_03/tazik-05.png", this);       // Тазик добавили соль
+    tazik[5]->setObjectName("tazik-5");
     tazik[6] = new PicObject(":/resource/lev_03/tazik-06.png", this);       // тазик со взбитым тестом
+    tazik[6]->setObjectName("tazik-6");
     tazik[7] = new PicObject(":/resource/lev_03/kolobok.png", this);       // колобок вместо тазика
+    tazik[7]->setObjectName("tazik-7");
 
-    for(int i=0; i<=5; i++)
+    for(int i=0; i<=7; i++)
     {
         tazik[i]->resize_object(WIDTH_SCREEN/16, HEIGHT_SCREEN/12);
         tazik[i]->move(table->x()+table->width()/3,
@@ -150,7 +155,7 @@ void Level_03::initial()
     produkt_mysl[6] = new PicObject(":/resource/lev_03/venchik.png", mysl);
     produkt_mysl[6]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
     produkt_mysl[6]->setObjectName("venchik_m");
-    produkt_mysl[7] = new PicObject(":/resource/lev_03/kolobok.png", mysl);
+    produkt_mysl[7] = new PicObject(":/resource/lev_03/pechka.png", mysl);
     produkt_mysl[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
     produkt_mysl[7]->setObjectName("kolobok_m");
 
@@ -160,7 +165,6 @@ void Level_03::initial()
         produkt_mysl[i]->move(mysl->width()/2-produkt_mysl[i]->width()/2,
                               mysl->height()/3-produkt_mysl[i]->height()/2);
     }
-    //produkt_mysl[0]->show();
 
     // ингридиенты
 
@@ -186,7 +190,7 @@ void Level_03::initial()
     produkt[6] = new PicObject(":/resource/lev_03/venchik.png", this);
     produkt[6]->resize_object(WIDTH_SCREEN/60, HEIGHT_SCREEN/15);
     produkt[6]->setObjectName("venchik");
-    produkt[7] = new PicObject(":/resource/lev_03/kolobok.png", this);
+    produkt[7] = new PicObject(":/resource/lev_03/tazik_06.png", this);
     produkt[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
     produkt[7]->setObjectName("kolobok");
     produkt[7]->hide();
@@ -224,6 +228,7 @@ void Level_03::initial()
     connect(produkt[5], &PicObject::clicked, this, &Level_03::mousePressEvent);
     connect(produkt[6], &PicObject::clicked, this, &Level_03::mousePressEvent);
     connect(produkt[7], &PicObject::clicked, this, &Level_03::mousePressEvent);
+    connect(tazik[6],   &PicObject::clicked, this, &Level_03::mousePressEvent);
 }
 
 // ----------------------- Перемешиваем ингридиенты ------------------------------
@@ -258,34 +263,59 @@ void Level_03::mousePressEvent(QMouseEvent *pe)
     if(QObject::sender())
     {
         name_active_object = QObject::sender()->objectName();       // Узнаем имя объекта который испустил сигнал
-        qDebug() << name_active_object;
+        PicObject *active_object = this->findChild<PicObject*>(name_active_object);
+        old_x = active_object->x();
+        old_y = active_object->y();
     }
 }
 
 // ----------------------- Отпускание кнопки мышки -----------------------------
 
 void Level_03::mouseReleaseEvent(QMouseEvent *pe)
-{
-    if((pe->position().x()>=table->x())&&(pe->position().x()<=table->x()+table->width())&&
-        (pe->position().y()>=table->y())&&(pe->position().y()<=table->y()+table->height()/4))
+{    
+    PicObject *active_object = this->findChild<PicObject*>(name_active_object);
+    if(NUMBER<7 && name_active_object!=nullptr)
     {
-        QString name_mysl_object = produkt_mysl[NUMBER]->objectName();
-        QString temp_name = name_active_object+"_m";
-
-        if(name_mysl_object==temp_name)
+        if((pe->position().x()>=table->x())&&(pe->position().x()<=table->x()+table->width())&&
+            (pe->position().y()>=table->y()-table->height()/6)&&
+            (pe->position().y()<=table->y()+table->height()/4))
         {
-            tazik[NUMBER]->move(table->x()+table->width()/3,
-                           table->y()-tazik[NUMBER]->height()/2-tazik[NUMBER]->height()/6);
-            tazik[NUMBER]->show();
-            delete produkt[NUMBER];
-            delete produkt_mysl[NUMBER];
-            produkt[NUMBER] = nullptr;
-            produkt_mysl[NUMBER] = nullptr;
-            NUMBER++;
-            set_mysl();
-            name_active_object = nullptr;
+            QString name_mysl_object = produkt_mysl[NUMBER]->objectName();
+            QString temp_name = name_active_object+"_m";
+
+            if(name_mysl_object==temp_name)
+            {
+                produkt[NUMBER]->hide();
+                tazik[NUMBER]->raise();
+                if(NUMBER!=0)
+                {
+                    delete tazik[NUMBER-1];
+                    tazik[NUMBER-1] = nullptr;
+                }
+                delete produkt_mysl[NUMBER];
+                produkt_mysl[NUMBER] = nullptr;
+                tazik[NUMBER]->show();
+                NUMBER++;
+                set_mysl();
+                sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
+                sound->play();
+            } else
+            {
+                active_object->move_to_xy(pe->position().x(), old_x, pe->position().y(), old_y, 1, 4);
+                sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
+                sound->play();
+            }
+        } else
+        {
+            active_object->move_to_xy(pe->position().x(), old_x, pe->position().y(), old_y, 1, 4);
+            sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
+            sound->play();
         }
+    } else
+    {
+
     }
+    name_active_object = nullptr;
 }
 
 // ----------------------- Перемещение предметов -------------------------------

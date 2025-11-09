@@ -297,7 +297,6 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
 
         QString nameobj = QObject::sender()->objectName();
         QString current_mysl_name = instruments[value_m[STEP_NUMBER]]->objectName();
-        //PicObject* current_mysl = this->findChild<PicObject*>(nameobj);
 
         if(nameobj==current_mysl_name)
         {
