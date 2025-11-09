@@ -311,9 +311,30 @@ void Level_03::mouseReleaseEvent(QMouseEvent *pe)
             sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
             sound->play();
         }
-    } else
+    } else  // Если все ингридиенты собрапны, ставим тазик в печь
     {
+        if((name_active_object!=nullptr)&&
+            (pe->position().x()<=WIDTH_SCREEN/5)&&(pe->position().x()>=WIDTH_SCREEN/7)&&
+            (pe->position().y()<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/20)&&
+            (pe->position().y()>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20))
+        {
+            kolobok->move(table->x()+table->width()/3,
+                          table->y()-kolobok->height()/2-kolobok->height()/6);
 
+            delete tazik[6];
+            tazik[6] = nullptr;
+            delete tazik[7];
+            tazik[7] = nullptr;
+            delete mysl;
+            mysl = nullptr;
+            delete produkt[7];
+            produkt[7] = nullptr;
+            timer_show_kolobok = new QTimer(this);
+            timer_show_kolobok->start(10);
+            connect(timer_show_kolobok, &QTimer::timeout, this, &Level_03::show_kolobok);
+            sound->setSource(QUrl("qrc:/resource/sound/show.mp3"));
+            sound->play();
+        }
     }
     name_active_object = nullptr;
 }
@@ -329,4 +350,39 @@ void Level_03::mouseMoveEvent(QMouseEvent *pe)
         active_object->move(pe->position().x()-active_object->width()/2,
                             pe->position().y()-active_object->height()/2);
     }
+}
+
+// -------------- Колобок появляется на столе -----------------------------
+
+void Level_03::show_kolobok()
+{
+    // static int w = 200;
+    // static int h = 200;
+    // w--;
+    // h--;
+    // if(w<=20)
+    // {
+    //     w=20;
+    // }
+    // if(h<=12)
+    // {
+    //     h=12;
+    //     timer_show_kolobok->stop();
+    //     disconnect(timer_show_kolobok, &QTimer::timeout, this, &Level_03::show_kolobok);
+    //     delete timer_show_kolobok;
+    //     timer_show_kolobok = nullptr;
+    // }
+    // kolobok->resize_object(WIDTH_SCREEN/w, HEIGHT_SCREEN/h);
+
+    static int opacity = 0;
+    opacity++;
+    kolobok->opacity(opacity);
+    kolobok->show();
+}
+
+// ------------------------ Победа ---------------------------------------
+
+void Level_03::victory()
+{
+
 }
