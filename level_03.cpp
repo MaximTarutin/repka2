@@ -369,6 +369,7 @@ void Level_03::show_kolobok()
         timer_victory = new QTimer(this);
         timer_victory->start(4);
         connect(timer_victory, &QTimer::timeout, this, &Level_03::victory);
+        sound->setSource(QUrl("qrc:/resource/sound/tuk.mp3"));
     }
 }
 
@@ -384,35 +385,93 @@ void Level_03::victory()
 
     index++;
 
-    if(index >= 5000) exit(22);
-
+    if(index >= 2000)
+    {
+        timer_victory->stop();
+        disconnect(timer_victory, &QTimer::timeout, this, &Level_03::victory);
+        this->close();
+        emit next_level();
+        delete timer_victory;
+        timer_victory = nullptr;
+        delete kolobok;
+        kolobok = nullptr;
+        delete sound;
+        sound = nullptr;
+    }
     if(FLAG_X&&FLAG_Y)
     {
-        x+=2;
-        y+=2;
-        if(x>=WIDTH_SCREEN) FLAG_X = false;
-        if(y>=HEIGHT_SCREEN) FLAG_Y = false;
+        x+=5;
+        y+=5;
+        if(x>=WIDTH_SCREEN-kolobok->width())
+        {
+            FLAG_X = false;
+            sound->stop();
+            sound->play();
+        }
+        if(y>=HEIGHT_SCREEN-kolobok->height())
+        {
+            FLAG_Y = false;
+            sound->stop();
+            sound->play();
+        }
     }
     if(!FLAG_X&&FLAG_Y)
     {
-        x-=2;
-        y+=2;
-        if(x<=0) FLAG_X = true;
-        if(y>=HEIGHT_SCREEN) FLAG_Y = false;
+        x-=5;
+        y+=5;
+        if(x<=0)
+        {
+            FLAG_X = true;
+            sound->stop();
+            sound->play();
+        }
+        if(y>=HEIGHT_SCREEN-kolobok->height())
+        {
+            FLAG_Y = false;
+            sound->stop();
+            sound->play();
+        }
     }
     if(FLAG_X&&!FLAG_Y)
     {
-        x+=2;
-        y-=2;
-        if(x>=WIDTH_SCREEN) FLAG_X =  false;
-        if(y<=0) FLAG_Y = true;
+        x+=5;
+        y-=5;
+        if(x>=WIDTH_SCREEN-kolobok->width())
+        {
+            FLAG_X =  false;
+            sound->stop();
+            sound->play();
+        }
+        if(y<=0)
+        {
+            FLAG_Y = true;
+            sound->stop();
+            sound->play();
+        }
     }
     if(!FLAG_X&&!FLAG_Y)
     {
-        x-=2;
-        y-=2;
-        if(x<=0) FLAG_X = true;
-        if(y<=0) FLAG_Y = true;
+        x-=5;
+        y-=5;
+        if(x<=0)
+        {
+            FLAG_X = true;
+            sound->stop();
+            sound->play();
+        }
+        if(y<=0)
+        {
+            FLAG_Y = true;
+            sound->stop();
+            sound->play();
+        }
     }
     kolobok->move(x,y);
+}
+
+// -------------------------- Закрываем текущее окно --------------------------------
+
+void Level_03::back_level()
+{
+    this->close();
 }

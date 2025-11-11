@@ -281,10 +281,7 @@ void Level_01::back_level()
 
 void Level_01::mousePressEvent(QMouseEvent *pe)
 {
-    if(((pe->position().x() > vegetable[value_i[CURRENT_OBJECT]]->x())and
-       (pe->position().x() < vegetable[value_i[CURRENT_OBJECT]]->x()+vegetable[value_i[CURRENT_OBJECT]]->width())and
-       (pe->position().y() > vegetable[value_i[CURRENT_OBJECT]]->y())and
-       (pe->position().y() < vegetable[value_i[CURRENT_OBJECT]]->y()+vegetable[value_i[CURRENT_OBJECT]]->height())))
+    if(QObject::sender())
     {
         CURRENT_OBJECT_ACTIVE = true;
     }
@@ -294,7 +291,7 @@ void Level_01::mousePressEvent(QMouseEvent *pe)
 
 void Level_01::mouseMoveEvent(QMouseEvent *pe)
 {
-    if(!CURRENT_OBJECT_ACTIVE)
+    if(CURRENT_OBJECT_ACTIVE)
     {
         vegetable[value_i[CURRENT_OBJECT]]->raise();
         vegetable[value_i[CURRENT_OBJECT]]->move(pe->position().x()-
@@ -347,7 +344,6 @@ void Level_01::mouseReleaseEvent(QMouseEvent *pe)
         sound->play();
         vegetable[value_i[CURRENT_OBJECT]]->move_to_xy(x1,x1_1,y1,y1_1, 1, 4);  // возвращаем овощ на место
     }
-
 }
 
 // ---------------------------------- Победа ----------------------------------------------
@@ -411,6 +407,8 @@ void Level_01::view_rdbvgkm(int current_level)
         dedka->show();
         dedka->move(repka->x()+repka->width(), HEIGHT_SCREEN/2);
         dedka->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/2);
+        break;
+    case 3:
         break;
     }
 

@@ -18,10 +18,7 @@ public:
     explicit Level_03(QWidget *parent = nullptr);
     ~Level_03();
 
-public slots:
-    void initial();                             // Инициализация уровня
-    void get_width(int w);                      // Получаем WIDTH_SCREEN
-    void get_height(int h);                     // Получаем HEIGHT_SCREEN
+    QPushButton     *button_back = nullptr;     // Кнопка назад
 
 private:
     int WIDTH_SCREEN = 0;                       // Ширина экрана
@@ -40,7 +37,7 @@ private:
     QLabel          *background = nullptr;      // Фон уровня
     QMediaPlayer    *sound = nullptr;           // Проигрыватель
     QAudioOutput    *output = nullptr;          // Аудиовыход
-    QPushButton     *button_back = nullptr;     // Кнопка назад
+
     QTimer          *timer_show_kolobok;        // Таймер появления колобка
     QTimer          *timer_victory;             // Таймер анимации при победе
     PicObject       *table = nullptr;           // Стол
@@ -64,16 +61,24 @@ private:
     QList<int>  produkt_value = {};             // Список нумерации продукты
     QList<int>  produkt_mysl_value = {};        // Список нумерации продукты в мысли
 
+
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);
     virtual void mouseMoveEvent(QMouseEvent *pe);
     virtual void mouseReleaseEvent(QMouseEvent *pe);
+
+public slots:
+    void initial();                             // Инициализация уровня
+    void get_width(int w);                      // Получаем WIDTH_SCREEN
+    void get_height(int h);                     // Получаем HEIGHT_SCREEN
+    void back_level();                          // Закрываем окно текущего уровня
 
 private slots:
     void show_kolobok();                        // Колобок появляется на столе
     void victory();                             // Победа
 
 signals:
+    void next_level();                          // Сигнал переход на следующий уровень
 };
 
 #endif // LEVEL__3_H
