@@ -281,7 +281,7 @@ void Level_01::back_level()
 
 void Level_01::mousePressEvent(QMouseEvent *pe)
 {
-    if(QObject::sender())
+    if(QObject::sender() && pe->button() == Qt::LeftButton)
     {
         CURRENT_OBJECT_ACTIVE = true;
     }
@@ -350,7 +350,8 @@ void Level_01::mouseReleaseEvent(QMouseEvent *pe)
 
 void Level_01::victory()
 {
-    int x1, y1;         // конечные координаты
+    int x1 = 0;         // конечные координаты
+    int y1 = 0;
     int x, y;           // начальные координаты
     int direction;      // направление движения овощей
 

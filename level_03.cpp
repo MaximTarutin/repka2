@@ -258,9 +258,9 @@ void Level_03::set_mysl()
 
 // ---------------------- Нажатие кнопки мышки --------------------------------
 
-void Level_03::mousePressEvent(QMouseEvent *)
+void Level_03::mousePressEvent(QMouseEvent *pe)
 {
-    if(QObject::sender())
+    if(QObject::sender() && pe->button() == Qt::LeftButton)
     {
         name_active_object = QObject::sender()->objectName();       // Узнаем имя объекта который испустил сигнал
         PicObject *active_object = this->findChild<PicObject*>(name_active_object);
@@ -393,10 +393,10 @@ void Level_03::victory()
         emit next_level();
         delete timer_victory;
         timer_victory = nullptr;
-        delete kolobok;
-        kolobok = nullptr;
-        delete sound;
-        sound = nullptr;
+        // delete kolobok;
+        // kolobok = nullptr;
+        // delete sound;
+        // sound = nullptr;
     }
     if(FLAG_X&&FLAG_Y)
     {

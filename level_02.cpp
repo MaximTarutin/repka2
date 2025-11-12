@@ -291,7 +291,7 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
         delete hand;
         hand = nullptr;
     }
-    if(QObject::sender())   // Узнаем какой объект подал сигнал сlicked()
+    if(QObject::sender() && pe->button() == Qt::LeftButton)   // Узнаем какой объект подал сигнал сlicked()
     {
         static int step = cell->width()/50;  // расстояние между инструментами расставленных в ячейке
 
@@ -340,6 +340,7 @@ void Level_02::victory()
 {
     sound->setSource(QUrl("qrc:/resource/sound/salut.mp3"));
     sound->play();
+    mysl->hide();
     timer_firework = new QTimer(this);
     timer_firework->start(11000);
     connect(timer_firework, &QTimer::timeout, this, [this]()
