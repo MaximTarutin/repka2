@@ -218,6 +218,18 @@ void Level_03::initial()
         produkt[i]->show();
     }
 
+    prosrach = new PicObject(":/resource/lev_03/prosrach.png", this);
+    prosrach->resize_object(WIDTH_SCREEN/8-WIDTH_SCREEN/145,HEIGHT_SCREEN/10);
+    prosrach->move(WIDTH_SCREEN/2-WIDTH_SCREEN/50,HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
+    prosrach->show();
+
+    kura = new PicObject(":/resource/lev_03/utka.gif", prosrach);
+    kura->resize_object(100,100);
+    kura->move_to_x(-160,160,0,80);
+    kura->animation_start(250,100);
+    kura->show();
+
+
     set_mysl();
 
     connect(produkt[0], &PicObject::clicked, this, &Level_03::mousePressEvent);
@@ -389,7 +401,6 @@ void Level_03::victory()
     {
         timer_victory->stop();
         disconnect(timer_victory, &QTimer::timeout, this, &Level_03::victory);
-        //this->close();
         emit next_level();
         delete timer_victory;
         timer_victory = nullptr;

@@ -38,7 +38,7 @@ private:
 
     int WIDTH_SCREEN = 0;                                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                                          // Высота экрана
-    int CURRENT_LEVEL = 1;                                          // Текущий уровень
+    int CURRENT_LEVEL = 3;                                          // Текущий уровень
 
     void screen_size();                                             // Получаем разрешение экрана и
                                                                     // определяем результаты в переменные

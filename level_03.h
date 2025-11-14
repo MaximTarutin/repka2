@@ -55,6 +55,8 @@ private:
                                                 // 5 - соль
                                                 // 6 - венчик
                                                 // 7 - колобок
+    PicObject       *prosrach = nullptr;        // позрачный объект
+    PicObject       *kura = nullptr;            // анимация курица
 
     QString         name_active_object;         // имя объекта по которому кликнули мышкой
     QList<QList<int>>  coordinates = {};        // Список координаты продуктов (список в списке - [[a,b],[a,b],...,[a,b]])
