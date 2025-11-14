@@ -389,14 +389,16 @@ void Level_03::victory()
     {
         timer_victory->stop();
         disconnect(timer_victory, &QTimer::timeout, this, &Level_03::victory);
-        this->close();
+        //this->close();
         emit next_level();
         delete timer_victory;
         timer_victory = nullptr;
-        // delete kolobok;
-        // kolobok = nullptr;
-        // delete sound;
-        // sound = nullptr;
+        delete kolobok;
+        kolobok = nullptr;
+        delete sound;
+        sound = nullptr;
+        back_level();
+        return;
     }
     if(FLAG_X&&FLAG_Y)
     {

@@ -352,6 +352,8 @@ void Level_02::victory()
                     instruments[i] = nullptr;
                     instruments_mysl[i] = nullptr;
                 }
+                delete mysl;
+                mysl = nullptr;
                 this->close();
                 emit next_level();
             });
