@@ -17,9 +17,11 @@
         <file>resource/lev_03/tazik-05.png</file>
         <file>resource/lev_03/tazik-06.png</file>
         <file>resource/lev_03/venchik.png</file>
-        <file>resource/lev_03/kura.gif</file>
         <file>resource/lev_03/utka.gif</file>
         <file>resource/lev_03/prosrach.png</file>
         <file>resource/lev_03/prosrach1.png</file>
+        <file>resource/lev_03/cat.gif</file>
+        <file>resource/lev_03/duck.gif</file>
+        <file>resource/lev_03/kar.gif</file>
     </qresource>
 </RCC>

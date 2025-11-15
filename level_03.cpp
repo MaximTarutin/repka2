@@ -218,17 +218,19 @@ void Level_03::initial()
         produkt[i]->show();
     }
 
+    // объекты для анимации на уровне
+
+    timer_animate = new QTimer(this);
     prosrach = new PicObject(":/resource/lev_03/prosrach.png", this);
-    prosrach->resize_object(WIDTH_SCREEN/8-WIDTH_SCREEN/145,HEIGHT_SCREEN/10);
-    prosrach->move(WIDTH_SCREEN/2-WIDTH_SCREEN/50,HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
-    prosrach->show();
+    duck_1 = new PicObject(":/resource/lev_03/utka.gif", prosrach);
+    duck = new PicObject(":/resource/lev_03/duck.gif", prosrach);
+    kar = new PicObject(":/resource/lev_03/kar.gif", prosrach);
+    cat = new PicObject(":/resource/lev_03/cat.gif", prosrach);
 
-    kura = new PicObject(":/resource/lev_03/utka.gif", prosrach);
-    kura->resize_object(100,100);
-    kura->move_to_x(-160,160,0,80);
-    kura->animation_start(250,100);
-    kura->show();
-
+    duck_1->move(0-prosrach->width()*2,0);
+    duck->move(0-prosrach->width()*2,0);
+    kar->move(0-prosrach->width()*2,0);
+    cat->move(prosrach->width()+prosrach->width(),0);
 
     set_mysl();
 
@@ -241,6 +243,13 @@ void Level_03::initial()
     connect(produkt[6], &PicObject::clicked, this, &Level_03::mousePressEvent);
     connect(produkt[7], &PicObject::clicked, this, &Level_03::mousePressEvent);
     connect(tazik[6],   &PicObject::clicked, this, &Level_03::mousePressEvent);
+    connect(timer_animate, &QTimer::timeout, this, &Level_03::animate);
+    connect(duck_1, &PicObject::move_end, this, [this](){timer_animate->start(300);duck_1->hide();});
+    connect(duck, &PicObject::move_end, this, [this](){timer_animate->start(300);duck->hide();});
+    connect(kar, &PicObject::move_end, this, [this](){timer_animate->start(300);kar->hide();});
+    connect(cat, &PicObject::move_end, this, [this](){timer_animate->start(300);cat->hide();});
+
+    timer_animate->start(300);
 }
 
 // ----------------------- Перемешиваем ингридиенты ------------------------------
@@ -481,6 +490,51 @@ void Level_03::victory()
     }
     kolobok->move(x,y);
 }
+
+// ------------------------ Анимация на уровне -----------------------------------
+
+void Level_03::animate()
+{
+    int k = 0;
+    k = rnd(0,10);
+    switch(k)
+    {
+    case 6:
+        timer_animate->stop();
+        prosrach->resize_object(WIDTH_SCREEN/8-WIDTH_SCREEN/120,HEIGHT_SCREEN/10);
+        prosrach->move(WIDTH_SCREEN/2-WIDTH_SCREEN/50,HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
+        duck_1->move_to_x(0-prosrach->width(),prosrach->width()+prosrach->width()/2, 0, 80);
+        duck_1->animation_start(WIDTH_SCREEN/8, HEIGHT_SCREEN/10);
+        duck_1->show();
+        break;
+    case 1:
+        timer_animate->stop();
+        prosrach->move(WIDTH_SCREEN/2-WIDTH_SCREEN/50,HEIGHT_SCREEN/2-HEIGHT_SCREEN/10);
+        duck->move_to_x(0-prosrach->width(),prosrach->width()+prosrach->width()/2, 0, 80);
+        duck->animation_start(WIDTH_SCREEN/14, HEIGHT_SCREEN/8);
+        duck->show();
+        break;
+    case 4:
+        timer_animate->stop();
+        prosrach->move(WIDTH_SCREEN/2-WIDTH_SCREEN/50,HEIGHT_SCREEN/2-HEIGHT_SCREEN/8);
+        prosrach->resize_object(WIDTH_SCREEN/8-WIDTH_SCREEN/90,HEIGHT_SCREEN/10);
+        kar->move_to_x(0-prosrach->width(),prosrach->width()+prosrach->width()/2, 0, 80);
+        kar->animation_start(WIDTH_SCREEN/14, HEIGHT_SCREEN/8);
+        kar->show();
+        break;
+    case 3:
+        timer_animate->stop();
+        prosrach->resize_object(WIDTH_SCREEN/8-WIDTH_SCREEN/120,HEIGHT_SCREEN/10);
+        prosrach->move(WIDTH_SCREEN/2-WIDTH_SCREEN/50,HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
+        cat->move_to_x(prosrach->width()+prosrach->width()/2, 0-prosrach->width(), 0, 80);
+        cat->animation_start(WIDTH_SCREEN/8, HEIGHT_SCREEN/10);
+        cat->show();
+        break;
+    }
+}
+
+
+
 
 // -------------------------- Закрываем текущее окно --------------------------------
 

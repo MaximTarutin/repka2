@@ -40,6 +40,7 @@ private:
 
     QTimer          *timer_show_kolobok;        // Таймер появления колобка
     QTimer          *timer_victory;             // Таймер анимации при победе
+    QTimer          *timer_animate;             // Таймер анимации на уровне
     PicObject       *table = nullptr;           // Стол
     PicObject       *babka = nullptr;           // Бабка
     PicObject       *mysl = nullptr;            // Мысль бабки
@@ -56,7 +57,10 @@ private:
                                                 // 6 - венчик
                                                 // 7 - колобок
     PicObject       *prosrach = nullptr;        // позрачный объект
-    PicObject       *kura = nullptr;            // анимация курица
+    PicObject       *duck = nullptr;            // анимация утка летит
+    PicObject       *kar = nullptr;             // анимация ворона
+    PicObject       *cat = nullptr;             // анимация кошка
+    PicObject       *duck_1 = nullptr;          // анимация утка идет
 
     QString         name_active_object;         // имя объекта по которому кликнули мышкой
     QList<QList<int>>  coordinates = {};        // Список координаты продуктов (список в списке - [[a,b],[a,b],...,[a,b]])
@@ -77,6 +81,7 @@ public slots:
 
 private slots:
     void show_kolobok();                        // Колобок появляется на столе
+    void animate();                             // анимация на уровне
     void victory();                             // Победа
 
 signals:
