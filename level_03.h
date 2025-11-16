@@ -29,6 +29,7 @@ private:
     int y[8] = {};
     int old_x = 0;                              // координаты объекта до перемещения
     int old_y = 0;
+    bool HELP_FLAG = false;                     // false - первая подсказка, true - подсказка тазик в печь
 
     int  rnd(int a, int b);                     // Случайные числа в диапазоне от a до b
     void mix_ingridients();                     // перемешиваем список ингридиентов
@@ -47,6 +48,7 @@ private:
     PicObject       *tazik[8] = {};             // Состояния тазика по мере наполняемости продуктами
     PicObject       *kolobok = nullptr;         // Колобок
     PicObject       *produkt[8] = {};           // Продукты
+    PicObject       *hand = nullptr;            // Рука - подсказка
     PicObject       *produkt_mysl[8] = {};      // Продукты в мысли:
                                                 // 0 - тазик
                                                 // 1 - молоко
@@ -83,6 +85,7 @@ private slots:
     void show_kolobok();                        // Колобок появляется на столе
     void animate();                             // анимация на уровне
     void victory();                             // Победа
+    void help();                                // Подсказка
 
 signals:
     void next_level();                          // Сигнал переход на следующий уровень

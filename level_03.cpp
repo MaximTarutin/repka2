@@ -37,6 +37,18 @@ Level_03::~Level_03()
         delete tazik[i];
         tazik[i] = nullptr;
     }
+    delete timer_animate;
+    timer_animate = nullptr;
+    delete timer_show_kolobok;
+    timer_show_kolobok = nullptr;
+    delete duck;
+    duck = nullptr;
+    delete duck_1;
+    duck_1 = nullptr;
+    delete kar;
+    kar = nullptr;
+    delete cat;
+    cat = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -250,6 +262,14 @@ void Level_03::initial()
     connect(cat, &PicObject::move_end, this, [this](){timer_animate->start(300);cat->hide();});
 
     timer_animate->start(300);
+
+    hand = new PicObject(":/resource/lev_01/ruka.png", this);
+    hand->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
+    hand->move(500, 500);
+    hand->show();
+    help();
+
+    connect(hand, &PicObject::move_end, this, &Level_03::help);
 }
 
 // ----------------------- Перемешиваем ингридиенты ------------------------------
@@ -284,6 +304,12 @@ void Level_03::mousePressEvent(QMouseEvent *pe)
     if(QObject::sender() && pe->button() == Qt::LeftButton)
     {
         name_active_object = QObject::sender()->objectName();       // Узнаем имя объекта который испустил сигнал
+        qDebug() << name_active_object;
+        if(name_active_object=="tazik" || name_active_object=="tazik-6")
+        {
+            hand->hide();
+            disconnect(hand, &PicObject::move_end, this, &Level_03::help);
+        }
         PicObject *active_object = this->findChild<PicObject*>(name_active_object);
         old_x = active_object->x();
         old_y = active_object->y();
@@ -326,6 +352,13 @@ void Level_03::mouseReleaseEvent(QMouseEvent *pe)
                 sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
                 sound->play();
             }
+            if(NUMBER==7) // Делаем подсказку тазик в печь
+            {
+                HELP_FLAG = true;
+                hand->show();
+                help();
+                connect(hand, &PicObject::move_end, this, &Level_03::help);
+            }
         } else
         {
             active_object->move_to_xy(pe->position().x(), old_x, pe->position().y(), old_y, 1, 4);
@@ -351,10 +384,13 @@ void Level_03::mouseReleaseEvent(QMouseEvent *pe)
             delete produkt[7];
             produkt[7] = nullptr;
             timer_show_kolobok = new QTimer(this);
-            timer_show_kolobok->start(10);
+            timer_show_kolobok->start(1);
             connect(timer_show_kolobok, &QTimer::timeout, this, &Level_03::show_kolobok);
             sound->setSource(QUrl("qrc:/resource/sound/show.mp3"));
             sound->play();
+        } else
+        {
+            tazik[6]->move(old_x, old_y);
         }
     }
     name_active_object = nullptr;
@@ -418,6 +454,18 @@ void Level_03::victory()
         delete sound;
         sound = nullptr;
         back_level();
+        delete timer_show_kolobok;
+        timer_show_kolobok = nullptr;
+        delete timer_animate;
+        timer_animate = nullptr;
+        delete duck;
+        duck = nullptr;
+        delete duck_1;
+        duck_1 = nullptr;
+        delete kar;
+        kar = nullptr;
+        delete cat;
+        cat = nullptr;
         return;
     }
     if(FLAG_X&&FLAG_Y)
@@ -533,8 +581,25 @@ void Level_03::animate()
     }
 }
 
+// --------------------------- Подсказка -------------------------------------------
 
-
+void Level_03::help()
+{
+    hand->raise();
+    if(!HELP_FLAG)
+    {
+        hand->move(produkt[0]->x()+produkt[0]->width()/2,
+                   produkt[0]->y()+produkt[0]->height()/2);
+        hand->move_to_xy(produkt[0]->x()+produkt[0]->width()/2,table->x()+table->width()/2,
+                         produkt[0]->y()+produkt[0]->height()/2,table->y(),2);
+    } else
+    {
+        hand->move(produkt[6]->x()+produkt[6]->width()/2,
+                   produkt[6]->y()+produkt[6]->height()/2);
+        hand->move_to_xy(produkt[6]->x()+produkt[6]->width()/2, WIDTH_SCREEN/6,
+                         produkt[6]->y()+produkt[6]->height()/2, HEIGHT_SCREEN/2, 2);
+    }
+}
 
 // -------------------------- Закрываем текущее окно --------------------------------
 

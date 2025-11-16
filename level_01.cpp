@@ -345,6 +345,7 @@ void Level_01::mouseReleaseEvent(QMouseEvent *pe)
         }
         vegetable[value_i[CURRENT_OBJECT]]->move(vegetable_gray[value_i[CURRENT_OBJECT]]->x(),
                                                  vegetable_gray[value_i[CURRENT_OBJECT]]->y());
+        disconnect(vegetable[value_i[CURRENT_OBJECT]], &PicObject::clicked, this, &Level_01::mousePressEvent);
         CURRENT_OBJECT++;
         sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
         sound->play();
