@@ -12,6 +12,7 @@ SOURCES += \
     level_01.cpp \
     level_02.cpp \
     level_03.cpp \
+    level_04.cpp \
     main.cpp \
     mainwindow.cpp \
     picobject.cpp
@@ -20,6 +21,7 @@ HEADERS += \
     level_01.h \
     level_02.h \
     level_03.h \
+    level_04.h \
     mainwindow.h \
     picobject.h
 
