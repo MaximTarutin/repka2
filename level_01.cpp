@@ -99,20 +99,6 @@ void Level_01::initial()
     button_next->move(WIDTH_SCREEN-WIDTH_SCREEN/12, HEIGHT_SCREEN/20);
     button_next->hide();
 
-
-    // repka = new PicObject(":/resource/lev_01/repka.png", this);
-    // repka->show();
-    // repka->move(WIDTH_SCREEN/25, HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
-    // repka->resize_object(WIDTH_SCREEN/10*2, HEIGHT_SCREEN/4*2);
-    // dedka = new PicObject(":/resource/lev_01/dedka.png", this);
-    // dedka->show();
-    // dedka->move(repka->x()+repka->width()-repka->width()/3, HEIGHT_SCREEN/2);
-    // dedka->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/2);
-    // babka = new PicObject(":/resource/lev_01/babka.png",this);
-    // babka->show();
-    // babka->move(dedka->x()+dedka->width()-dedka->width()/5, HEIGHT_SCREEN/2);
-    // babka->resize_object(WIDTH_SCREEN/5,HEIGHT_SCREEN/2);
-
     vegetable[0] = new PicObject(":/resource/lev_01/repka.png", this);
     vegetable[0]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/4);
     vegetable[0]->setObjectName("repka");

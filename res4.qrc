@@ -1,0 +1,32 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resource/lev_04/confetti-12.gif</file>
+        <file>resource/lev_04/fon.jpg</file>
+        <file>resource/lev_04/grib.png</file>
+        <file>resource/lev_04/holst.png</file>
+        <file>resource/lev_04/karandash-1.png</file>
+        <file>resource/lev_04/karandash-2.png</file>
+        <file>resource/lev_04/karandash-3.png</file>
+        <file>resource/lev_04/karandash-4.png</file>
+        <file>resource/lev_04/karandash-5.png</file>
+        <file>resource/lev_04/karandash-6.png</file>
+        <file>resource/lev_04/karandash-7.png</file>
+        <file>resource/lev_04/karandash.png</file>
+        <file>resource/lev_04/korzina.png</file>
+        <file>resource/lev_04/lico.png</file>
+        <file>resource/lev_04/platie.png</file>
+        <file>resource/lev_04/platok.png</file>
+        <file>resource/lev_04/sapogi.png</file>
+        <file>resource/lev_04/vnuchka-1.png</file>
+        <file>resource/lev_04/vnuchka-2.png</file>
+        <file>resource/lev_04/vnuchka-3.png</file>
+        <file>resource/lev_04/vnuchka-4.png</file>
+        <file>resource/lev_04/vnuchka-5.png</file>
+        <file>resource/lev_04/vnuchka-6.png</file>
+        <file>resource/lev_04/vnuchka-7.png</file>
+        <file>resource/lev_04/vnuchka-111.png</file>
+        <file>resource/lev_04/vnuchka.png</file>
+        <file>resource/lev_04/vnuchka.xcf</file>
+        <file>resource/lev_04/volosy.png</file>
+    </qresource>
+</RCC>
