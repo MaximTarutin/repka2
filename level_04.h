@@ -25,6 +25,10 @@ private:
     PicObject   *vnuchka = nullptr;             // Внучка
     PicObject   *mysl = nullptr;                // Мысль внучки
     PicObject   *holst = nullptr;               // Холст
+    PicObject   *vnuchka_holst = nullptr;       // Внучка на холсте
+    PicObject   *container = nullptr;           // Карандашница
+    PicObject   *lico = nullptr;                // Лицо
+    PicObject   *platok = nullptr;              // Платок
 
 public slots:
     void get_width(int w);                      // Получаем ширину экрана

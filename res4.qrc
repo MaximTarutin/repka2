@@ -25,8 +25,7 @@
         <file>resource/lev_04/vnuchka-6.png</file>
         <file>resource/lev_04/vnuchka-7.png</file>
         <file>resource/lev_04/vnuchka-111.png</file>
-        <file>resource/lev_04/vnuchka.png</file>
-        <file>resource/lev_04/vnuchka.xcf</file>
         <file>resource/lev_04/volosy.png</file>
+        <file>resource/lev_04/vnuchka.png</file>
     </qresource>
 </RCC>

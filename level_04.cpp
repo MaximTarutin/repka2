@@ -17,6 +17,10 @@ Level_04::~Level_04()
     mysl = nullptr;
     delete vnuchka;
     vnuchka = nullptr;
+    delete holst;
+    holst = nullptr;
+    delete vnuchka_holst;
+    vnuchka_holst = nullptr;
 }
 
 // ------------------- Получаем ширину и высоту экрана --------------------
@@ -59,10 +63,20 @@ void Level_04::initial()
     mysl->show();
 
     holst = new PicObject(":/resource/lev_04/holst.png", this);
-    holst->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/2+HEIGHT_SCREEN/6);
+    holst->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/2+HEIGHT_SCREEN/3);
     holst->move(WIDTH_SCREEN/2, HEIGHT_SCREEN/2-HEIGHT_SCREEN/4);
     holst->show();
-}
+
+    vnuchka_holst = new PicObject(":/resource/lev_04/vnuchka.png", holst);
+    vnuchka_holst->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/3);
+    vnuchka_holst->move(holst->width()/6, holst->height()/7);
+    vnuchka_holst->show();
+
+    container = new PicObject(":/resource/lev_02/fon.png", this);
+    container->resize_object(WIDTH_SCREEN/2, HEIGHT_SCREEN/13);
+    container->move(WIDTH_SCREEN/3, HEIGHT_SCREEN/20);
+    container->show();
+    }
 
 // -------------------------- Закрываем текущее окно --------------------------------
 
