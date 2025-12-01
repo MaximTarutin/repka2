@@ -29,6 +29,7 @@ private:
     PicObject   *container = nullptr;           // Карандашница
     PicObject   *lico = nullptr;                // Лицо
     PicObject   *platok = nullptr;              // Платок
+    PicObject   *pens[7] = {};                  // Карандаши
 
 public slots:
     void get_width(int w);                      // Получаем ширину экрана
