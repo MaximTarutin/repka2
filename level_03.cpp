@@ -304,7 +304,6 @@ void Level_03::mousePressEvent(QMouseEvent *pe)
     if(QObject::sender() && pe->button() == Qt::LeftButton)
     {
         name_active_object = QObject::sender()->objectName();       // Узнаем имя объекта который испустил сигнал
-        qDebug() << name_active_object;
         if(name_active_object=="tazik" || name_active_object=="tazik-6")
         {
             hand->hide();

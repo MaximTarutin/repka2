@@ -20,7 +20,10 @@ public:
 private:
     int WIDTH_SCREEN = 0;                       // Ширина экрана
     int HEIGHT_SCREEN = 0;                      // Высота экрана
-    int rnd(int a, int b);                      // Случайное число в диапазоне от a до b
+    int STEP = 0;                               // Шаг выполнения (всего 7)
+    int ACTIVE_PEN = 10;                        // Активный карандаш, 10 - нет активных
+    int old_x = 0;                              // координаты объекта до перемещения
+    int old_y = 0;
 
     QLabel      *background = nullptr;          // Фон
     PicObject   *vnuchka = nullptr;             // Внучка
@@ -30,13 +33,19 @@ private:
     PicObject   *container = nullptr;           // Карандашница
     PicObject   *mysl_obj[7] = {};              // Объекты в мысли
     PicObject   *pens[7] = {};                  // Карандаши
+    QString     name_active_object;             // имя объекта по которому кликнули мышкой
 
     QList<int> value_p = {};                    // Список нумерации карандашейQList<int> value_m = {};
     QList<int> value_m = {};                    // Список предметов в мысли
     QList<QList<int>>  coordinates = {};        // Список координат карандашей в карандашнице
 
+    int rnd(int a, int b);                      // Случайное число в диапазоне от a до b
     void mix_pens();                            // Перемешиваем список карандашей
     void mix_mysl();                            // Перемешиваем список предметов в мысли
+
+protected:
+    virtual void mousePressEvent(QMouseEvent *pe);      // Нажатие кнопки мышки
+    virtual void mouseReleaseEvent(QMouseEvent *pe);    // Отпускание кнопки мышки
 
 public slots:
     void get_width(int w);                      // Получаем ширину экрана

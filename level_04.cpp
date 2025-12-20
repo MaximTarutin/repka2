@@ -70,7 +70,12 @@ void Level_04::initial()
     background->setStyleSheet("border-image: url(:/resource/lev_04/fon.jpg);");
     this->setCentralWidget(background);
     background->show();
+
     button_back = new QPushButton(this);
+    button_back->setStyleSheet("border-image: url(:/resource/lev_01/return.png);");
+    button_back->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
+    button_back->move(WIDTH_SCREEN/30, HEIGHT_SCREEN/20);
+    button_back->show();
 
     vnuchka = new PicObject(":/resource/lev_04/vnuchka-111.png", this);
     vnuchka->resize_object(WIDTH_SCREEN/8, HEIGHT_SCREEN/3);
@@ -99,15 +104,15 @@ void Level_04::initial()
 
     // Инициализируем карандаши
 
-    pens[0] = new PicObject(":/resource/lev_04/karandash-1.png", this);
+    pens[0] = new PicObject(":/resource/lev_04/karandash-2.png", this);
     pens[0]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    pens[1] = new PicObject(":/resource/lev_04/karandash-2.png", this);
+    pens[1] = new PicObject(":/resource/lev_04/karandash-1.png", this);
     pens[1]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
     pens[2] = new PicObject(":/resource/lev_04/karandash-3.png", this);
     pens[2]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    pens[3] = new PicObject(":/resource/lev_04/karandash-4.png", this);
+    pens[3] = new PicObject(":/resource/lev_04/karandash-5.png", this);
     pens[3]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    pens[4] = new PicObject(":/resource/lev_04/karandash-5.png", this);
+    pens[4] = new PicObject(":/resource/lev_04/karandash-4.png", this);
     pens[4]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
     pens[5] = new PicObject(":/resource/lev_04/karandash-6.png", this);
     pens[5]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
@@ -170,44 +175,81 @@ void Level_04::initial()
                                     << container->y()+container->height()/8);
 
     mix_pens();     // Перемешиваем список карандашей
+    mix_mysl();     // Перемешиваем список объектов в мысли внучки
 
-    for(int i=0; i<=6; i++)
+    for(int i=0; i<=6; i++)     // Расставляем карандаши
     {
         pens[value_p[i]]->move(coordinates[i].at(0), coordinates[i].at(1));
         pens[i]->show();
+    }
+
+    mysl_obj[value_m[STEP]]->show();
+
+    connect(pens[0], &PicObject::clicked, this, [this](){ACTIVE_PEN=0;});
+    connect(pens[1], &PicObject::clicked, this, [this](){ACTIVE_PEN=1;});
+    connect(pens[2], &PicObject::clicked, this, [this](){ACTIVE_PEN=2;});
+    connect(pens[3], &PicObject::clicked, this, [this](){ACTIVE_PEN=3;});
+    connect(pens[4], &PicObject::clicked, this, [this](){ACTIVE_PEN=4;});
+    connect(pens[5], &PicObject::clicked, this, [this](){ACTIVE_PEN=5;});
+    connect(pens[6], &PicObject::clicked, this, [this](){ACTIVE_PEN=6;});
+    for(int i=0; i<=6; i++)
+    {
+        connect(pens[i], &PicObject::clicked, this, &Level_04::mousePressEvent);
     }
 }
 
 // ---------------------------  Перемешиваем список карандашей ----------------------
 
 void Level_04::mix_pens()
+{
+    int k = 0;
+    int temp = 0;
+    for(int i=0; i<=6; i++)
     {
-        int k = 0;
-        int temp = 0;
-
-        for(int i=0; i<=6; i++)
-        {
-            k = rnd(0,6);
-            temp = value_p[k];
-            value_p[k] = value_p[i];
-            value_p[i] = temp;            
-        }
+        k = rnd(0,6);
+        temp = value_p[k];
+        value_p[k] = value_p[i];
+        value_p[i] = temp;
     }
+}
 
 // ---------------------------  Перемешиваем список предметов в мысли ----------------------
 
-    void Level_04::mix_mysl()
+void Level_04::mix_mysl()
+{
+    int k = 0;
+    int temp = 0;
+    for(int i=0; i<=6; i++)
     {
-        int k = 0;
-        int temp = 0;
-        for(int i=0; i<=6; i++)
-        {
-            k = rnd(0,6);
-            temp = value_m[k];
-            value_m[k] = value_m[i];
-            value_m[i] = temp;
-        }
+        k = rnd(0,6);
+        temp = value_m[k];
+        value_m[k] = value_m[i];
+        value_m[i] = temp;
     }
+}
+
+// --------------------- Нажатие кнопки мышки -------------------------------------
+
+void Level_04::mousePressEvent(QMouseEvent *pe)
+{
+    if(QObject::sender() && pe->button() == Qt::LeftButton)         // Если нажали по какому-либо объекту
+    {
+        old_x = pens[ACTIVE_PEN]->x();  // запоминаем координаты выбранного карандаша
+        old_y = pens[ACTIVE_PEN]->y();
+        qDebug() << old_x << old_y;
+    }
+    else
+    {
+        ACTIVE_PEN = 10;
+    }
+}
+
+// ---------------------- Отпускание кнопки мышки ----------------------------------
+
+void Level_04::mouseReleaseEvent(QMouseEvent *pe)
+{
+
+}
 
 // -------------------------- Закрываем текущее окно --------------------------------
 
