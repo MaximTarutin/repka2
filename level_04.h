@@ -28,8 +28,7 @@ private:
     PicObject   *holst = nullptr;               // Холст
     PicObject   *vnuchka_holst = nullptr;       // Внучка на холсте
     PicObject   *container = nullptr;           // Карандашница
-    PicObject   *lico = nullptr;                // Лицо
-    PicObject   *platok = nullptr;              // Платок
+    PicObject   *mysl_obj[7] = {};              // Объекты в мысли
     PicObject   *pens[7] = {};                  // Карандаши
 
     QList<int> value_p = {};                    // Список нумерации карандашейQList<int> value_m = {};

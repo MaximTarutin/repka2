@@ -12,9 +12,7 @@ Level_04::~Level_04()
     delete background;
     background = nullptr;
     delete button_back;
-    button_back = nullptr;
-    delete mysl;
-    mysl = nullptr;
+    button_back = nullptr;    
     delete vnuchka;
     vnuchka = nullptr;
     delete holst;
@@ -25,7 +23,11 @@ Level_04::~Level_04()
     {
         delete pens[i];
         pens[i] = nullptr;
+        delete mysl_obj[i];
+        mysl_obj[i] = nullptr;
     }
+    delete mysl;
+    mysl = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -95,41 +97,60 @@ void Level_04::initial()
     container->move(WIDTH_SCREEN/5, HEIGHT_SCREEN/20);
     container->show();
 
+    // Инициализируем карандаши
+
     pens[0] = new PicObject(":/resource/lev_04/karandash-1.png", this);
     pens[0]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    //pens[0]->move(container->x()+container->width()/15,
-                  //container->y()+container->height()/8);
-   //pens[0]->show();
-
     pens[1] = new PicObject(":/resource/lev_04/karandash-2.png", this);
     pens[1]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    //pens[1]->move(pens[0]->x()+container->width()/7, pens[0]->y());
-    //pens[1]->show();
-
     pens[2] = new PicObject(":/resource/lev_04/karandash-3.png", this);
     pens[2]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    //pens[2]->move(pens[1]->x()+container->width()/7, pens[1]->y());
-    //pens[2]->show();
-
     pens[3] = new PicObject(":/resource/lev_04/karandash-4.png", this);
     pens[3]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    //pens[3]->move(pens[2]->x()+container->width()/7, pens[2]->y());
-    //pens[3]->show();
-
     pens[4] = new PicObject(":/resource/lev_04/karandash-5.png", this);
     pens[4]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    //pens[4]->move(pens[3]->x()+container->width()/7, pens[3]->y());
-    //pens[4]->show();
-
     pens[5] = new PicObject(":/resource/lev_04/karandash-6.png", this);
     pens[5]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    //pens[5]->move(pens[4]->x()+container->width()/7, pens[4]->y());
-    //pens[5]->show();
-
     pens[6] = new PicObject(":/resource/lev_04/karandash-7.png", this);
     pens[6]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    //pens[6]->move(pens[5]->x()+container->width()/7, pens[5]->y());
-    //pens[6]->show();
+
+    // Инициализируем объекты в мыслях внучки
+
+    mysl_obj[0] = new PicObject(":/resource/lev_04/platok.png", mysl);
+    mysl_obj[0]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/8);
+    mysl_obj[0]->move(mysl->width()/2-mysl_obj[0]->width()/2,
+                      mysl->height()/2-mysl_obj[0]->height());
+    mysl_obj[0]->hide();
+    mysl_obj[1] = new PicObject(":/resource/lev_04/lico.png", mysl);
+    mysl_obj[1]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
+    mysl_obj[1]->move(mysl->width()/2-mysl_obj[1]->width()/2,
+                      mysl->height()/2-mysl_obj[1]->height());
+    mysl_obj[1]->hide();
+    mysl_obj[2] = new PicObject(":/resource/lev_04/volosy.png", mysl);
+    mysl_obj[2]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/15);
+    mysl_obj[2]->move(mysl->width()/2-mysl_obj[2]->width()/2,
+                      mysl->height()/2-mysl_obj[2]->height());
+    mysl_obj[2]->hide();
+    mysl_obj[3] = new PicObject(":/resource/lev_04/korzina.png", mysl);
+    mysl_obj[3]->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
+    mysl_obj[3]->move(mysl->width()/2-mysl_obj[3]->width()/2,
+                      mysl->height()/2-mysl_obj[3]->height());
+    mysl_obj[3]->hide();
+    mysl_obj[4] = new PicObject(":/resource/lev_04/grib.png", mysl);
+    mysl_obj[4]->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
+    mysl_obj[4]->move(mysl->width()/2-mysl_obj[4]->width()/2,
+                      mysl->height()/2-mysl_obj[4]->height());
+    mysl_obj[4]->hide();
+    mysl_obj[5] = new PicObject(":/resource/lev_04/platie.png", mysl);
+    mysl_obj[5]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/8);
+    mysl_obj[5]->move(mysl->width()/2-mysl_obj[5]->width()/2,
+                      mysl->height()/2-mysl_obj[5]->height());
+    mysl_obj[5]->hide();
+    mysl_obj[6] = new PicObject(":/resource/lev_04/sapogi.png", mysl);
+    mysl_obj[6]->resize_object(WIDTH_SCREEN/15, HEIGHT_SCREEN/20);
+    mysl_obj[6]->move(mysl->width()/2-mysl_obj[6]->width()/2,
+                      mysl->height()/2-mysl_obj[6]->height());
+    mysl_obj[6]->hide();
 
     // Список координат карандашей в карандашнице
 
