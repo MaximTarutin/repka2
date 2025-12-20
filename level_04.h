@@ -20,6 +20,7 @@ public:
 private:
     int WIDTH_SCREEN = 0;                       // Ширина экрана
     int HEIGHT_SCREEN = 0;                      // Высота экрана
+    int rnd(int a, int b);                      // Случайное число в диапазоне от a до b
 
     QLabel      *background = nullptr;          // Фон
     PicObject   *vnuchka = nullptr;             // Внучка
@@ -30,6 +31,13 @@ private:
     PicObject   *lico = nullptr;                // Лицо
     PicObject   *platok = nullptr;              // Платок
     PicObject   *pens[7] = {};                  // Карандаши
+
+    QList<int> value_p = {};                    // Список нумерации карандашейQList<int> value_m = {};
+    QList<int> value_m = {};                    // Список предметов в мысли
+    QList<QList<int>>  coordinates = {};        // Список координат карандашей в карандашнице
+
+    void mix_pens();                            // Перемешиваем список карандашей
+    void mix_mysl();                            // Перемешиваем список предметов в мысли
 
 public slots:
     void get_width(int w);                      // Получаем ширину экрана

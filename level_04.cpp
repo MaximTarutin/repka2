@@ -28,6 +28,16 @@ Level_04::~Level_04()
     }
 }
 
+//------------------ генератор случайных чисел в диапазоне от a до b -----------------------
+
+int Level_04::rnd(int a, int b)
+{
+    int k;
+    b=b-a+1;
+    k = rand()%b+a;
+    return k;
+}
+
 // ------------------- Получаем ширину и высоту экрана --------------------
 
 void Level_04::get_width(int w)
@@ -44,6 +54,9 @@ void Level_04::get_height(int h)
 
 void Level_04::initial()
 {
+    value_p = {0,1,2,3,4,5,6};  // нумерация карандашей в списке
+    value_m = {0,1,2,3,4,5,6};  // нумерация предметов в списке
+
     // ------ курсор -------
 
     QCursor cursorTarget = QCursor(QPixmap(":/resource/logo/cursor1.png"),0,0);
@@ -84,39 +97,95 @@ void Level_04::initial()
 
     pens[0] = new PicObject(":/resource/lev_04/karandash-1.png", this);
     pens[0]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    pens[0]->move(container->x()+container->width()/15,
-                  container->y()+container->height()/8);
-    pens[0]->show();
+    //pens[0]->move(container->x()+container->width()/15,
+                  //container->y()+container->height()/8);
+   //pens[0]->show();
 
     pens[1] = new PicObject(":/resource/lev_04/karandash-2.png", this);
     pens[1]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    pens[1]->move(pens[0]->x()+container->width()/7, pens[0]->y());
-    pens[1]->show();
+    //pens[1]->move(pens[0]->x()+container->width()/7, pens[0]->y());
+    //pens[1]->show();
 
     pens[2] = new PicObject(":/resource/lev_04/karandash-3.png", this);
     pens[2]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    pens[2]->move(pens[1]->x()+container->width()/7, pens[1]->y());
-    pens[2]->show();
+    //pens[2]->move(pens[1]->x()+container->width()/7, pens[1]->y());
+    //pens[2]->show();
 
     pens[3] = new PicObject(":/resource/lev_04/karandash-4.png", this);
     pens[3]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    pens[3]->move(pens[2]->x()+container->width()/7, pens[2]->y());
-    pens[3]->show();
+    //pens[3]->move(pens[2]->x()+container->width()/7, pens[2]->y());
+    //pens[3]->show();
 
     pens[4] = new PicObject(":/resource/lev_04/karandash-5.png", this);
     pens[4]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    pens[4]->move(pens[3]->x()+container->width()/7, pens[3]->y());
-    pens[4]->show();
+    //pens[4]->move(pens[3]->x()+container->width()/7, pens[3]->y());
+    //pens[4]->show();
 
     pens[5] = new PicObject(":/resource/lev_04/karandash-6.png", this);
     pens[5]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    pens[5]->move(pens[4]->x()+container->width()/7, pens[4]->y());
-    pens[5]->show();
+    //pens[5]->move(pens[4]->x()+container->width()/7, pens[4]->y());
+    //pens[5]->show();
 
     pens[6] = new PicObject(":/resource/lev_04/karandash-7.png", this);
     pens[6]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
-    pens[6]->move(pens[5]->x()+container->width()/7, pens[5]->y());
-    pens[6]->show();
+    //pens[6]->move(pens[5]->x()+container->width()/7, pens[5]->y());
+    //pens[6]->show();
+
+    // Список координат карандашей в карандашнице
+
+    coordinates.append(QList<int>() << container->x()+container->width()/15
+                                    << container->y()+container->height()/8);
+    coordinates.append(QList<int>() << container->x()+container->width()/15+container->width()/7
+                                    << container->y()+container->height()/8);
+    coordinates.append(QList<int>() << container->x()+container->width()/15+(container->width()/7)*2
+                                    << container->y()+container->height()/8);
+    coordinates.append(QList<int>() << container->x()+container->width()/15+(container->width()/7)*3
+                                    << container->y()+container->height()/8);
+    coordinates.append(QList<int>() << container->x()+container->width()/15+(container->width()/7)*4
+                                    << container->y()+container->height()/8);
+    coordinates.append(QList<int>() << container->x()+container->width()/15+(container->width()/7)*5
+                                    << container->y()+container->height()/8);
+    coordinates.append(QList<int>() << container->x()+container->width()/15+(container->width()/7)*6
+                                    << container->y()+container->height()/8);
+
+    mix_pens();     // Перемешиваем список карандашей
+
+    for(int i=0; i<=6; i++)
+    {
+        pens[value_p[i]]->move(coordinates[i].at(0), coordinates[i].at(1));
+        pens[i]->show();
+    }
+}
+
+// ---------------------------  Перемешиваем список карандашей ----------------------
+
+void Level_04::mix_pens()
+    {
+        int k = 0;
+        int temp = 0;
+
+        for(int i=0; i<=6; i++)
+        {
+            k = rnd(0,6);
+            temp = value_p[k];
+            value_p[k] = value_p[i];
+            value_p[i] = temp;            
+        }
+    }
+
+// ---------------------------  Перемешиваем список предметов в мысли ----------------------
+
+    void Level_04::mix_mysl()
+    {
+        int k = 0;
+        int temp = 0;
+        for(int i=0; i<=6; i++)
+        {
+            k = rnd(0,6);
+            temp = value_m[k];
+            value_m[k] = value_m[i];
+            value_m[i] = temp;
+        }
     }
 
 // -------------------------- Закрываем текущее окно --------------------------------
