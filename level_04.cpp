@@ -236,7 +236,6 @@ void Level_04::mousePressEvent(QMouseEvent *pe)
     {
         old_x = pens[ACTIVE_PEN]->x();  // запоминаем координаты выбранного карандаша
         old_y = pens[ACTIVE_PEN]->y();
-        qDebug() << old_x << old_y;
     }
     else
     {
@@ -244,11 +243,38 @@ void Level_04::mousePressEvent(QMouseEvent *pe)
     }
 }
 
+// ----------------------- Перемещение мышки ---------------------------------------
+
+void Level_04::mouseMoveEvent(QMouseEvent *pe)
+{
+    int x;
+    int y;
+    if(ACTIVE_PEN <= 6)
+    {
+        x = pe->pos().x();
+        y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
+        pens[ACTIVE_PEN]->move(x,y);
+        if((ACTIVE_PEN==0)&&
+           (x>=WIDTH_SCREEN/2+WIDTH_SCREEN/16)&&(x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&
+           (y>=HEIGHT_SCREEN/2)) exit(66);
+    }
+
+}
+
 // ---------------------- Отпускание кнопки мышки ----------------------------------
 
 void Level_04::mouseReleaseEvent(QMouseEvent *pe)
 {
+    int x;
+    int y;
+    x = pe->pos().x();
+    y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
+    if(value_m[STEP]==ACTIVE_PEN)
+    {
 
+    }
+    pens[ACTIVE_PEN]->move_to_xy(x, old_x, y, old_y, 1);
+    ACTIVE_PEN = 10;
 }
 
 // -------------------------- Закрываем текущее окно --------------------------------

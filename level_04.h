@@ -46,6 +46,7 @@ private:
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);      // Нажатие кнопки мышки
     virtual void mouseReleaseEvent(QMouseEvent *pe);    // Отпускание кнопки мышки
+    virtual void mouseMoveEvent(QMouseEvent *pe);       // Перемещение мышки
 
 public slots:
     void get_width(int w);                      // Получаем ширину экрана
