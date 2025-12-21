@@ -247,16 +247,26 @@ void Level_04::mousePressEvent(QMouseEvent *pe)
 
 void Level_04::mouseMoveEvent(QMouseEvent *pe)
 {
-    int x;
-    int y;
+    int x=0;
+    int y=0;
+    int y1=0;
     if(ACTIVE_PEN <= 6)
     {
         x = pe->pos().x();
         y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
+        y1 = pe->pos().y();
         pens[ACTIVE_PEN]->move(x,y);
-        if((ACTIVE_PEN==0)&&
-           (x>=WIDTH_SCREEN/2+WIDTH_SCREEN/16)&&(x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&
-           (y>=HEIGHT_SCREEN/2)) exit(66);
+        if(ACTIVE_PEN==0)
+        {
+            if(((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/16)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&
+             (y1>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y1<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
+             ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/7)&&
+             (y1>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y1<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
+             ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/14)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
+             (y1>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/7-HEIGHT_SCREEN/80)&&
+             (y1<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8))) exit(66);
+        }
+
     }
 
 }
