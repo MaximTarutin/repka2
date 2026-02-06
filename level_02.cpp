@@ -118,6 +118,8 @@ void Level_02::initial()
     cell->move(WIDTH_SCREEN/2-WIDTH_SCREEN/4,HEIGHT_SCREEN/30);
     cell->show();
 
+    animation_level();  // анимация уровня
+
     instruments[0] = new PicObject(":/resource/lev_02/fomka.png", this);
     instruments[0]->resize_object(WIDTH_SCREEN/14, HEIGHT_SCREEN/10);
     instruments[0]->setObjectName("fomka");
@@ -142,6 +144,11 @@ void Level_02::initial()
     instruments[7] = new PicObject(":/resource/lev_02/vily.png", this);
     instruments[7]->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/8);
     instruments[7]->setObjectName("vily");
+
+    for(int i=0; i<=7; i++)
+    {
+        instruments[i]->raise();
+    }
 
     instruments_mysl[0] = new PicObject(":/resource/lev_02/fomka.png", this);
     instruments_mysl[0]->resize_object(WIDTH_SCREEN/18, HEIGHT_SCREEN/14);
@@ -201,8 +208,6 @@ void Level_02::initial()
     }
 
     mysl_deda(STEP_NUMBER); // о чем думает дед
-
-    animation_level();  // анимация уровня
 
     // ----- подсказка --------
 
@@ -379,13 +384,13 @@ void Level_02::animation_level()
      spider->animation_start(WIDTH_SCREEN/20, HEIGHT_SCREEN/3);
      spider->move(rnd(WIDTH_SCREEN/2-WIDTH_SCREEN/3, WIDTH_SCREEN-WIDTH_SCREEN/20),HEIGHT_SCREEN/2-HEIGHT_SCREEN/3);
      spider->show();
-     spider->raise();
+     //spider->raise();
 
      tarakan = new PicObject(":/resource/lev_02/tarakan.gif", this);
      tarakan->animation_start(WIDTH_SCREEN/15, HEIGHT_SCREEN/10);
      tarakan->move_to_x(WIDTH_SCREEN/6, WIDTH_SCREEN-WIDTH_SCREEN/6, HEIGHT_SCREEN-HEIGHT_SCREEN/10, 40);
      tarakan->show();
-     tarakan->raise();
+     //tarakan->lower();
 
      connect(tarakan, &PicObject::move_end, this, [this](){tarakan->hide(); timer_tarakan->start(100);});
      connect(timer_tarakan, &QTimer::timeout, this, &Level_02::run_tarakan);

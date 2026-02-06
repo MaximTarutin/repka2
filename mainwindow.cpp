@@ -112,9 +112,14 @@ void MainWindow::start_level()
             connect(lev_02, &Level_02::next_level, this, [this](){
                 CURRENT_LEVEL=3; lev_01->show(); lev_01->view_rdbvgkm(2);           // Если ловим сигнал, прибавляем номер уровня
                 connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
-                    CURRENT_LEVEL=3; start_level(); delete lev_02;                  // Объект lev_02 уничтожается
-                    lev_02 = nullptr;});});                                         // при победе 2 уровня кнопка button_next перейдет
-                                                                                    // на 3 уровень
+                    CURRENT_LEVEL=3; start_level();
+                    if(lev_02!=(void*)0)
+                    {
+                        delete lev_02;                  // Объект lev_02 уничтожается
+                        lev_02 = nullptr;
+                    }
+                    });});                              // при победе 2 уровня кнопка button_next перейдет
+                                                        // на 3 уровень
             screen_size();
             lev_02->initial();
         }
@@ -132,9 +137,14 @@ void MainWindow::start_level()
             connect(lev_03, &Level_03::next_level, this, [this](){
                 CURRENT_LEVEL=4; lev_01->show(); lev_01->view_rdbvgkm(3);           // Если ловим сигнал, прибавляем номер уровня
                 connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
-                    CURRENT_LEVEL=4; start_level(); delete lev_03;                  // Объект lev_03 уничтожается
-                    lev_03 = nullptr;});});                                         // при победе 3 уровня кнопка button_next перейдет
-                                                                                    // на 4 уровень.
+                    CURRENT_LEVEL=4; start_level();
+                    if(lev_03!=(void*)0)
+                    {
+                        delete lev_03;                  // Объект lev_03 уничтожается
+                        lev_03 = nullptr;
+                    }
+                    });});                              // при победе 3 уровня кнопка button_next перейдет
+                                                        // на 4 уровень.
             screen_size();
             lev_03->initial();
         }
@@ -152,9 +162,14 @@ void MainWindow::start_level()
             connect(lev_04, &Level_04::next_level, this, [this](){
                 CURRENT_LEVEL=5; lev_01->show(); lev_01->view_rdbvgkm(4);           // Если ловим сигнал, прибавляем номер уровня
                 connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
-                    CURRENT_LEVEL=5; start_level(); delete lev_04;                  // Объект lev_04 уничтожается
-                    lev_04 = nullptr;});});                                         // при победе 4 уровня кнопка button_next перейдет
-                                                                                    // на 5 уровень.
+                    CURRENT_LEVEL=5; start_level();
+                    if(lev_04!=(void*)0)
+                    {
+                        delete lev_04;                  // Объект lev_04 уничтожается
+                        lev_04 = nullptr;
+                    }
+                    });});                              // при победе 4 уровня кнопка button_next перейдет
+                                                        // на 5 уровень.
             screen_size();
             lev_04->initial();
         }

@@ -17,8 +17,13 @@ Level_04::~Level_04()
     vnuchka = nullptr;
     delete holst;
     holst = nullptr;
-    delete vnuchka_holst;
-    vnuchka_holst = nullptr;
+
+    for(int i=0; i<=7; i++)
+    {
+        delete vnuchka_holst[i];
+        vnuchka_holst[i] = nullptr;
+    }
+
     for(int i=0; i<7; i++)
     {
         delete pens[i];
@@ -26,6 +31,7 @@ Level_04::~Level_04()
         delete mysl_obj[i];
         mysl_obj[i] = nullptr;
     }
+
     delete mysl;
     mysl = nullptr;
 }
@@ -56,6 +62,11 @@ void Level_04::get_height(int h)
 
 void Level_04::initial()
 {
+    sound = new QMediaPlayer(this);
+    output = new QAudioOutput();
+    sound->setAudioOutput(output);
+    output->setVolume(1);
+
     value_p = {0,1,2,3,4,5,6};  // нумерация карандашей в списке
     value_m = {0,1,2,3,4,5,6};  // нумерация предметов в списке
 
@@ -92,10 +103,22 @@ void Level_04::initial()
     holst->move(WIDTH_SCREEN/2, HEIGHT_SCREEN/2-HEIGHT_SCREEN/4);
     holst->show();
 
-    vnuchka_holst = new PicObject(":/resource/lev_04/vnuchka.png", holst);
-    vnuchka_holst->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/3);
-    vnuchka_holst->move(holst->width()/6, holst->height()/7);
-    vnuchka_holst->show();
+    vnuchka_holst[0] = new PicObject(":/resource/lev_04/vn-01.png", holst);
+    vnuchka_holst[1] = new PicObject(":/resource/lev_04/vn-00.png", holst);
+    vnuchka_holst[2] = new PicObject(":/resource/lev_04/vn-03.png", holst);
+    vnuchka_holst[3] = new PicObject(":/resource/lev_04/vn-05.png", holst);
+    vnuchka_holst[4] = new PicObject(":/resource/lev_04/vn-04.png", holst);
+    vnuchka_holst[5] = new PicObject(":/resource/lev_04/vn-06.png", holst);
+    vnuchka_holst[6] = new PicObject(":/resource/lev_04/vn-07.png", holst);
+    vnuchka_holst[7] = new PicObject(":/resource/lev_04/vnuchka.png", holst);
+
+    for(int i=0; i<=7; i++)
+    {
+        vnuchka_holst[i]->resize_object(WIDTH_SCREEN/7, HEIGHT_SCREEN/3);
+        vnuchka_holst[i]->move(holst->width()/6, holst->height()/7);
+        vnuchka_holst[i]->hide();
+    }
+    vnuchka_holst[7]->show();
 
     container = new PicObject(":/resource/lev_02/fon.png", this);
     container->resize_object(WIDTH_SCREEN/3, HEIGHT_SCREEN/13);
@@ -188,8 +211,8 @@ void Level_04::initial()
     connect(pens[0], &PicObject::clicked, this, [this](){ACTIVE_PEN=0;});
     connect(pens[1], &PicObject::clicked, this, [this](){ACTIVE_PEN=1;});
     connect(pens[2], &PicObject::clicked, this, [this](){ACTIVE_PEN=2;});
-    connect(pens[3], &PicObject::clicked, this, [this](){ACTIVE_PEN=3;});
-    connect(pens[4], &PicObject::clicked, this, [this](){ACTIVE_PEN=4;});
+    connect(pens[3], &PicObject::clicked, this, [this](){ACTIVE_PEN=3;});   // Определяем активный карандаш
+    connect(pens[4], &PicObject::clicked, this, [this](){ACTIVE_PEN=4;});   // по клику по нему
     connect(pens[5], &PicObject::clicked, this, [this](){ACTIVE_PEN=5;});
     connect(pens[6], &PicObject::clicked, this, [this](){ACTIVE_PEN=6;});
     for(int i=0; i<=6; i++)
@@ -232,6 +255,8 @@ void Level_04::mix_mysl()
 
 void Level_04::mousePressEvent(QMouseEvent *pe)
 {
+
+
     if(QObject::sender() && pe->button() == Qt::LeftButton)         // Если нажали по какому-либо объекту
     {
         old_x = pens[ACTIVE_PEN]->x();  // запоминаем координаты выбранного карандаша
@@ -240,6 +265,7 @@ void Level_04::mousePressEvent(QMouseEvent *pe)
     else
     {
         ACTIVE_PEN = 10;
+
     }
 }
 
@@ -253,20 +279,17 @@ void Level_04::mouseMoveEvent(QMouseEvent *pe)
     if(ACTIVE_PEN <= 6)
     {
         x = pe->pos().x();
-        y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
+            y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
         y1 = pe->pos().y();
         pens[ACTIVE_PEN]->move(x,y);
-        if(ACTIVE_PEN==0)
-        {
-            if(((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/16)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&
-             (y1>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y1<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
-             ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/7)&&
-             (y1>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y1<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
-             ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/14)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
-             (y1>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/7-HEIGHT_SCREEN/80)&&
-             (y1<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8))) exit(66);
-        }
-
+        // if(ACTIVE_PEN==1)
+        // {
+        //     if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
+        //        (y1>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/11)&&(y1<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30))
+        //     {
+        //         exit(54);
+        //     }
+        // }
     }
 
 }
@@ -278,12 +301,38 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
     int x;
     int y;
     x = pe->pos().x();
-    y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
-    if(value_m[STEP]==ACTIVE_PEN)
-    {
-
+    //y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
+    y = pe->pos().y();
+    value_m[STEP]=1; // <------------------------------------------------------------------------------------------------
+     if(value_m[STEP]==ACTIVE_PEN)
+     {
+        if(ACTIVE_PEN==0)
+        {
+            if(((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/16)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&
+                 (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
+                ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/7)&&
+                 (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
+                ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/14)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
+                 (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/7-HEIGHT_SCREEN/80)&&
+                 (y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8)))
+            {
+                vnuchka_holst[0]->show();
+                STEP++;
+                //delete pens[ACTIVE_PEN];
+                //pens[ACTIVE_PEN] = nullptr;
+            }
+        }
+        if(ACTIVE_PEN==1)
+        {
+            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
+                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/11)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30))
+                {
+                vnuchka_holst[0]->show(); vnuchka_holst[1]->show();
+                STEP++;
+                }
+        }
+        pens[ACTIVE_PEN]->move_to_xy(x, old_x, y, old_y, 1);
     }
-    pens[ACTIVE_PEN]->move_to_xy(x, old_x, y, old_y, 1);
     ACTIVE_PEN = 10;
 }
 

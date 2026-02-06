@@ -20,27 +20,30 @@ Level_03::~Level_03()
     sound = nullptr;
     delete button_back;
     button_back = nullptr;
+    for(int i=0; i<=6; i++)
+    {
+        delete produkt_mysl[i];
+        produkt_mysl[i] = nullptr;
+
+    }
+    for(int i=0; i<=7; i++)
+    {
+        delete tazik[i];
+        tazik[i] = nullptr;
+        delete produkt[i];
+        produkt[i] = nullptr;
+    }
     delete table;
     table = nullptr;
     delete mysl;
     mysl = nullptr;
     delete babka;
     babka = nullptr;
-    delete kolobok;
-    kolobok = nullptr;
-    for(int i=0; i<=7; i++)
-    {
-        delete produkt_mysl[i];
-        produkt_mysl[i] = nullptr;
-        delete produkt[i];
-        produkt[i] = nullptr;
-        delete tazik[i];
-        tazik[i] = nullptr;
-    }
-    delete timer_animate;
-    timer_animate = nullptr;
     delete timer_show_kolobok;
     timer_show_kolobok = nullptr;
+    delete kolobok;
+    kolobok = nullptr;
+
     delete duck;
     duck = nullptr;
     delete duck_1;
@@ -49,6 +52,8 @@ Level_03::~Level_03()
     kar = nullptr;
     delete cat;
     cat = nullptr;
+    delete timer_animate;
+    timer_animate = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -307,11 +312,19 @@ void Level_03::mousePressEvent(QMouseEvent *pe)
         if(name_active_object=="tazik" || name_active_object=="tazik-6")
         {
             hand->hide();
-            disconnect(hand, &PicObject::move_end, this, &Level_03::help);
+            disconnect(hand, &PicObject::move_end, this, &Level_03::help);          // убираем подсказку
         }
-        PicObject *active_object = this->findChild<PicObject*>(name_active_object);
-        old_x = active_object->x();
-        old_y = active_object->y();
+
+        if(NUMBER !=6)
+        {
+            PicObject *active_object = this->findChild<PicObject*>(name_active_object);
+            old_x = active_object->x();
+            old_y = active_object->y();
+        } else
+        {
+            old_x = tazik[6]->x();
+            old_y = tazik[6]->y();
+        }
     }
 }
 
@@ -320,7 +333,7 @@ void Level_03::mousePressEvent(QMouseEvent *pe)
 void Level_03::mouseReleaseEvent(QMouseEvent *pe)
 {    
     PicObject *active_object = this->findChild<PicObject*>(name_active_object);
-    if(NUMBER<7 && name_active_object!=nullptr)
+    if(NUMBER<7 && name_active_object!=nullptr)         // до колобка
     {
         if((pe->position().x()>=table->x())&&(pe->position().x()<=table->x()+table->width())&&
             (pe->position().y()>=table->y()-table->height()/6)&&
@@ -329,7 +342,7 @@ void Level_03::mouseReleaseEvent(QMouseEvent *pe)
             QString name_mysl_object = produkt_mysl[NUMBER]->objectName();
             QString temp_name = name_active_object+"_m";
 
-            if(name_mysl_object==temp_name)
+            if(name_mysl_object==temp_name)   // если имя объекта совпадает с именем объекта в мысли
             {
                 produkt[NUMBER]->hide();
                 tazik[NUMBER]->raise();
@@ -364,13 +377,15 @@ void Level_03::mouseReleaseEvent(QMouseEvent *pe)
             sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
             sound->play();
         }
-    } else  // Если все ингридиенты собрапны, ставим тазик в печь
+    } else  // Если все ингридиенты собраны, ставим тазик в печь
     {
+        if(NUMBER==8) return;
         if((name_active_object!=nullptr)&&
             (pe->position().x()<=WIDTH_SCREEN/5)&&(pe->position().x()>=WIDTH_SCREEN/7)&&
             (pe->position().y()<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/20)&&
             (pe->position().y()>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20))
         {
+            NUMBER=8;
             kolobok->move(table->x()+table->width()/3,
                           table->y()-kolobok->height()/2-kolobok->height()/6);
 

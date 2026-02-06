@@ -5,6 +5,8 @@
 #include <QObject>
 #include <QPushButton>
 #include <QLabel>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "picobject.h"
 
 class Level_04 : public QMainWindow
@@ -29,11 +31,13 @@ private:
     PicObject   *vnuchka = nullptr;             // Внучка
     PicObject   *mysl = nullptr;                // Мысль внучки
     PicObject   *holst = nullptr;               // Холст
-    PicObject   *vnuchka_holst = nullptr;       // Внучка на холсте
+    PicObject   *vnuchka_holst[8] = {};         // Внучка на холсте
     PicObject   *container = nullptr;           // Карандашница
     PicObject   *mysl_obj[7] = {};              // Объекты в мысли
     PicObject   *pens[7] = {};                  // Карандаши
     QString     name_active_object;             // имя объекта по которому кликнули мышкой
+    QMediaPlayer    *sound = nullptr;           // Проигрыватель
+    QAudioOutput    *output = nullptr;          // Аудиовыход
 
     QList<int> value_p = {};                    // Список нумерации карандашейQList<int> value_m = {};
     QList<int> value_m = {};                    // Список предметов в мысли
