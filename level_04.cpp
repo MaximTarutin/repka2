@@ -282,14 +282,14 @@ void Level_04::mouseMoveEvent(QMouseEvent *pe)
             y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
         y1 = pe->pos().y();
         pens[ACTIVE_PEN]->move(x,y);
-        // if(ACTIVE_PEN==1)
-        // {
-        //     if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
-        //        (y1>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/11)&&(y1<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30))
-        //     {
-        //         exit(54);
-        //     }
-        // }
+        if(ACTIVE_PEN==4)
+        {
+            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
+               (y1>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20)&&(y1<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30))
+            {
+                //exit(54);
+            }
+        }
     }
 
 }
@@ -303,7 +303,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
     x = pe->pos().x();
     //y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
     y = pe->pos().y();
-    value_m[STEP]=1; // <------------------------------------------------------------------------------------------------
+    value_m[STEP]=4; // <------------------------------------------------------------------------------------------------
      if(value_m[STEP]==ACTIVE_PEN)
      {
         if(ACTIVE_PEN==0)
@@ -326,10 +326,37 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
         {
             if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
                   (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/11)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30))
-                {
-                vnuchka_holst[0]->show(); vnuchka_holst[1]->show();
+            {
+                vnuchka_holst[1]->show();
                 STEP++;
-                }
+            }
+        }        
+        if(ACTIVE_PEN==2)
+        {
+            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
+                (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/10))
+            {
+                vnuchka_holst[2]->show();
+                STEP++;
+            }
+        }
+        if(ACTIVE_PEN==3)
+        {
+            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/24)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/12)&&
+                (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/28)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/45))
+            {
+                vnuchka_holst[3]->show();
+                STEP++;
+            }
+        }
+        if(ACTIVE_PEN==4)
+        {
+            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
+                (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30))
+            {
+                vnuchka_holst[4]->show();
+                STEP++;
+            }
         }
         pens[ACTIVE_PEN]->move_to_xy(x, old_x, y, old_y, 1);
     }
