@@ -18,7 +18,7 @@ Level_04::~Level_04()
     delete holst;
     holst = nullptr;
 
-    for(int i=0; i<=7; i++)
+    for(int i=0; i<=8; i++)
     {
         delete vnuchka_holst[i];
         vnuchka_holst[i] = nullptr;
@@ -275,21 +275,12 @@ void Level_04::mouseMoveEvent(QMouseEvent *pe)
 {
     int x=0;
     int y=0;
-    int y1=0;
+    // int y1=0;
     if(ACTIVE_PEN <= 6)
     {
         x = pe->pos().x();
-            y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
-        y1 = pe->pos().y();
+        y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
         pens[ACTIVE_PEN]->move(x,y);
-        if(ACTIVE_PEN==5)
-        {
-            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/17)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
-               (y1>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/50)&&(y1<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/8))
-            {
-                //exit(54);
-            }
-        }
     }
 
 }
@@ -303,7 +294,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
     x = pe->pos().x();
     //y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
     y = pe->pos().y();
-    value_m[STEP]=5; // <------------------------------------------------------------------------------------------------
+    //value_m[STEP]=5; // <------------------------------------------------------------------------------------------------
      if(value_m[STEP]==ACTIVE_PEN)
      {
         if(ACTIVE_PEN==0)
@@ -364,6 +355,15 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
                 (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/50)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/8))
             {
                 vnuchka_holst[5]->show();
+                STEP++;
+            }
+        }
+        if(ACTIVE_PEN==6)
+        {
+            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/12)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8+WIDTH_SCREEN/100)&&
+                (y>=HEIGHT_SCREEN/2+HEIGHT_SCREEN/7)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/6))
+            {
+                vnuchka_holst[6]->show();
                 STEP++;
             }
         }
