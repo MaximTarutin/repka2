@@ -180,6 +180,7 @@ void Level_04::initial()
     mysl_obj[6]->move(mysl->width()/2-mysl_obj[6]->width()/2,
                       mysl->height()/2-mysl_obj[6]->height());
     mysl_obj[6]->hide();
+    mysl_obj[7] = new PicObject();
 
     // Список координат карандашей в карандашнице
 
@@ -294,62 +295,69 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
     int y;
     x = pe->pos().x();
     y = pe->pos().y();
-    //value_m[STEP]=0;
+    if(STEP>6) return;
     if(value_m[STEP]==ACTIVE_PEN)
     {
         if((ACTIVE_PEN==0)&&(((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/16)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&
-                                    (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
-                                    ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/7)&&
-                                    (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
-                                    ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/14)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
-                                    (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/7-HEIGHT_SCREEN/80)&&
-                                    (y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8))))
+                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
+                              ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/7)&&
+                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
+                              ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/14)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
+                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/7-HEIGHT_SCREEN/80)&&
+                              (y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8))))
         {
-                vnuchka_holst[0]->show();
-                STEP++;
-                delete_pen();
+            vnuchka_holst[0]->show();
+            delete_pen();
+            STEP++;
+            if(STEP<7) mysl_obj[value_m[STEP]]->show();
         }
         if((ACTIVE_PEN==1)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
-                                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/11)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30)))
+                             (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/11)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30)))
         {
-                vnuchka_holst[1]->show();
-                STEP++;
-                delete_pen();
+            vnuchka_holst[1]->show();
+            delete_pen();
+            STEP++;
+            if(STEP<7) mysl_obj[value_m[STEP]]->show();
         }
         if((ACTIVE_PEN==2)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
-                                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/10)))
+                             (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/10)))
         {
-                vnuchka_holst[2]->show();
-                STEP++;
-                delete_pen();
+            vnuchka_holst[2]->show();
+            delete_pen();
+            STEP++;
+            if(STEP<7) mysl_obj[value_m[STEP]]->show();
         }
         if((ACTIVE_PEN==3)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/24)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/12)&&
-                                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/28)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/45)))
+                             (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/28)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/45)))
         {
-                vnuchka_holst[3]->show();
-                STEP++;
-                delete_pen();
+            vnuchka_holst[3]->show();
+            delete_pen();
+            STEP++;
+            if(STEP<7) mysl_obj[value_m[STEP]]->show();
         }
         if((ACTIVE_PEN==4)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
-                                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30)))
+                             (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30)))
         {
-                vnuchka_holst[4]->show();
-                STEP++;
-                delete_pen();
+            vnuchka_holst[4]->show();
+            delete_pen();
+            STEP++;
+            if(STEP<7) mysl_obj[value_m[STEP]]->show();
         }
         if((ACTIVE_PEN==5)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/17)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
-                                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/50)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/8)))
+                             (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/50)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/8)))
         {
-                vnuchka_holst[5]->show();
-                STEP++;
-                delete_pen();
+            vnuchka_holst[5]->show();
+            delete_pen();
+            STEP++;
+            if(STEP<7) mysl_obj[value_m[STEP]]->show();
         }
         if((ACTIVE_PEN==6)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/12)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8+WIDTH_SCREEN/100)&&
                                   (y>=HEIGHT_SCREEN/2+HEIGHT_SCREEN/7)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/6)))
         {
-                vnuchka_holst[6]->show();
-                STEP++;
-                delete_pen();
+            vnuchka_holst[6]->show();
+            delete_pen();
+            STEP++;
+            if(STEP<7) mysl_obj[value_m[STEP]]->show();
         }
         if (pens[ACTIVE_PEN] != (void*)0) // если объект существует, то возвращаем на место
         {
@@ -376,6 +384,8 @@ void Level_04::delete_pen()
 {
     delete pens[ACTIVE_PEN];
     pens[ACTIVE_PEN] = nullptr;
+    delete mysl_obj[ACTIVE_PEN];
+    mysl_obj[ACTIVE_PEN] = nullptr;
 }
 
 

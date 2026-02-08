@@ -33,13 +33,13 @@ private:
     PicObject   *holst = nullptr;               // Холст
     PicObject   *vnuchka_holst[8] = {};         // Внучка на холсте
     PicObject   *container = nullptr;           // Карандашница
-    PicObject   *mysl_obj[7] = {};              // Объекты в мысли
+    PicObject   *mysl_obj[8] = {};              // Объекты в мысли
     PicObject   *pens[8] = {};                  // Карандаши
     QString     name_active_object;             // имя объекта по которому кликнули мышкой
     QMediaPlayer    *sound = nullptr;           // Проигрыватель
     QAudioOutput    *output = nullptr;          // Аудиовыход
 
-    QList<int> value_p = {};                    // Список нумерации карандашейQList<int> value_m = {};
+    QList<int> value_p = {};                    // Список нумерации карандашей
     QList<int> value_m = {};                    // Список предметов в мысли
     QList<QList<int>>  coordinates = {};        // Список координат карандашей в карандашнице
 
