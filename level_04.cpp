@@ -24,7 +24,7 @@ Level_04::~Level_04()
         vnuchka_holst[i] = nullptr;
     }
 
-    for(int i=0; i<7; i++)
+    for(int i=0; i<=7; i++)
     {
         delete pens[i];
         pens[i] = nullptr;
@@ -141,6 +141,7 @@ void Level_04::initial()
     pens[5]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
     pens[6] = new PicObject(":/resource/lev_04/karandash-7.png", this);
     pens[6]->resize_object(WIDTH_SCREEN/100, HEIGHT_SCREEN/15);
+    pens[7] = new PicObject(this);
 
     // Инициализируем объекты в мыслях внучки
 
@@ -264,7 +265,7 @@ void Level_04::mousePressEvent(QMouseEvent *pe)
     }
     else
     {
-        ACTIVE_PEN = 10;
+        ACTIVE_PEN = 7;
 
     }
 }
@@ -292,84 +293,74 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
     int x;
     int y;
     x = pe->pos().x();
-    //y = pe->pos().y()-pens[ACTIVE_PEN]->height()/2;
     y = pe->pos().y();
-    //value_m[STEP]=5; // <------------------------------------------------------------------------------------------------
-     if(value_m[STEP]==ACTIVE_PEN)
-     {
-        if(ACTIVE_PEN==0)
+    //value_m[STEP]=0;
+    if(value_m[STEP]==ACTIVE_PEN)
+    {
+        if((ACTIVE_PEN==0)&&(((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/16)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&
+                                    (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
+                                    ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/7)&&
+                                    (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
+                                    ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/14)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
+                                    (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/7-HEIGHT_SCREEN/80)&&
+                                    (y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8))))
         {
-            if(((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/16)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&
-                 (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
-                ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/7)&&
-                 (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
-                ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/14)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
-                 (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/7-HEIGHT_SCREEN/80)&&
-                 (y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8)))
-            {
                 vnuchka_holst[0]->show();
                 STEP++;
-                //delete pens[ACTIVE_PEN];
-                //pens[ACTIVE_PEN] = nullptr;
-            }
+                delete_pen();
         }
-        if(ACTIVE_PEN==1)
+        if((ACTIVE_PEN==1)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
+                                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/11)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30)))
         {
-            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
-                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/11)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30))
-            {
                 vnuchka_holst[1]->show();
                 STEP++;
-            }
-        }        
-        if(ACTIVE_PEN==2)
+                delete_pen();
+        }
+        if((ACTIVE_PEN==2)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
+                                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/10)))
         {
-            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
-                (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/10))
-            {
                 vnuchka_holst[2]->show();
                 STEP++;
-            }
+                delete_pen();
         }
-        if(ACTIVE_PEN==3)
+        if((ACTIVE_PEN==3)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/24)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/12)&&
+                                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/28)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/45)))
         {
-            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/24)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/12)&&
-                (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/28)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/45))
-            {
                 vnuchka_holst[3]->show();
                 STEP++;
-            }
+                delete_pen();
         }
-        if(ACTIVE_PEN==4)
+        if((ACTIVE_PEN==4)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
+                                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30)))
         {
-            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
-                (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30))
-            {
                 vnuchka_holst[4]->show();
                 STEP++;
-            }
+                delete_pen();
         }
-        if(ACTIVE_PEN==5)
+        if((ACTIVE_PEN==5)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/17)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
+                                  (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/50)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/8)))
         {
-            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/17)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
-                (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/50)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/8))
-            {
                 vnuchka_holst[5]->show();
                 STEP++;
-            }
+                delete_pen();
         }
-        if(ACTIVE_PEN==6)
+        if((ACTIVE_PEN==6)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/12)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8+WIDTH_SCREEN/100)&&
+                                  (y>=HEIGHT_SCREEN/2+HEIGHT_SCREEN/7)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/6)))
         {
-            if((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/12)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8+WIDTH_SCREEN/100)&&
-                (y>=HEIGHT_SCREEN/2+HEIGHT_SCREEN/7)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/6))
-            {
                 vnuchka_holst[6]->show();
                 STEP++;
-            }
+                delete_pen();
         }
+        if (pens[ACTIVE_PEN] != (void*)0) // если объект существует, то возвращаем на место
+        {
+            pens[ACTIVE_PEN]->move_to_xy(x, old_x, y, old_y, 1);
+        }
+    } else
+    {
+        qDebug() << pens[ACTIVE_PEN] << ACTIVE_PEN;
         pens[ACTIVE_PEN]->move_to_xy(x, old_x, y, old_y, 1);
-    } 
-    ACTIVE_PEN = 10;
+    }
+    ACTIVE_PEN = 7;
 }
 
 // -------------------------- Закрываем текущее окно --------------------------------
@@ -377,6 +368,14 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
 void Level_04::back_level()
 {
     this->close();
+}
+
+// -------------------------- Удаляем карандаш -------------------------------------
+
+void Level_04::delete_pen()
+{
+    delete pens[ACTIVE_PEN];
+    pens[ACTIVE_PEN] = nullptr;
 }
 
 
