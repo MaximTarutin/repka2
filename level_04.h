@@ -35,6 +35,7 @@ private:
     PicObject   *container = nullptr;           // Карандашница
     PicObject   *mysl_obj[8] = {};              // Объекты в мысли
     PicObject   *pens[8] = {};                  // Карандаши
+    PicObject   *bubbles = nullptr;             // Анимация шариков
     QString     name_active_object;             // имя объекта по которому кликнули мышкой
     QMediaPlayer    *sound = nullptr;           // Проигрыватель
     QAudioOutput    *output = nullptr;          // Аудиовыход
@@ -46,7 +47,9 @@ private:
     int rnd(int a, int b);                      // Случайное число в диапазоне от a до b
     void mix_pens();                            // Перемешиваем список карандашей
     void mix_mysl();                            // Перемешиваем список предметов в мысли
-    void delete_pen();                          // удаляем использованный правильно карандаш
+    void delete_pen();                          // Удаляем использованный правильно карандаш
+    void victory();                             // Победа
+
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);      // Нажатие кнопки мышки

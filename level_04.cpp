@@ -309,7 +309,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
             vnuchka_holst[0]->show();
             delete_pen();
             STEP++;
-            if(STEP<7) mysl_obj[value_m[STEP]]->show();
+            if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
         }
         if((ACTIVE_PEN==1)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/11)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30)))
@@ -317,7 +317,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
             vnuchka_holst[1]->show();
             delete_pen();
             STEP++;
-            if(STEP<7) mysl_obj[value_m[STEP]]->show();
+            if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
         }
         if((ACTIVE_PEN==2)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&
                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/10)))
@@ -325,7 +325,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
             vnuchka_holst[2]->show();
             delete_pen();
             STEP++;
-            if(STEP<7) mysl_obj[value_m[STEP]]->show();
+            if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
         }
         if((ACTIVE_PEN==3)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/24)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/12)&&
                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/28)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/45)))
@@ -333,7 +333,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
             vnuchka_holst[3]->show();
             delete_pen();
             STEP++;
-            if(STEP<7) mysl_obj[value_m[STEP]]->show();
+            if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
         }
         if((ACTIVE_PEN==4)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30)))
@@ -341,7 +341,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
             vnuchka_holst[4]->show();
             delete_pen();
             STEP++;
-            if(STEP<7) mysl_obj[value_m[STEP]]->show();
+            if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
         }
         if((ACTIVE_PEN==5)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/17)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/6-WIDTH_SCREEN/80)&&
                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/50)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/8)))
@@ -349,7 +349,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
             vnuchka_holst[5]->show();
             delete_pen();
             STEP++;
-            if(STEP<7) mysl_obj[value_m[STEP]]->show();
+            if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
         }
         if((ACTIVE_PEN==6)&&((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/12)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/8+WIDTH_SCREEN/100)&&
                                   (y>=HEIGHT_SCREEN/2+HEIGHT_SCREEN/7)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/6)))
@@ -357,7 +357,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
             vnuchka_holst[6]->show();
             delete_pen();
             STEP++;
-            if(STEP<7) mysl_obj[value_m[STEP]]->show();
+            if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
         }
         if (pens[ACTIVE_PEN] != (void*)0) // если объект существует, то возвращаем на место
         {
@@ -388,4 +388,13 @@ void Level_04::delete_pen()
     mysl_obj[ACTIVE_PEN] = nullptr;
 }
 
+// ----------------------------- Победа ----------------------------------------------
+
+void Level_04::victory()
+{
+    bubbles = new PicObject(":/resource/lev_04/confetti-12.gif", this);
+    bubbles->show();
+    bubbles->animation_start(WIDTH_SCREEN, HEIGHT_SCREEN);
+    //exit(3);
+}
 
