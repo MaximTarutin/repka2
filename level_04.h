@@ -36,6 +36,9 @@ private:
     PicObject   *mysl_obj[8] = {};              // Объекты в мысли
     PicObject   *pens[8] = {};                  // Карандаши
     PicObject   *bubbles = nullptr;             // Анимация шариков
+    PicObject   *guk = nullptr;                 // Анимация жук
+    PicObject   *bab = nullptr;                 // Анимация бабочки
+    PicObject   *muh = nullptr;                 // Анимация муха
     QString     name_active_object;             // имя объекта по которому кликнули мышкой
     QMediaPlayer    *sound = nullptr;           // Проигрыватель
     QAudioOutput    *output = nullptr;          // Аудиовыход

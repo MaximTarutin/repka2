@@ -364,7 +364,7 @@ void Level_02::victory()
             });
     firework = new PicObject(":/resource/lev_02/salut.gif", this);
     firework->show();
-    firework->animation_start(WIDTH_SCREEN/2, HEIGHT_SCREEN/2);    
+    firework->animation_start(WIDTH_SCREEN, HEIGHT_SCREEN);
 }
 
 // -------------------- Возврат на 1 уровень -------------------------------
@@ -384,13 +384,11 @@ void Level_02::animation_level()
      spider->animation_start(WIDTH_SCREEN/20, HEIGHT_SCREEN/3);
      spider->move(rnd(WIDTH_SCREEN/2-WIDTH_SCREEN/3, WIDTH_SCREEN-WIDTH_SCREEN/20),HEIGHT_SCREEN/2-HEIGHT_SCREEN/3);
      spider->show();
-     //spider->raise();
 
      tarakan = new PicObject(":/resource/lev_02/tarakan.gif", this);
      tarakan->animation_start(WIDTH_SCREEN/15, HEIGHT_SCREEN/10);
      tarakan->move_to_x(WIDTH_SCREEN/6, WIDTH_SCREEN-WIDTH_SCREEN/6, HEIGHT_SCREEN-HEIGHT_SCREEN/10, 40);
      tarakan->show();
-     //tarakan->lower();
 
      connect(tarakan, &PicObject::move_end, this, [this](){tarakan->hide(); timer_tarakan->start(100);});
      connect(timer_tarakan, &QTimer::timeout, this, &Level_02::run_tarakan);

@@ -27,5 +27,8 @@
         <file>resource/lev_04/vn-05.png</file>
         <file>resource/lev_04/vn-06.png</file>
         <file>resource/lev_04/vn-07.png</file>
+        <file>resource/lev_04/bab.gif</file>
+        <file>resource/lev_04/guk.gif</file>
+        <file>resource/lev_04/muh.gif</file>
     </qresource>
 </RCC>

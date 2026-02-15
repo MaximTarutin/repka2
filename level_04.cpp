@@ -17,13 +17,11 @@ Level_04::~Level_04()
     vnuchka = nullptr;
     delete holst;
     holst = nullptr;
-
     for(int i=0; i<=8; i++)
     {
         delete vnuchka_holst[i];
         vnuchka_holst[i] = nullptr;
     }
-
     for(int i=0; i<=7; i++)
     {
         delete pens[i];
@@ -31,9 +29,10 @@ Level_04::~Level_04()
         delete mysl_obj[i];
         mysl_obj[i] = nullptr;
     }
-
     delete mysl;
     mysl = nullptr;
+    delete bubbles;
+    bubbles = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -181,6 +180,21 @@ void Level_04::initial()
                       mysl->height()/2-mysl_obj[6]->height());
     mysl_obj[6]->hide();
     mysl_obj[7] = new PicObject();
+
+    guk = new PicObject(":/resource/lev_04/guk.gif", this);
+    guk->show();
+    guk->move(WIDTH_SCREEN/2+WIDTH_SCREEN/20,HEIGHT_SCREEN/2+HEIGHT_SCREEN/20);
+    guk->animation_start(WIDTH_SCREEN/8, HEIGHT_SCREEN/8);
+
+    muh = new PicObject(":/resource/lev_04/muh.gif", this);
+    muh->show();
+    muh->animation_start(WIDTH_SCREEN/10, HEIGHT_SCREEN/10);
+    muh->move(WIDTH_SCREEN/2+WIDTH_SCREEN/20,HEIGHT_SCREEN/20);
+
+    bab = new PicObject(":/resource/lev_04/bab.gif", this);
+    bab->show();
+    bab->animation_start(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
+    bab->move(WIDTH_SCREEN/2-WIDTH_SCREEN/5,HEIGHT_SCREEN/2-HEIGHT_SCREEN/10);
 
     // Список координат карандашей в карандашнице
 
@@ -395,6 +409,5 @@ void Level_04::victory()
     bubbles = new PicObject(":/resource/lev_04/confetti-12.gif", this);
     bubbles->show();
     bubbles->animation_start(WIDTH_SCREEN, HEIGHT_SCREEN);
-    //exit(3);
 }
 
