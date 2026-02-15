@@ -103,7 +103,7 @@ void MainWindow::start_level()
                         });
                 connect(lev_01->button_next, &QPushButton::clicked, this, [this]()
                         {
-                            CURRENT_LEVEL = 2;
+                            CURRENT_LEVEL = 2; // сделать сигнал в lev_01 next_level(), и по нему присваивать CURRENT_LEVEL=2,
                             lev_01->hide();
                             // ---------------------- Здесь сделать удаление из памяти ненужных объектов из lev_01
                             start_level();
@@ -132,10 +132,10 @@ void MainWindow::start_level()
                         {
                             CURRENT_LEVEL = 3;
                             lev_02->close();
-                            delete lev_02;
+                            delete lev_02;                      // удаляем второй уровень
                             lev_02 = nullptr;
                             lev_01->showFullScreen();
-                            lev_01->view_rdbvgkm(2);
+                            lev_01->view_rdbvgkm(2);            // Показываем дедку на lev_01
                         });
             }
             lev_02->showFullScreen();
