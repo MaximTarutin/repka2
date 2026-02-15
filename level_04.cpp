@@ -33,6 +33,18 @@ Level_04::~Level_04()
     mysl = nullptr;
     delete bubbles;
     bubbles = nullptr;
+    delete guk;
+    guk = nullptr;
+    delete bab;
+    bab = nullptr;
+    delete muh;
+    muh = nullptr;
+    delete bubbles;
+    bubbles = nullptr;
+    delete output;
+    output = nullptr;
+    delete sound;
+    sound = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -193,7 +205,7 @@ void Level_04::initial()
 
     bab = new PicObject(":/resource/lev_04/bab.gif", this);
     bab->show();
-    bab->animation_start(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
+    bab->animation_start(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
     bab->move(WIDTH_SCREEN/2-WIDTH_SCREEN/5,HEIGHT_SCREEN/2-HEIGHT_SCREEN/10);
 
     // Список координат карандашей в карандашнице
@@ -271,8 +283,6 @@ void Level_04::mix_mysl()
 
 void Level_04::mousePressEvent(QMouseEvent *pe)
 {
-
-
     if(QObject::sender() && pe->button() == Qt::LeftButton)         // Если нажали по какому-либо объекту
     {
         old_x = pens[ACTIVE_PEN]->x();  // запоминаем координаты выбранного карандаша
@@ -281,7 +291,6 @@ void Level_04::mousePressEvent(QMouseEvent *pe)
     else
     {
         ACTIVE_PEN = 7;
-
     }
 }
 
@@ -291,7 +300,6 @@ void Level_04::mouseMoveEvent(QMouseEvent *pe)
 {
     int x=0;
     int y=0;
-    // int y1=0;
     if(ACTIVE_PEN <= 6)
     {
         x = pe->pos().x();
@@ -312,6 +320,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
     if(STEP>6) return;
     if(value_m[STEP]==ACTIVE_PEN)
     {
+        sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
         if((ACTIVE_PEN==0)&&(((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/16)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/13)&&
                               (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/9)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/15))||
                               ((x>=WIDTH_SCREEN/2+WIDTH_SCREEN/8)&&(x<=WIDTH_SCREEN/2+WIDTH_SCREEN/7)&&
@@ -320,7 +329,8 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
                               (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/7-HEIGHT_SCREEN/80)&&
                               (y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8))))
         {
-            vnuchka_holst[0]->show();
+            vnuchka_holst[0]->show();            
+            sound->play();
             delete_pen();
             STEP++;
             if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
@@ -329,6 +339,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/11)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30)))
         {
             vnuchka_holst[1]->show();
+            sound->play();
             delete_pen();
             STEP++;
             if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
@@ -337,6 +348,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/8)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/10)))
         {
             vnuchka_holst[2]->show();
+            sound->play();
             delete_pen();
             STEP++;
             if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
@@ -345,6 +357,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/28)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/45)))
         {
             vnuchka_holst[3]->show();
+            sound->play();
             delete_pen();
             STEP++;
             if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
@@ -353,6 +366,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20)&&(y<=HEIGHT_SCREEN/2-HEIGHT_SCREEN/30)))
         {
             vnuchka_holst[4]->show();
+            sound->play();
             delete_pen();
             STEP++;
             if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
@@ -361,6 +375,7 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
                              (y>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/50)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/8)))
         {
             vnuchka_holst[5]->show();
+            sound->play();
             delete_pen();
             STEP++;
             if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
@@ -369,17 +384,21 @@ void Level_04::mouseReleaseEvent(QMouseEvent *pe)
                                   (y>=HEIGHT_SCREEN/2+HEIGHT_SCREEN/7)&&(y<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/6)))
         {
             vnuchka_holst[6]->show();
+            sound->play();
             delete_pen();
             STEP++;
             if(STEP<7) mysl_obj[value_m[STEP]]->show(); else victory();
         }
         if (pens[ACTIVE_PEN] != (void*)0) // если объект существует, то возвращаем на место
         {
+            sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
+            sound->play();
             pens[ACTIVE_PEN]->move_to_xy(x, old_x, y, old_y, 1);
         }
     } else
     {
-        qDebug() << pens[ACTIVE_PEN] << ACTIVE_PEN;
+        sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
+        sound->play();
         pens[ACTIVE_PEN]->move_to_xy(x, old_x, y, old_y, 1);
     }
     ACTIVE_PEN = 7;
@@ -406,6 +425,8 @@ void Level_04::delete_pen()
 
 void Level_04::victory()
 {
+    sound->setSource(QUrl("qrc:/resource/sound/ura.mp3"));
+    sound->play();
     bubbles = new PicObject(":/resource/lev_04/confetti-12.gif", this);
     bubbles->show();
     bubbles->animation_start(WIDTH_SCREEN, HEIGHT_SCREEN);

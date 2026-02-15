@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QTimer>
 #include "picobject.h"
 
 class Level_04 : public QMainWindow
@@ -42,6 +43,7 @@ private:
     QString     name_active_object;             // имя объекта по которому кликнули мышкой
     QMediaPlayer    *sound = nullptr;           // Проигрыватель
     QAudioOutput    *output = nullptr;          // Аудиовыход
+    QTimer          *victory_timer = nullptr;   // Таймер анимации победы
 
     QList<int> value_p = {};                    // Список нумерации карандашей
     QList<int> value_m = {};                    // Список предметов в мысли
