@@ -85,99 +85,159 @@ void MainWindow::exit_of_game()
 
 void MainWindow::start_level()
 {
+    qDebug() << "current level - " << CURRENT_LEVEL;
     switch(CURRENT_LEVEL)
     {
-    case 1:
-        if(lev_01==(void*)0)   // Если объект не существует, то создаем его
+        case 1:
+        if(lev_01==(void*)0)
         {
-            lev_01 = new Level_01();
-            connect(this, &MainWindow::width_scr, lev_01, &Level_01::get_width);        // Получаем разрешение экрана для всех
-            connect(this, &MainWindow::height_scr, lev_01, &Level_01::get_height);      // уровней и пишем значение в каждом уровне
-            screen_size();
+                lev_01 = new Level_01();
+                connect(this, &MainWindow::width_scr, lev_01, &Level_01::get_width);        // Получаем разрешение экрана для всех
+                connect(this, &MainWindow::height_scr, lev_01, &Level_01::get_height);      // уровней и пишем значение в каждом уровне
+                screen_size();
+                lev_01->initial();  // Запускаем инициализацию уровня
+                connect(lev_01->button_back, &QPushButton::clicked, this, [this]()      // Нажимаем кнопку назад
+                        {
+                            this->showFullScreen();
+                            lev_01->hide();
+                        });
+                connect(lev_01->button_next, &QPushButton::clicked, this, [this]()
+                        {
+                            CURRENT_LEVEL = 2;
+                            lev_01->hide();
+                            // ---------------------- Здесь сделать удаление из памяти ненужных объектов из lev_01
+                            start_level();
+                        });
+                // ------- Здесь сделать вызов сигнала next_level из lev_01 (создать его), чтобы по нажатию кнопки старт переходить сразу к текущему уровню
+
         }
-        lev_01->showFullScreen();
-        lev_01->initial();
-        connect(lev_01->button_back, &QPushButton::clicked, this, [this](){
-                this->showFullScreen(); lev_01->back_level();});
-        connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
-                CURRENT_LEVEL=2; start_level(); lev_01->close();});
-        this->hide();
+        lev_01->showFullScreen();   // Показываем уровень во весь экран
+        this->hide();               // Скрываем это окно
+
         break;
-    case 2:
-        if(lev_02==(void*)0)
-        {
-            lev_02 = new Level_02();
-            connect(this, &MainWindow::width_scr, lev_02, &Level_02::get_width);
-            connect(this, &MainWindow::height_scr, lev_02, &Level_02::get_height);
-            connect(lev_02, &Level_02::next_level, this, [this](){
-                CURRENT_LEVEL=3; lev_01->show(); lev_01->view_rdbvgkm(2);           // Если ловим сигнал, прибавляем номер уровня
-                connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
-                    CURRENT_LEVEL=3; start_level();
-                    if(lev_02!=(void*)0)
-                    {
-                        delete lev_02;                  // Объект lev_02 уничтожается
-                        lev_02 = nullptr;
-                    }
-                    });});                              // при победе 2 уровня кнопка button_next перейдет
-                                                        // на 3 уровень
-            screen_size();
-            lev_02->initial();
-        }
-        lev_02->showFullScreen();
-        connect(lev_02->button_back, &QPushButton::clicked, this, [this](){
-                lev_01->showFullScreen(); lev_02->back_level();});
-        this->hide();
+        case 2:
+            if(lev_02==(void*)0)
+            {
+                lev_02 = new Level_02();
+                connect(this, &MainWindow::width_scr, lev_02, &Level_02::get_width);        // Получаем разрешение экрана для всех
+                connect(this, &MainWindow::height_scr, lev_02, &Level_02::get_height);      // уровней и пишем значение в каждом уровне
+                screen_size();
+                lev_02->initial();
+                connect(lev_02->button_back, &QPushButton::clicked, this, [this]()          // Нажали кнопку назад в lev_02
+                        {
+                            lev_01->showFullScreen();
+                            lev_02->hide();
+                        });
+                connect(lev_02, &Level_02::next_level, this, [this]()
+                        {
+                            CURRENT_LEVEL = 3;
+                            lev_02->close();
+                            delete lev_02;
+                            lev_02 = nullptr;
+                            lev_01->showFullScreen();
+                            lev_01->view_rdbvgkm(2);
+                        });
+            }
+            lev_02->showFullScreen();
+            this->hide();
         break;
-    case 3:
-        if(lev_03==(void*)0)
-        {
-            lev_03 = new Level_03();
-            connect(this, &MainWindow::width_scr, lev_03, &Level_03::get_width);
-            connect(this, &MainWindow::height_scr, lev_03, &Level_03::get_height);
-            connect(lev_03, &Level_03::next_level, this, [this](){
-                CURRENT_LEVEL=4; lev_01->show(); lev_01->view_rdbvgkm(3);           // Если ловим сигнал, прибавляем номер уровня
-                connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
-                    CURRENT_LEVEL=4; start_level();
-                    if(lev_03!=(void*)0)
-                    {
-                        delete lev_03;                  // Объект lev_03 уничтожается
-                        lev_03 = nullptr;
-                    }
-                    });});                              // при победе 3 уровня кнопка button_next перейдет
-                                                        // на 4 уровень.
-            screen_size();
-            lev_03->initial();
-        }
-        lev_03->showFullScreen();
-        connect(lev_03->button_back, &QPushButton::clicked, this, [this](){
-                 lev_01->showFullScreen(); lev_03->back_level();});
-        this->hide();
-        break;
-    case 4:
-        if(lev_04==(void*)0)
-        {
-            lev_04 = new Level_04();
-            connect(this, &MainWindow::width_scr, lev_04, &Level_04::get_width);
-            connect(this, &MainWindow::height_scr, lev_04, &Level_04::get_height);
-            connect(lev_04, &Level_04::next_level, this, [this](){
-                CURRENT_LEVEL=5; lev_01->show(); lev_01->view_rdbvgkm(4);           // Если ловим сигнал, прибавляем номер уровня
-                connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
-                    CURRENT_LEVEL=5; start_level();
-                    if(lev_04!=(void*)0)
-                    {
-                        delete lev_04;                  // Объект lev_04 уничтожается
-                        lev_04 = nullptr;
-                    }
-                    });});                              // при победе 4 уровня кнопка button_next перейдет
-                                                        // на 5 уровень.
-            screen_size();
-            lev_04->initial();
-        }
-        lev_04->showFullScreen();
-        connect(lev_04->button_back, &QPushButton::clicked, this, [this](){
-                lev_01->showFullScreen(); lev_04->back_level();});
-        this->hide();
+        case 3:
+            exit(3);
         break;
     }
+    // switch(CURRENT_LEVEL)
+    // {
+    // case 1:
+    //     if(lev_01==(void*)0)   // Если объект не существует, то создаем его
+    //     {
+    //         lev_01 = new Level_01();
+    //         connect(this, &MainWindow::width_scr, lev_01, &Level_01::get_width);        // Получаем разрешение экрана для всех
+    //         connect(this, &MainWindow::height_scr, lev_01, &Level_01::get_height);      // уровней и пишем значение в каждом уровне
+    //         screen_size();
+    //     }
+    //     lev_01->showFullScreen();
+    //     lev_01->initial();
+    //     connect(lev_01->button_back, &QPushButton::clicked, this, [this](){
+    //             this->showFullScreen(); lev_01->back_level();});
+    //     connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
+    //             CURRENT_LEVEL=2; start_level(); lev_01->close();});
+    //     this->hide();
+    //     break;
+    // case 2:
+    //     if(lev_02==(void*)0)
+    //     {
+    //         lev_02 = new Level_02();
+    //         connect(this, &MainWindow::width_scr, lev_02, &Level_02::get_width);
+    //         connect(this, &MainWindow::height_scr, lev_02, &Level_02::get_height);
+    //         connect(lev_02, &Level_02::next_level, this, [this](){
+    //             CURRENT_LEVEL=3; lev_01->show(); lev_01->view_rdbvgkm(2);           // Если ловим сигнал, прибавляем номер уровня
+    //             connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
+    //                 CURRENT_LEVEL=3; start_level();
+    //                 if(lev_02!=(void*)0)
+    //                 {
+    //                     delete lev_02;                  // Объект lev_02 уничтожается
+    //                     lev_02 = nullptr;
+    //                 }
+    //                 });});                              // при победе 2 уровня кнопка button_next перейдет
+    //                                                     // на 3 уровень
+    //         screen_size();
+    //         lev_02->initial();
+    //     }
+    //     lev_02->showFullScreen();
+    //     connect(lev_02->button_back, &QPushButton::clicked, this, [this](){
+    //             lev_01->showFullScreen(); lev_02->back_level();});
+    //     this->hide();
+    //     break;
+    // case 3:
+    //     if(lev_03==(void*)0)
+    //     {
+    //         lev_03 = new Level_03();
+    //         connect(this, &MainWindow::width_scr, lev_03, &Level_03::get_width);
+    //         connect(this, &MainWindow::height_scr, lev_03, &Level_03::get_height);
+    //         connect(lev_03, &Level_03::next_level, this, [this](){
+    //             CURRENT_LEVEL=4; lev_01->show(); lev_01->view_rdbvgkm(3);           // Если ловим сигнал, прибавляем номер уровня
+    //             connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
+    //                 CURRENT_LEVEL=4; start_level();
+    //                 if(lev_03!=(void*)0)
+    //                 {
+    //                     delete lev_03;                  // Объект lev_03 уничтожается
+    //                     lev_03 = nullptr;
+    //                 }
+    //                 });});                              // при победе 3 уровня кнопка button_next перейдет
+    //                                                     // на 4 уровень.
+    //         screen_size();
+    //         lev_03->initial();
+    //     }
+    //     lev_03->showFullScreen();
+    //     connect(lev_03->button_back, &QPushButton::clicked, this, [this](){
+    //              lev_01->showFullScreen(); lev_03->back_level();});
+    //     this->hide();
+    //     break;
+    // case 4:
+    //     if(lev_04==(void*)0)
+    //     {
+    //         lev_04 = new Level_04();
+    //         connect(this, &MainWindow::width_scr, lev_04, &Level_04::get_width);
+    //         connect(this, &MainWindow::height_scr, lev_04, &Level_04::get_height);
+    //         connect(lev_04, &Level_04::next_level, this, [this](){
+    //             CURRENT_LEVEL=5; lev_01->show(); lev_01->view_rdbvgkm(4);           // Если ловим сигнал, прибавляем номер уровня
+    //             connect(lev_01->button_next, &QPushButton::clicked, this, [this](){
+    //                 CURRENT_LEVEL=5; start_level();
+    //                 if(lev_04!=(void*)0)
+    //                 {
+    //                     delete lev_04;                  // Объект lev_04 уничтожается
+    //                     lev_04 = nullptr;
+    //                 }
+    //                 });});                              // при победе 4 уровня кнопка button_next перейдет
+    //                                                     // на 5 уровень.
+    //         screen_size();
+    //         lev_04->initial();
+    //     }
+    //     lev_04->showFullScreen();
+    //     connect(lev_04->button_back, &QPushButton::clicked, this, [this](){
+    //             lev_01->showFullScreen(); lev_04->back_level();});
+    //     this->hide();
+    //     break;
+    // }
 }
 

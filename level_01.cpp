@@ -263,21 +263,21 @@ void Level_01::flight_bird()
 
 // ---------------- Возврат на главный экран --------------------
 
-void Level_01::back_level()
-{
-    if(LEVEL_END)
-    {
-        for(int i=0; i<9; i++)
-        {
-            if (vegetable[i] != (void*)0) // если объект существует, то удаляем его
-            {
-                delete vegetable[i];
-                vegetable[i] = nullptr;
-            }
-        }
-    }
-    this->close();
-}
+// void Level_01::back_level()
+// {
+//     if(LEVEL_END)
+//     {
+//         for(int i=0; i<9; i++)
+//         {
+//             if (vegetable[i] != (void*)0) // если объект существует, то удаляем его
+//             {
+//                 delete vegetable[i];
+//                 vegetable[i] = nullptr;
+//             }
+//         }
+//     }
+//     this->close();
+// }
 
 // ----------------- Нажатие кнопки мышки -----------------------------
 

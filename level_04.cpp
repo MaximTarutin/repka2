@@ -45,6 +45,8 @@ Level_04::~Level_04()
     output = nullptr;
     delete sound;
     sound = nullptr;
+    delete container;
+    container = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -425,6 +427,12 @@ void Level_04::delete_pen()
 
 void Level_04::victory()
 {
+    victory_timer = new QTimer(this);
+    victory_timer->start(9000);
+    connect(victory_timer, &QTimer::timeout, this, [this]()
+    {
+        this->close();
+    });
     sound->setSource(QUrl("qrc:/resource/sound/ura.mp3"));
     sound->play();
     bubbles = new PicObject(":/resource/lev_04/confetti-12.gif", this);

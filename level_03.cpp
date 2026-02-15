@@ -43,7 +43,6 @@ Level_03::~Level_03()
     timer_show_kolobok = nullptr;
     delete kolobok;
     kolobok = nullptr;
-
     delete duck;
     duck = nullptr;
     delete duck_1;

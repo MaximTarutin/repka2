@@ -61,7 +61,7 @@ public slots:
     void initial();                                         // инициализация
     void get_width(int w);                                  // Получаем WIDTH_SCREEN
     void get_height(int h);                                 // Получаем HEIGHT_SCREEN
-    void back_level();                                      // Возврат на главный экран
+    //void back_level();                                      // Возврат на главный экран
     void view_rdbvgkm(int current_level);                   // Прорисовываем цепочку Репка-Дедка-Бабка-
                                                             // -Внучка-Жучка-Кошка-Мышка в зависимости от
                                                             // значения current_level
