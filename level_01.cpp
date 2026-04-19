@@ -381,24 +381,30 @@ void Level_01::view_rdbvgkm(int current_level)
     switch(current_level)
     {
     case 1:
-        repka = new PicObject(":/resource/lev_01/repka.png", this);
-        repka->show();
+        repka = new PicObject(":/resource/lev_01/repka.png", this);        
         repka->move(0, HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
         repka->resize_object(WIDTH_SCREEN/10*2, HEIGHT_SCREEN/4*2);
+        repka->show();
         LEVEL_END = true;
         button_next->show();
         break;
     case 2:
-        dedka = new PicObject(":/resource/lev_01/dedka.png", this);
-        dedka->show();
+        dedka = new PicObject(":/resource/lev_01/dedka.png", this);        
         dedka->move(repka->x()+repka->width()-repka->width()/3, HEIGHT_SCREEN/2);
         dedka->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/2);
+        dedka->show();
         break;
     case 3:
-        babka = new PicObject(":/resource/lev_01/babka.png",this);
-        babka->show();
+        babka = new PicObject(":/resource/lev_01/babka.png",this);        
         babka->move(dedka->x()+dedka->width()-dedka->width()/5, HEIGHT_SCREEN/2);
         babka->resize_object(WIDTH_SCREEN/5,HEIGHT_SCREEN/2);
+        babka->show();
         break;
+    case 4:
+        vnuchka = new PicObject(":/resource/lev_01/vnuchka.png", this);
+        vnuchka->resize_object(WIDTH_SCREEN/5,HEIGHT_SCREEN/2);
+        vnuchka->move(babka->x()+babka->width()-babka->width()/5, HEIGHT_SCREEN/2);
+        vnuchka->show();
+
     }
 }

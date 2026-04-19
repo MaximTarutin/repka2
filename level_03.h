@@ -88,7 +88,7 @@ private slots:
     void help();                                // Подсказка
 
 signals:
-    void next_level();                          // Сигнал переход на следующий уровень
+    void next_level(int lev);                   // Сигнал переход на следующий уровень
 };
 
 #endif // LEVEL__3_H

@@ -67,7 +67,7 @@ public slots:
     void back_level();                          // Закрываем окно текущего уровня
 
 signals:
-        void next_level();                      // Сигнал переход на следующий уровень
+        void next_level(int lev);               // Сигнал переход на следующий уровень
 };
 
 #endif // LEVEL__4_H

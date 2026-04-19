@@ -364,7 +364,7 @@ void Level_02::victory()
             });
     firework = new PicObject(":/resource/lev_02/salut.gif", this);
     firework->show();
-    firework->animation_start(WIDTH_SCREEN, HEIGHT_SCREEN);
+    firework->animation_start(WIDTH_SCREEN/2, HEIGHT_SCREEN/2);
 }
 
 // -------------------- Возврат на 1 уровень -------------------------------

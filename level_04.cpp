@@ -15,13 +15,13 @@ Level_04::~Level_04()
     button_back = nullptr;    
     delete vnuchka;
     vnuchka = nullptr;
-    delete holst;
-    holst = nullptr;
     for(int i=0; i<=8; i++)
     {
         delete vnuchka_holst[i];
         vnuchka_holst[i] = nullptr;
     }
+    delete holst;
+    holst = nullptr;
     for(int i=0; i<=7; i++)
     {
         delete pens[i];
@@ -431,7 +431,7 @@ void Level_04::victory()
     victory_timer->start(9000);
     connect(victory_timer, &QTimer::timeout, this, [this]()
     {
-        this->close();
+        emit next_level(5);
     });
     sound->setSource(QUrl("qrc:/resource/sound/ura.mp3"));
     sound->play();
