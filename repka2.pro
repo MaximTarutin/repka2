@@ -36,6 +36,7 @@ RESOURCES += \
     res2.qrc \
     res3.qrc \
     res4.qrc \
+    res5.qrc \
     res_sound.qrc
 
 
