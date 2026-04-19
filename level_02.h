@@ -65,7 +65,7 @@ protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
 
 signals:
-    void next_level();                                      // сигнал следующий уровень
+    void next_level(int lev);                               // сигнал следующий уровень
 };
 
 #endif // LEVEL_02_H

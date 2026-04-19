@@ -261,24 +261,6 @@ void Level_01::flight_bird()
     }
 }
 
-// ---------------- Возврат на главный экран --------------------
-
-// void Level_01::back_level()
-// {
-//     if(LEVEL_END)
-//     {
-//         for(int i=0; i<9; i++)
-//         {
-//             if (vegetable[i] != (void*)0) // если объект существует, то удаляем его
-//             {
-//                 delete vegetable[i];
-//                 vegetable[i] = nullptr;
-//             }
-//         }
-//     }
-//     this->close();
-// }
-
 // ----------------- Нажатие кнопки мышки -----------------------------
 
 void Level_01::mousePressEvent(QMouseEvent *pe)
@@ -389,7 +371,7 @@ void Level_01::victory()
     delete warehouse;
     warehouse = nullptr;
     view_rdbvgkm(1);
-
+    emit next_level(2);
 }
 
 // ----------------------- Вырисовываем цепочку Р-Д-Б-В-Ж-К-М ----------------------------------

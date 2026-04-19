@@ -360,7 +360,7 @@ void Level_02::victory()
                 delete mysl;
                 mysl = nullptr;
                 this->close();
-                emit next_level();
+                emit next_level(3); // посылаем сигнал с номером следующего уровня в mainwindow
             });
     firework = new PicObject(":/resource/lev_02/salut.gif", this);
     firework->show();

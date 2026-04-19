@@ -94,22 +94,23 @@ void MainWindow::start_level()
                 lev_01 = new Level_01();
                 connect(this, &MainWindow::width_scr, lev_01, &Level_01::get_width);        // Получаем разрешение экрана для всех
                 connect(this, &MainWindow::height_scr, lev_01, &Level_01::get_height);      // уровней и пишем значение в каждом уровне
+
                 screen_size();
                 lev_01->initial();  // Запускаем инициализацию уровня
+
+                connect(lev_01, &Level_01::next_level, this, &MainWindow::get_current_level);  // получаем номер следующего уровня
+
                 connect(lev_01->button_back, &QPushButton::clicked, this, [this]()      // Нажимаем кнопку назад
                         {
                             this->showFullScreen();
                             lev_01->hide();
                         });
                 connect(lev_01->button_next, &QPushButton::clicked, this, [this]()
-                        {
-                            CURRENT_LEVEL = 2; // сделать сигнал в lev_01 next_level(), и по нему присваивать CURRENT_LEVEL=2,
+                        {                    
                             lev_01->hide();
                             // ---------------------- Здесь сделать удаление из памяти ненужных объектов из lev_01
                             start_level();
                         });
-                // ------- Здесь сделать вызов сигнала next_level из lev_01 (создать его), чтобы по нажатию кнопки старт переходить сразу к текущему уровню
-
         }
         lev_01->showFullScreen();   // Показываем уровень во весь экран
         this->hide();               // Скрываем это окно
@@ -123,6 +124,9 @@ void MainWindow::start_level()
                 connect(this, &MainWindow::height_scr, lev_02, &Level_02::get_height);      // уровней и пишем значение в каждом уровне
                 screen_size();
                 lev_02->initial();
+
+                connect(lev_02, &Level_02::next_level, this, &MainWindow::get_current_level); // получаем номер следующего уровня
+
                 connect(lev_02->button_back, &QPushButton::clicked, this, [this]()          // Нажали кнопку назад в lev_02
                         {
                             lev_01->showFullScreen();
@@ -130,7 +134,6 @@ void MainWindow::start_level()
                         });
                 connect(lev_02, &Level_02::next_level, this, [this]()
                         {
-                            CURRENT_LEVEL = 3;
                             lev_02->close();
                             delete lev_02;                      // удаляем второй уровень
                             lev_02 = nullptr;
@@ -239,5 +242,12 @@ void MainWindow::start_level()
     //     this->hide();
     //     break;
     // }
+}
+
+// ------------------------- Получаем номер уровня ----------------------------------------
+
+void MainWindow::get_current_level(int lev)
+{
+    CURRENT_LEVEL = lev;
 }
 

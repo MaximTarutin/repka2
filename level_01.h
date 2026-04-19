@@ -61,7 +61,6 @@ public slots:
     void initial();                                         // инициализация
     void get_width(int w);                                  // Получаем WIDTH_SCREEN
     void get_height(int h);                                 // Получаем HEIGHT_SCREEN
-    //void back_level();                                      // Возврат на главный экран
     void view_rdbvgkm(int current_level);                   // Прорисовываем цепочку Репка-Дедка-Бабка-
                                                             // -Внучка-Жучка-Кошка-Мышка в зависимости от
                                                             // значения current_level
@@ -75,6 +74,9 @@ protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
     virtual void mouseMoveEvent(QMouseEvent *pe);           // перетаскивание овощей
     virtual void mouseReleaseEvent(QMouseEvent *pe);        // отпускаем кнопку мышки
+
+signals:
+    void next_level(int);                                   // передаем номер следующего уровня при победе в mainwindow
 };
 
 #endif // LEVEL_01_H

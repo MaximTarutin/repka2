@@ -48,8 +48,8 @@ private:
     void initial();                                                 // Инициализация
 
 private slots:
-    void exit_of_game();                                            // Выход из игры
-    void start_level();
-
+    void exit_of_game();                                            // Выход из игрыvoid get_current_level(int lev);
+    void start_level();                                             // Запуск текущего уровня
+    void get_current_level(int lev);                                // получаем номер уровня (CURRENT_LEVEL)
 };
 #endif // MAINWINDOW_H
