@@ -200,6 +200,34 @@ void MainWindow::start_level()
             lev_04->showFullScreen();
             this->hide();
         break;
+        case 5:
+            if(lev_05==(void*)0)
+            {
+                lev_05 = new Level_05();
+                connect(this, &MainWindow::width_scr, lev_05, &Level_05::get_width);
+                connect(this, &MainWindow::height_scr, lev_05, &Level_05::get_height);      // разрешение экрана
+                screen_size();
+                lev_05->initial();
+
+                connect(lev_05, &Level_05::next_level, this, &MainWindow::get_current_level);   // Получаем номер следующего уровня
+
+                connect(lev_05->button_back, &QPushButton::clicked, this, [this]()      // Нажали кнопку назад
+                        {
+                            lev_01->showFullScreen();
+                            lev_05->hide();
+                        });
+                connect(lev_05, &Level_05::next_level, this, [this]()
+                        {
+                            lev_05->close();
+                            lev_01->showFullScreen();
+                            lev_01->view_rdbvgkm(5);
+                            delete lev_05;
+                            lev_05 = nullptr;
+                        });
+            }
+            lev_05->showFullScreen();
+            this->hide();
+        break;
     }
 }
 
