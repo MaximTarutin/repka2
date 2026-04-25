@@ -85,7 +85,6 @@ void MainWindow::exit_of_game()
 
 void MainWindow::start_level()
 {
-    qDebug() << "current level - " << CURRENT_LEVEL;
     switch(CURRENT_LEVEL)
     {
         case 1:

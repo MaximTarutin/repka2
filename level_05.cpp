@@ -9,7 +9,14 @@ Level_05::Level_05(QWidget *parent)
 }
 Level_05::~Level_05()
 {
-
+    delete output;
+    output = nullptr;
+    delete sound;
+    sound = nullptr;
+    delete background;
+    background = nullptr;
+    delete button_back;
+    button_back = nullptr;
 }
 
 // -------------------- Получаем разрешение экрана --------------------------------
@@ -40,9 +47,21 @@ void Level_05::initial()
 
     // ---------------------
 
+    background = new QLabel(this);
+    background->setStyleSheet("border-image: url(:/resource/lev_05/dvor.jpeg);");
+    this->setCentralWidget(background);
+    background->show();
+
     button_back = new QPushButton(this);
     button_back->setStyleSheet("border-image: url(:/resource/lev_01/return.png);");
     button_back->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
     button_back->move(WIDTH_SCREEN/30, HEIGHT_SCREEN/20);
     button_back->show();
+
+    dog = new PicObject(":/resource/lev_05/zuchka.png", this);
+    dog->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/2+HEIGHT_SCREEN/8);
+    dog->move(WIDTH_SCREEN/2+WIDTH_SCREEN/6, HEIGHT_SCREEN/2-HEIGHT_SCREEN/6);
+    dog->show();
+
+
 }

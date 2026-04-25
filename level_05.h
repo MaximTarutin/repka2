@@ -31,6 +31,7 @@ private:
     QLabel      *background = nullptr;      // Фон
     QMediaPlayer    *sound = nullptr;       // Проигрыватель
     QAudioOutput    *output = nullptr;      // Аудиовыход
+    PicObject       *dog = nullptr;         // Собака на фоне
 
 
 signals:
