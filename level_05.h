@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QList>
 #include "picobject.h"
 
 class Level_05 : public QMainWindow
@@ -32,6 +33,9 @@ private:
     QMediaPlayer    *sound = nullptr;       // Проигрыватель
     QAudioOutput    *output = nullptr;      // Аудиовыход
     PicObject       *dog = nullptr;         // Собака на фоне
+    PicObject       *mysl = nullptr;        // Мысль собаки
+    PicObject       *panel[8] = {};         // Панель куда складываем пазл
+    QList<QList<int>>  coordinates = {};    // Координаты панели и пазлов
 
 
 signals:
