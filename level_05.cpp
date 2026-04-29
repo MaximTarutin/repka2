@@ -1,11 +1,12 @@
 #include "level_05.h"
 #include "qmediaplayer.h"
 #include "qpushbutton.h"
+#include <ctime>
 
 Level_05::Level_05(QWidget *parent)
     : QMainWindow{parent}
 {
-
+    srand(time(NULL));
 }
 Level_05::~Level_05()
 {
@@ -26,6 +27,16 @@ Level_05::~Level_05()
         delete panel[i];
         panel[i] = nullptr;
     }
+}
+
+//------------------ генератор случайных чисел в диапазоне от a до b -----------------------
+
+int Level_05::rnd(int a, int b)
+{
+    int k;
+    b=b-a+1;
+    k   =   rand()%b+a;
+    return k;
 }
 
 // -------------------- Получаем разрешение экрана --------------------------------
@@ -107,6 +118,7 @@ void Level_05::initial()
         QString name = ":/resource/lev_05/0"+QString::number(i+1)+"-"+QString::number(nabor)+".png";
         pazl[i] = new PicObject(name, this);
         pazl[i]->resize_object(WIDTH_SCREEN/9, HEIGHT_SCREEN/5);
+        pazl[i]->hide();
     }
 
     pazl[0]->move(panel[0]->x(), panel[6]->y()+HEIGHT_SCREEN/5+HEIGHT_SCREEN/100);
@@ -114,7 +126,7 @@ void Level_05::initial()
     pazl[2]->move(pazl[1]->x()+pazl[1]->width()+WIDTH_SCREEN/90, pazl[1]->y());
     pazl[3]->move(pazl[2]->x()+pazl[2]->width()+WIDTH_SCREEN/90, pazl[2]->y());
     pazl[4]->move(pazl[2]->x()+pazl[2]->width()+WIDTH_SCREEN/90,
-                  pazl[3]->y()-pazl[3]->height()-HEIGHT_SCREEN/100);
+                  pazl[3]->y()-pazl[3]->height()-HEIGHT_SCREEN/100);                // Расставляем пазлы сначала по порядку
     pazl[5]->move(pazl[2]->x()+pazl[2]->width()+WIDTH_SCREEN/90,
                   pazl[4]->y()-pazl[4]->height()-HEIGHT_SCREEN/100);
     pazl[6]->move(pazl[2]->x()+pazl[2]->width()+WIDTH_SCREEN/90,
@@ -122,4 +134,37 @@ void Level_05::initial()
     pazl[7]->move(pazl[4]->x()+pazl[4]->width()+WIDTH_SCREEN/90,
                   pazl[0]->y()-pazl[0]->height()-HEIGHT_SCREEN/100);
     pazl[8]->move(pazl[4]->x()+pazl[4]->width()+WIDTH_SCREEN/90, pazl[0]->y());
+
+    coordinates_pazl.append(QList<int>() << pazl[0]->x() << pazl[0]->y());
+    coordinates_pazl.append(QList<int>() << pazl[1]->x() << pazl[1]->y());
+    coordinates_pazl.append(QList<int>() << pazl[2]->x() << pazl[2]->y());
+    coordinates_pazl.append(QList<int>() << pazl[3]->x() << pazl[3]->y());
+    coordinates_pazl.append(QList<int>() << pazl[4]->x() << pazl[4]->y());          // Составляем список возможных координат
+    coordinates_pazl.append(QList<int>() << pazl[5]->x() << pazl[5]->y());
+    coordinates_pazl.append(QList<int>() << pazl[6]->x() << pazl[6]->y());
+    coordinates_pazl.append(QList<int>() << pazl[7]->x() << pazl[7]->y());
+    coordinates_pazl.append(QList<int>() << pazl[8]->x() << pazl[8]->y());
+
+    qDebug() << coordinates_pazl;
+
+    //-------------- Перемешаем список координат пазлов -------------------
+
+    QList<int> temp;
+    int k = 0;
+
+    for(int i=0; i<=8; i++)
+    {
+        k = rnd(0,8);
+        coordinates_pazl[i].swap(coordinates_pazl[k]);  // Меняем местами элементы списка
+    }
+
+    // --------------------------------------------------------------------
+
+    for(int i=0; i<=8; i++)
+    {
+        int x = coordinates_pazl.at(i).at(0);           // Расставляем пазлы
+        int y = coordinates_pazl.at(i).at(1);
+        pazl[i]->move(x,y);
+        pazl[i]->show();
+    }
 }

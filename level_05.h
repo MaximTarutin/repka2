@@ -29,6 +29,8 @@ private:
     int WIDTH_SCREEN = 0;                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                          // Высота экрана
 
+    int rnd(int a, int b);                          // случайное число в диапазоне от a до b
+
     QLabel      *background = nullptr;              // Фон
     QMediaPlayer    *sound = nullptr;               // Проигрыватель
     QAudioOutput    *output = nullptr;              // Аудиовыход
