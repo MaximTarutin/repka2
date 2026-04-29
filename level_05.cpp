@@ -111,7 +111,7 @@ void Level_05::initial()
         panel[i]->show();
     }
 
-    int nabor = 0;      // сделать рандомным, координаты пазлов тоже сделать рандомными
+    int nabor = rnd(0,2);      // случайный набор пазлов
 
     for(int i=0; i<=8; i++)
     {
@@ -144,8 +144,6 @@ void Level_05::initial()
     coordinates_pazl.append(QList<int>() << pazl[6]->x() << pazl[6]->y());
     coordinates_pazl.append(QList<int>() << pazl[7]->x() << pazl[7]->y());
     coordinates_pazl.append(QList<int>() << pazl[8]->x() << pazl[8]->y());
-
-    qDebug() << coordinates_pazl;
 
     //-------------- Перемешаем список координат пазлов -------------------
 
