@@ -118,12 +118,14 @@ void Level_05::initial()
     pic_mysl->move(mysl->width()/3, mysl->height()/5);
     pic_mysl->show();
 
-    for(int i=0; i<=8; i++)
+    for(int i=0; i<=8; i++)         // создаем элементы пазла
     {
         QString name = ":/resource/lev_05/0"+QString::number(i+1)+"-"+QString::number(nabor)+".png";
         pazl[i] = new PicObject(name, this);
         pazl[i]->resize_object(WIDTH_SCREEN/9, HEIGHT_SCREEN/5);
         pazl[i]->hide();
+        pazl[i]->setObjectName(QString::number(i));
+        connect(pazl[i], &PicObject::clicked, this, &Level_05::mousePressEvent);
     }
 
     pazl[0]->move(panel[0]->x(), panel[6]->y()+HEIGHT_SCREEN/5+HEIGHT_SCREEN/100);
@@ -171,3 +173,31 @@ void Level_05::initial()
         pazl[i]->show();
     }
 }
+
+// ------------------------- Нажимаем кнопку мышки --------------------------
+
+void Level_05::mousePressEvent(QMouseEvent *pe)
+{
+    if(QObject::sender() && pe->button() == Qt::LeftButton)
+    {
+        QString nameobj = QObject::sender()->objectName();   // Получаем имя объекта по которому кликнули
+        int num = nameobj.toInt();                           // Получаем номер пазла
+        qDebug() << nameobj << num;
+        exit(2);
+    }
+}
+
+// ----------------------- Перемещаем мышку ---------------------------------
+
+void Level_05::mouseMoveEvent(QMouseEvent *pe)
+{
+
+}
+
+// ----------------------- Отпускаем кнопку мышки --------------------------
+
+void Level_05::mouseReleaseEvent(QMouseEvent *pe)
+{
+
+}
+

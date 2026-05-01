@@ -9,6 +9,7 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include <QList>
+#include <QMouseEvent>
 #include "picobject.h"
 
 class Level_05 : public QMainWindow
@@ -42,6 +43,10 @@ private:
     QList<QList<int>> coordinates_panel = {};       // Координаты частей панели
     QList<QList<int>> coordinates_pazl = {};        // Координаты пазлов вокруг панели
 
+protected:
+    virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
+    virtual void mouseMoveEvent(QMouseEvent *pe);           // перетаскивание овощей
+    virtual void mouseReleaseEvent(QMouseEvent *pe);        // отпускаем кнопку мышки
 
 signals:
     void next_level(int lev);                       // Сигнал переход на следующий уровень
