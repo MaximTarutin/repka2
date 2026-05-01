@@ -111,7 +111,12 @@ void Level_05::initial()
         panel[i]->show();
     }
 
-    int nabor = rnd(0,2);      // случайный набор пазлов
+    int nabor = rnd(0,5);      // случайный набор пазлов
+
+    pic_mysl = new PicObject(":/resource/lev_05/00-"+QString::number(nabor)+".png", mysl);
+    pic_mysl->resize_object(WIDTH_SCREEN/11, HEIGHT_SCREEN/6);
+    pic_mysl->move(mysl->width()/3, mysl->height()/5);
+    pic_mysl->show();
 
     for(int i=0; i<=8; i++)
     {

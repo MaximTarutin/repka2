@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>resource/lev_05/00-0.jpg</file>
         <file>resource/lev_05/00-1.png</file>
         <file>resource/lev_05/00-2.png</file>
         <file>resource/lev_05/01-0.png</file>
@@ -37,5 +36,36 @@
         <file>resource/lev_05/Moving-picture-puppy-dog-running-animated-gif.gif</file>
         <file>resource/lev_05/viktory.gif</file>
         <file>resource/lev_05/zuchka.png</file>
+        <file>resource/lev_05/00-3.png</file>
+        <file>resource/lev_05/00-4.png</file>
+        <file>resource/lev_05/00-5.png</file>
+        <file>resource/lev_05/01-3.png</file>
+        <file>resource/lev_05/01-4.png</file>
+        <file>resource/lev_05/01-5.png</file>
+        <file>resource/lev_05/02-3.png</file>
+        <file>resource/lev_05/02-4.png</file>
+        <file>resource/lev_05/02-5.png</file>
+        <file>resource/lev_05/03-3.png</file>
+        <file>resource/lev_05/03-4.png</file>
+        <file>resource/lev_05/03-5.png</file>
+        <file>resource/lev_05/04-3.png</file>
+        <file>resource/lev_05/04-4.png</file>
+        <file>resource/lev_05/04-5.png</file>
+        <file>resource/lev_05/05-3.png</file>
+        <file>resource/lev_05/05-4.png</file>
+        <file>resource/lev_05/05-5.png</file>
+        <file>resource/lev_05/06-3.png</file>
+        <file>resource/lev_05/06-4.png</file>
+        <file>resource/lev_05/06-5.png</file>
+        <file>resource/lev_05/07-3.png</file>
+        <file>resource/lev_05/07-4.png</file>
+        <file>resource/lev_05/07-5.png</file>
+        <file>resource/lev_05/08-3.png</file>
+        <file>resource/lev_05/08-4.png</file>
+        <file>resource/lev_05/08-5.png</file>
+        <file>resource/lev_05/09-3.png</file>
+        <file>resource/lev_05/09-4.png</file>
+        <file>resource/lev_05/09-5.png</file>
+        <file>resource/lev_05/00-0.png</file>
     </qresource>
 </RCC>

@@ -36,6 +36,7 @@ private:
     QAudioOutput    *output = nullptr;              // Аудиовыход
     PicObject       *dog = nullptr;                 // Собака на фоне
     PicObject       *mysl = nullptr;                // Мысль собаки
+    PicObject       *pic_mysl = nullptr;            // Картинка в мысли
     PicObject       *panel[8] = {};                 // Панель куда складываем пазл
     PicObject       *pazl[8] = {};                  // Набор пазлов
     QList<QList<int>> coordinates_panel = {};       // Координаты частей панели
