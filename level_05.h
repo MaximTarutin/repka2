@@ -29,6 +29,7 @@ public slots:
 private:
     int WIDTH_SCREEN = 0;                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                          // Высота экрана
+    int ACTIVE_PAZL = 100;                          // Номер активного пазла (100 - пазл не выбран)
 
     int rnd(int a, int b);                          // случайное число в диапазоне от a до b
 

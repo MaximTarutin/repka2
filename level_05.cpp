@@ -18,6 +18,8 @@ Level_05::~Level_05()
     background = nullptr;
     delete button_back;
     button_back = nullptr;
+    delete pic_mysl;
+    pic_mysl = nullptr;
     delete mysl;
     mysl = nullptr;
     delete dog;
@@ -26,6 +28,8 @@ Level_05::~Level_05()
     {
         delete panel[i];
         panel[i] = nullptr;
+        delete pazl[i];
+        pazl[i] = nullptr;
     }
 }
 
@@ -109,6 +113,7 @@ void Level_05::initial()
         panel[i]->resize_object(WIDTH_SCREEN/9, HEIGHT_SCREEN/5);
         panel[i]->move(coordinates_panel.at(i).at(0), coordinates_panel.at(i).at(1));
         panel[i]->show();
+        qDebug() << i << panel[i]->pos();
     }
 
     int nabor = rnd(0,5);      // случайный набор пазлов
@@ -178,26 +183,61 @@ void Level_05::initial()
 
 void Level_05::mousePressEvent(QMouseEvent *pe)
 {
-    if(QObject::sender() && pe->button() == Qt::LeftButton)
+    if(ACTIVE_PAZL==100)
     {
-        QString nameobj = QObject::sender()->objectName();   // Получаем имя объекта по которому кликнули
-        int num = nameobj.toInt();                           // Получаем номер пазла
-        qDebug() << nameobj << num;
-        exit(2);
-    }
+        if(QObject::sender() && pe->button() == Qt::LeftButton)
+        {
+            QString nameobj = QObject::sender()->objectName();   // Получаем имя объекта по которому кликнули
+            ACTIVE_PAZL = nameobj.toInt();                       // Получаем номер пазла
+        }
+    } else return;
 }
 
 // ----------------------- Перемещаем мышку ---------------------------------
 
 void Level_05::mouseMoveEvent(QMouseEvent *pe)
 {
-
+    if(ACTIVE_PAZL!=100)
+    {
+        pazl[ACTIVE_PAZL]->raise();
+        pazl[ACTIVE_PAZL]->move(pe->position().x()-pazl[ACTIVE_PAZL]->width()/2,
+                                pe->position().y()-pazl[ACTIVE_PAZL]->height()/2);
+    } else return;
 }
 
 // ----------------------- Отпускаем кнопку мышки --------------------------
 
 void Level_05::mouseReleaseEvent(QMouseEvent *pe)
 {
+    if(ACTIVE_PAZL!=100)
+    {
+        int x = pe->position().x()-pazl[ACTIVE_PAZL]->width()/2;
+        int y = pe->position().y()-pazl[ACTIVE_PAZL]->height()/2;
+        int x0 = coordinates_panel.at(ACTIVE_PAZL).at(0)-panel[ACTIVE_PAZL]->width()/2;
+        int x1 = coordinates_panel.at(ACTIVE_PAZL).at(0)+panel[ACTIVE_PAZL]->width()/2;     // область куда ставим пазл
+        int y0 = coordinates_panel.at(ACTIVE_PAZL).at(1)-panel[ACTIVE_PAZL]->height()/2;
+        int y1 = coordinates_panel.at(ACTIVE_PAZL).at(1)+panel[ACTIVE_PAZL]->height()/2;
+        int x2 = coordinates_panel.at(ACTIVE_PAZL).at(0);
+        int y2 = coordinates_panel.at(ACTIVE_PAZL).at(1);
+        if((x>=x0)and(x<=x1)and(y>=y0)and(y<=y1))
+        {
+            pazl[ACTIVE_PAZL]->move(x2, y2); qDebug() << ACTIVE_PAZL;
+        } else
+        {
+            pazl[ACTIVE_PAZL]->move_to_xy(pazl[ACTIVE_PAZL]->x(), coordinates_pazl.at(ACTIVE_PAZL).at(0),
+                                          pazl[ACTIVE_PAZL]->y(), coordinates_pazl.at(ACTIVE_PAZL).at(1), 1,10);
+        }
+    }
 
+    ACTIVE_PAZL = 100;
+
+    int check_victory = 0;  // счетчик правильно поставленных пазлов
+
+    for(int i=0; i<=8; i++) // Проверяем все ли пазлы поставлены на место
+    {
+        if((pazl[i]->x()==coordinates_panel.at(i).at(0))&&
+           (pazl[i]->y()==coordinates_panel.at(i).at(1))) check_victory++;
+    }
+    if(check_victory==9) exit(65);
 }
 
