@@ -44,6 +44,8 @@ private:
     QList<QList<int>> coordinates_panel = {};       // Координаты частей панели
     QList<QList<int>> coordinates_pazl = {};        // Координаты пазлов вокруг панели
 
+    void victory();                                 // Победа
+
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
     virtual void mouseMoveEvent(QMouseEvent *pe);           // перетаскивание овощей

@@ -50,6 +50,7 @@ private:
     PicObject       *dedka = nullptr;                       // дедка
     PicObject       *babka = nullptr;                       // бабка
     PicObject       *vnuchka = nullptr;                     // внучка
+    PicObject       *zuchka = nullptr;                      // жучка
     QTimer          *timer_bird = nullptr;                  // таймер частоты полета птицы
     QMediaPlayer    *sound = nullptr;                       // звук "ага" или "noo"
     QAudioOutput    *output = nullptr;                      // аудиовыход

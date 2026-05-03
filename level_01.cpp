@@ -38,6 +38,10 @@ Level_01::~Level_01()
     dedka = nullptr;
     delete babka;
     babka = nullptr;
+    delete vnuchka;
+    vnuchka = nullptr;
+    delete zuchka;
+    zuchka = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -405,6 +409,11 @@ void Level_01::view_rdbvgkm(int current_level)
         vnuchka->resize_object(WIDTH_SCREEN/5,HEIGHT_SCREEN/2);
         vnuchka->move(babka->x()+babka->width()-babka->width()/5, HEIGHT_SCREEN/2);
         vnuchka->show();
-
+    case 5:
+        zuchka = new PicObject(":/resource/lev_01/zuchka.png", this);
+        zuchka->resize_object(WIDTH_SCREEN/6,HEIGHT_SCREEN/3);
+        zuchka->move(vnuchka->x()+vnuchka->width()-vnuchka->width()/5,
+                     HEIGHT_SCREEN-HEIGHT_SCREEN/3);
+        zuchka->show();
     }
 }

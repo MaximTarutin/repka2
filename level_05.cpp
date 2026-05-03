@@ -219,6 +219,7 @@ void Level_05::mouseReleaseEvent(QMouseEvent *pe)
         int y1 = coordinates_panel.at(ACTIVE_PAZL).at(1)+panel[ACTIVE_PAZL]->height()/2;
         int x2 = coordinates_panel.at(ACTIVE_PAZL).at(0);
         int y2 = coordinates_panel.at(ACTIVE_PAZL).at(1);
+
         if((x>=x0)and(x<=x1)and(y>=y0)and(y<=y1))
         {
             pazl[ACTIVE_PAZL]->move(x2, y2); qDebug() << ACTIVE_PAZL;
@@ -238,6 +239,13 @@ void Level_05::mouseReleaseEvent(QMouseEvent *pe)
         if((pazl[i]->x()==coordinates_panel.at(i).at(0))&&
            (pazl[i]->y()==coordinates_panel.at(i).at(1))) check_victory++;
     }
-    if(check_victory==9) exit(65);
+    if(check_victory==9) victory();
+}
+
+// ----------------------------- Победа ---------------------------------------
+
+void Level_05::victory()
+{
+    emit next_level(6);
 }
 

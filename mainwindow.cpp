@@ -219,9 +219,9 @@ void MainWindow::start_level()
                         {
                             lev_05->close();
                             lev_01->showFullScreen();
-                            lev_01->view_rdbvgkm(5);
-                            delete lev_05;
-                            lev_05 = nullptr;
+                            // lev_01->view_rdbvgkm(5);
+                            // delete lev_05;
+                            // lev_05 = nullptr;
                         });
             }
             lev_05->showFullScreen();
