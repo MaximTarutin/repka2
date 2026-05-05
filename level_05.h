@@ -10,6 +10,7 @@
 #include <QAudioOutput>
 #include <QList>
 #include <QMouseEvent>
+#include <QTimer>
 #include "picobject.h"
 
 class Level_05 : public QMainWindow
@@ -41,10 +42,13 @@ private:
     PicObject       *pic_mysl = nullptr;            // Картинка в мысли
     PicObject       *panel[8] = {};                 // Панель куда складываем пазл
     PicObject       *pazl[8] = {};                  // Набор пазлов
+    PicObject       *dog_victory = nullptr;         // Анимация победы
     QList<QList<int>> coordinates_panel = {};       // Координаты частей панели
     QList<QList<int>> coordinates_pazl = {};        // Координаты пазлов вокруг панели
+    QTimer          *timer_victory = nullptr;       // Таймер победной анимации
 
-    void victory();                                 // Победа
+    private slots:
+        void victory();                             // Победа
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки

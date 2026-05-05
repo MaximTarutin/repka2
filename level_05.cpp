@@ -31,6 +31,8 @@ Level_05::~Level_05()
         delete pazl[i];
         pazl[i] = nullptr;
     }
+    delete timer_victory;
+    timer_victory = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -239,13 +241,33 @@ void Level_05::mouseReleaseEvent(QMouseEvent *pe)
         if((pazl[i]->x()==coordinates_panel.at(i).at(0))&&
            (pazl[i]->y()==coordinates_panel.at(i).at(1))) check_victory++;
     }
-    if(check_victory==9) victory();
+    if(check_victory==9)
+    {
+        timer_victory = new QTimer();
+        connect(timer_victory, &QTimer::timeout, this, &Level_05::victory);
+        timer_victory->start(3000);
+        dog_victory = new PicObject(this);
+        dog_victory->load(":/resource/lev_05/dog1.gif");
+        dog_victory->animation_start(WIDTH_SCREEN/8, HEIGHT_SCREEN/6);
+        dog_victory->move_to_x(WIDTH_SCREEN+dog_victory->width(), 0-dog_victory->width(),
+                               HEIGHT_SCREEN-dog_victory->height(), 1, 1);
+        dog_victory->show();
+
+
+    }
 }
 
 // ----------------------------- Победа ---------------------------------------
 
 void Level_05::victory()
 {
-    emit next_level(6);
+    static int count;
+    dog_victory->move_to_x(WIDTH_SCREEN+dog_victory->width(), 0-dog_victory->width(),
+                           HEIGHT_SCREEN-dog_victory->height(), 1, 1);
+    count++;
+    if(count>=3)
+    {
+        emit next_level(6);
+    }
 }
 
