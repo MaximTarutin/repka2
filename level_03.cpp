@@ -266,11 +266,11 @@ void Level_03::initial()
 
 void Level_03::animate()
 {
-    disconnect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
-    delete animate_persone;
-    animate_persone = nullptr;
-    animate_persone = new PicObject(prosrach);
-    connect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
+    // disconnect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
+    // delete animate_persone;
+    // animate_persone = nullptr;
+    // animate_persone = new PicObject(prosrach);
+    // connect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
     int k = 0;
     k = rnd(0,3);
     switch(k)

@@ -3,6 +3,7 @@
 PicObject::PicObject(QWidget *parent):QLabel(parent)
 {
     timer_move = new QTimer();
+    movie = new QMovie();
     width_frame = width();
     height_frame = height();
     setScaledContents(true);
@@ -70,9 +71,12 @@ void PicObject::load(QString path)
     pixmap1 = pixmap.scaled( width(), height(), Qt::KeepAspectRatio);
     setPixmap(pixmap1);
     QString a = path_to_image.right(3);
+
     if(a=="gif")
     {
-        movie = new QMovie(path_to_image); // если расширение gif, то создаем анимацию
+        delete movie;           // предотвращаем утечку памяти
+        movie = nullptr;
+        movie = new QMovie(path_to_image);
         setMovie(movie);
     }
     setScaledContents(true);
