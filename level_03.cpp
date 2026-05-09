@@ -2,7 +2,6 @@
 #include "qmediaplayer.h"
 #include "qpushbutton.h"
 #include <ctime>
-#include <QMouseEvent>
 
 Level_03::Level_03(QWidget *parent)
     : QMainWindow{parent}
@@ -231,12 +230,12 @@ void Level_03::initial()
 
     // объекты для анимации на уровне
 
-    timer_animate = new QTimer(this);
-
+    // timer_animate = new QTimer(this);
     animate_persone = new PicObject(this);
     prosrach = new PicObject(":/resource/lev_03/prosrach.png", this);
     animate_persone->setParent(prosrach);
 
+    animate();
     set_mysl();
 
     connect(produkt[0], &PicObject::clicked, this, &Level_03::mousePressEvent);
@@ -248,14 +247,16 @@ void Level_03::initial()
     connect(produkt[6], &PicObject::clicked, this, &Level_03::mousePressEvent);
     connect(produkt[7], &PicObject::clicked, this, &Level_03::mousePressEvent);
     connect(tazik[6],   &PicObject::clicked, this, &Level_03::mousePressEvent);
-    connect(timer_animate, &QTimer::timeout, this, &Level_03::animate);
+    connect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
+    // connect(timer_animate, &QTimer::timeout, this, &Level_03::animate);
 
-    timer_animate->start(5000);
+    // timer_animate->start(5000);
 
     hand = new PicObject(":/resource/lev_01/ruka.png", this);
     hand->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
     hand->move(500, 500);
     hand->show();
+    hand->raise();
     help();
 
     connect(hand, &PicObject::move_end, this, &Level_03::help);
@@ -265,6 +266,11 @@ void Level_03::initial()
 
 void Level_03::animate()
 {
+    disconnect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
+    delete animate_persone;
+    animate_persone = nullptr;
+    animate_persone = new PicObject(prosrach);
+    connect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
     int k = 0;
     k = rnd(0,3);
     switch(k)
@@ -484,7 +490,7 @@ void Level_03::victory()
     static bool FLAG_X = true;
     static bool FLAG_Y = true;
     static int index = 0;
-
+hand->raise();
     index++;
 
     if(index >= 2000)
@@ -584,17 +590,12 @@ void Level_03::victory()
 
 void Level_03::help()
 {
-    hand->raise();
     if(!HELP_FLAG)
     {
-        hand->move(produkt[0]->x()+produkt[0]->width()/2,
-                   produkt[0]->y()+produkt[0]->height()/2);
         hand->move_to_xy(produkt[0]->x()+produkt[0]->width()/2,table->x()+table->width()/2,
                          produkt[0]->y()+produkt[0]->height()/2,table->y(),2);
     } else
     {
-        hand->move(produkt[6]->x()+produkt[6]->width()/2,
-                   produkt[6]->y()+produkt[6]->height()/2);
         hand->move_to_xy(produkt[6]->x()+produkt[6]->width()/2, WIDTH_SCREEN/6,
                          produkt[6]->y()+produkt[6]->height()/2, HEIGHT_SCREEN/2, 2);
     }
