@@ -59,10 +59,7 @@ private:
                                                 // 6 - венчик
                                                 // 7 - колобок
     PicObject       *prosrach = nullptr;        // позрачный объект
-    PicObject       *duck = nullptr;            // анимация утка летит
-    PicObject       *kar = nullptr;             // анимация ворона
-    PicObject       *cat = nullptr;             // анимация кошка
-    PicObject       *duck_1 = nullptr;          // анимация утка идет
+    PicObject       *animate_persone = nullptr; // персонаж для анимации
 
     QString         name_active_object;         // имя объекта по которому кликнули мышкой
     QList<QList<int>>  coordinates = {};        // Список координаты продуктов (список в списке - [[a,b],[a,b],...,[a,b]])
