@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QPushButton>
+#include <QLabel>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 class Level_06 : public QMainWindow
 {
@@ -22,6 +25,12 @@ public slots:
 private:
     int WIDTH_SCREEN = 0;                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                          // Высота экрана
+
+    QLabel          *background = nullptr;          // Фон
+    QMediaPlayer    *sound = nullptr;               // Звуки
+    QAudioOutput    *output = nullptr;              // Аудтовыход
+
+    int rnd(int a, int b);                          // Случайные числа в диапазоне от a до b
 
 signals:
     void next_level(int lev);                       // Сигнал переход на следующий уровень
