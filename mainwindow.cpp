@@ -164,7 +164,7 @@ void MainWindow::start_level()
                             lev_03->close();
                             lev_01->showFullScreen();
                             lev_01->view_rdbvgkm(3);            // Показываем бабку на lev_01
-                            delete lev_03;                      // удаляем второй уровень
+                            delete lev_03;
                             lev_03 = nullptr;
                         });
             }
@@ -192,7 +192,7 @@ void MainWindow::start_level()
                             lev_04->close();
                             lev_01->showFullScreen();
                             lev_01->view_rdbvgkm(4);            // Показываем внучку на lev_01
-                            delete lev_04;                      // удаляем второй уровень
+                            delete lev_04;
                             lev_04 = nullptr;
                         });
             }
@@ -219,9 +219,9 @@ void MainWindow::start_level()
                         {
                             lev_05->close();
                             lev_01->showFullScreen();
-                            // lev_01->view_rdbvgkm(5);
-                            // delete lev_05;
-                            // lev_05 = nullptr;
+                            lev_01->view_rdbvgkm(5);
+                            delete lev_05;
+                            lev_05 = nullptr;
                         });
             }
             lev_05->showFullScreen();

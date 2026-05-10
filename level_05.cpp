@@ -179,12 +179,38 @@ void Level_05::initial()
         pazl[i]->move(x,y);
         pazl[i]->show();
     }
+
+    hand = new PicObject(":/resource/lev_01/ruka.png", this);
+    hand->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
+    hand->move(500, 500);
+    hand->show();
+    hand->raise();
+    help();
+
+    connect(hand, &PicObject::move_end, this, &Level_05::help);
+}
+
+// ------------------------- Подсказка --------------------------------------
+
+void Level_05::help()
+{
+    int x = pazl[0]->x()+pazl[0]->width()/2;
+    int x1 = panel[0]->x()+panel[0]->width()/2;
+    int y = pazl[0]->y()+pazl[0]->height()/2;
+    int y1 = panel[0]->y()+panel[0]->height()/2;
+    hand->move_to_xy(x, x1, y, y1, 5);
 }
 
 // ------------------------- Нажимаем кнопку мышки --------------------------
 
 void Level_05::mousePressEvent(QMouseEvent *pe)
 {
+    if(hand != (void*)0)
+    {
+        delete hand;
+        hand = nullptr;
+    }
+
     if(ACTIVE_PAZL==100)
     {
         if(QObject::sender() && pe->button() == Qt::LeftButton)
@@ -224,9 +250,13 @@ void Level_05::mouseReleaseEvent(QMouseEvent *pe)
 
         if((x>=x0)and(x<=x1)and(y>=y0)and(y<=y1))
         {
-            pazl[ACTIVE_PAZL]->move(x2, y2); qDebug() << ACTIVE_PAZL;
+            pazl[ACTIVE_PAZL]->move(x2, y2);
+            sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
+            sound->play();
         } else
         {
+            sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
+            sound->play();
             pazl[ACTIVE_PAZL]->move_to_xy(pazl[ACTIVE_PAZL]->x(), coordinates_pazl.at(ACTIVE_PAZL).at(0),
                                           pazl[ACTIVE_PAZL]->y(), coordinates_pazl.at(ACTIVE_PAZL).at(1), 1,10);
         }
@@ -243,6 +273,8 @@ void Level_05::mouseReleaseEvent(QMouseEvent *pe)
     }
     if(check_victory==9)
     {
+        sound->setSource(QUrl("qrc:/resource/sound/lay.mp3"));
+        sound->play();
         timer_victory = new QTimer();
         connect(timer_victory, &QTimer::timeout, this, &Level_05::victory);
         timer_victory->start(3000);
@@ -262,11 +294,13 @@ void Level_05::mouseReleaseEvent(QMouseEvent *pe)
 void Level_05::victory()
 {
     static int count;
+    sound->play();
     dog_victory->move_to_x(WIDTH_SCREEN+dog_victory->width(), 0-dog_victory->width(),
                            HEIGHT_SCREEN-dog_victory->height(), 1, 1);
     count++;
     if(count>=3)
     {
+        sound->stop();
         emit next_level(6);
     }
 }

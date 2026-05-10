@@ -43,12 +43,14 @@ private:
     PicObject       *panel[8] = {};                 // Панель куда складываем пазл
     PicObject       *pazl[8] = {};                  // Набор пазлов
     PicObject       *dog_victory = nullptr;         // Анимация победы
+    PicObject       *hand = nullptr;
     QList<QList<int>> coordinates_panel = {};       // Координаты частей панели
     QList<QList<int>> coordinates_pazl = {};        // Координаты пазлов вокруг панели
     QTimer          *timer_victory = nullptr;       // Таймер победной анимации
 
     private slots:
         void victory();                             // Победа
+        void help();                                // Помощь
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки

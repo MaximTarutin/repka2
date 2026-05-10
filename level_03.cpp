@@ -578,6 +578,7 @@ hand->raise();
 
 void Level_03::help()
 {
+    hand->raise();
     if(!HELP_FLAG)
     {
         hand->move_to_xy(produkt[0]->x()+produkt[0]->width()/2,table->x()+table->width()/2,
