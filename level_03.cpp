@@ -45,8 +45,6 @@ Level_03::~Level_03()
     animate_persone = nullptr;
     delete prosrach;
     prosrach = nullptr;
-    delete timer_animate;
-    timer_animate = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -248,9 +246,6 @@ void Level_03::initial()
     connect(produkt[7], &PicObject::clicked, this, &Level_03::mousePressEvent);
     connect(tazik[6],   &PicObject::clicked, this, &Level_03::mousePressEvent);
     connect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
-    // connect(timer_animate, &QTimer::timeout, this, &Level_03::animate);
-
-    // timer_animate->start(5000);
 
     hand = new PicObject(":/resource/lev_01/ruka.png", this);
     hand->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
@@ -266,11 +261,6 @@ void Level_03::initial()
 
 void Level_03::animate()
 {
-    // disconnect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
-    // delete animate_persone;
-    // animate_persone = nullptr;
-    // animate_persone = new PicObject(prosrach);
-    // connect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
     int k = 0;
     k = rnd(0,3);
     switch(k)
@@ -506,8 +496,6 @@ hand->raise();
         sound = nullptr;
         delete timer_show_kolobok;
         timer_show_kolobok = nullptr;
-        delete timer_animate;
-        timer_animate = nullptr;
         delete animate_persone;
         animate_persone = nullptr;
         delete prosrach;

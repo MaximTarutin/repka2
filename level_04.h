@@ -40,6 +40,7 @@ private:
     PicObject   *guk = nullptr;                 // Анимация жук
     PicObject   *bab = nullptr;                 // Анимация бабочки
     PicObject   *muh = nullptr;                 // Анимация муха
+    PicObject   *hand = nullptr;                // Рука - подсказка
     QString     name_active_object;             // имя объекта по которому кликнули мышкой
     QMediaPlayer    *sound = nullptr;           // Проигрыватель
     QAudioOutput    *output = nullptr;          // Аудиовыход
@@ -65,6 +66,9 @@ public slots:
     void get_width(int w);                      // Получаем ширину экрана
     void get_height(int h);                     // Получаем высоту экрана
     void back_level();                          // Закрываем окно текущего уровня
+
+private slots:
+    void help();                                // Подсказка
 
 signals:
         void next_level(int lev);               // Сигнал переход на следующий уровень

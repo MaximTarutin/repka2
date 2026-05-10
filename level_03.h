@@ -41,7 +41,6 @@ private:
 
     QTimer          *timer_show_kolobok;        // Таймер появления колобка
     QTimer          *timer_victory;             // Таймер анимации при победе
-    QTimer          *timer_animate;             // Таймер анимации на уровне
     PicObject       *table = nullptr;           // Стол
     PicObject       *babka = nullptr;           // Бабка
     PicObject       *mysl = nullptr;            // Мысль бабки

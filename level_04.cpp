@@ -249,6 +249,15 @@ void Level_04::initial()
     {
         connect(pens[i], &PicObject::clicked, this, &Level_04::mousePressEvent);
     }
+
+    hand = new PicObject(":/resource/lev_01/ruka.png", this);
+    hand->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
+    hand->move(500, 500);
+    hand->show();
+    hand->raise();
+    help();
+
+    connect(hand, &PicObject::move_end, this, &Level_04::help);
 }
 
 // ---------------------------  Перемешиваем список карандашей ----------------------
@@ -285,6 +294,12 @@ void Level_04::mix_mysl()
 
 void Level_04::mousePressEvent(QMouseEvent *pe)
 {
+    if(hand != (void*)0)
+    {
+        delete hand;
+        hand = nullptr;
+    }
+
     if(QObject::sender() && pe->button() == Qt::LeftButton)         // Если нажали по какому-либо объекту
     {
         old_x = pens[ACTIVE_PEN]->x();  // запоминаем координаты выбранного карандаша
@@ -440,3 +455,13 @@ void Level_04::victory()
     bubbles->animation_start(WIDTH_SCREEN, HEIGHT_SCREEN);
 }
 
+// ----------------------------- Подсказка ------------------------------------------
+
+void Level_04::help()
+{
+    int xx = pens[value_m[0]]->x()-pens[value_m[0]]->width();
+    int yy = pens[value_m[0]]->y()+pens[value_m[0]]->height();
+    int yy1 = yy+HEIGHT_SCREEN/20;
+
+    hand->move_to_y(xx, yy, yy1, 70);
+}
