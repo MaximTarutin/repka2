@@ -14,6 +14,7 @@
 #include "level_03.h"
 #include "level_04.h"
 #include "level_05.h"
+#include "level_06.h"
 
 class MainWindow : public QMainWindow
 {
@@ -39,6 +40,7 @@ private:
     Level_03            *lev_03 = nullptr;                          // третий уровень
     Level_04            *lev_04 = nullptr;                          // четвертый уровень
     Level_05            *lev_05 = nullptr;                          // пятый уровень
+    Level_06            *lev_06 = nullptr;                          // шестой уровень
 
     int WIDTH_SCREEN = 0;                                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                                          // Высота экрана

@@ -14,6 +14,7 @@ SOURCES += \
     level_03.cpp \
     level_04.cpp \
     level_05.cpp \
+    level_06.cpp \
     main.cpp \
     mainwindow.cpp \
     picobject.cpp
@@ -24,6 +25,7 @@ HEADERS += \
     level_03.h \
     level_04.h \
     level_05.h \
+    level_06.h \
     mainwindow.h \
     picobject.h
 
@@ -39,6 +41,7 @@ RESOURCES += \
     res3.qrc \
     res4.qrc \
     res5.qrc \
+    res6.qrc \
     res_sound.qrc
 
 

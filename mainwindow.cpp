@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "level_06.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -227,6 +228,34 @@ void MainWindow::start_level()
             lev_05->showFullScreen();
             this->hide();
         break;
+        case 6:
+            if(lev_06==(void*)0)
+            {
+                lev_06 = new Level_06();
+                connect(this, &MainWindow::width_scr, lev_06, &Level_06::get_width);
+                connect(this, &MainWindow::height_scr, lev_06, &Level_06::get_height);      // разрешение экрана
+                screen_size();
+                lev_06->initial();
+
+                connect(lev_06, &Level_06::next_level, this, &MainWindow::get_current_level);   // Получаем номер следующего уровня
+
+                connect(lev_06->button_back, &QPushButton::clicked, this, [this]()      // Нажали кнопку назад
+                        {
+                            lev_01->showFullScreen();
+                            lev_06->hide();
+                        });
+                connect(lev_06, &Level_06::next_level, this, [this]()
+                        {
+                            lev_06->close();
+                            lev_01->showFullScreen();
+                            lev_01->view_rdbvgkm(6);
+                            delete lev_06;
+                            lev_06 = nullptr;
+                        });
+            }
+            lev_06->showFullScreen();
+            this->hide();
+            break;
     }
 }
 

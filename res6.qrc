@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resource/lev_06/321.gif</file>
+        <file>resource/lev_06/babka.png</file>
+        <file>resource/lev_06/cat-cats.gif</file>
+        <file>resource/lev_06/cat.png</file>
+        <file>resource/lev_06/chesnok1.png</file>
+        <file>resource/lev_06/dedka.png</file>
+        <file>resource/lev_06/fon.jpg</file>
+        <file>resource/lev_06/giphy.gif</file>
+        <file>resource/lev_06/grusha1.png</file>
+        <file>resource/lev_06/kartoshka1.png</file>
+        <file>resource/lev_06/koshka.png</file>
+        <file>resource/lev_06/morkovka1.png</file>
+        <file>resource/lev_06/myshka.png</file>
+        <file>resource/lev_06/ogurec1.png</file>
+        <file>resource/lev_06/plitka.jpg</file>
+        <file>resource/lev_06/rediska1.png</file>
+        <file>resource/lev_06/repka.png</file>
+        <file>resource/lev_06/tomat.png</file>
+        <file>resource/lev_06/tykva1.png</file>
+        <file>resource/lev_06/vnuchka.png</file>
+        <file>resource/lev_06/zuchka.png</file>
+    </qresource>
+</RCC>
