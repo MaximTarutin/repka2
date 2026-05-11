@@ -7,6 +7,8 @@
 #include <QLabel>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QList>
+#include "picobject.h"
 
 class Level_06 : public QMainWindow
 {
@@ -17,6 +19,7 @@ public:
 
     void initial();                                 // Инициализация
     QPushButton *button_back = nullptr;             // Кнопка назад
+    QList<QList<int>> coordinates_card = {};       // Координаты карт
 
 public slots:
     void get_width(int w);                          // Получаем ширину экрана
@@ -27,8 +30,12 @@ private:
     int HEIGHT_SCREEN = 0;                          // Высота экрана
 
     QLabel          *background = nullptr;          // Фон
-    QMediaPlayer    *sound = nullptr;               // Звуки
+    QMediaPlayer    *sound = nullptr;               // ЗвукиКот на фоне
     QAudioOutput    *output = nullptr;              // Аудтовыход
+    PicObject       *cat = nullptr;                 // Кот на фоне
+    PicObject       *card[29] = {};                 // Карточки
+    PicObject       *inv_card[29] = {};             // Перевернутые карты
+
 
     int rnd(int a, int b);                          // Случайные числа в диапазоне от a до b
 
