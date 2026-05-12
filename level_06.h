@@ -30,14 +30,16 @@ private:
     int HEIGHT_SCREEN = 0;                          // Высота экрана
 
     QLabel          *background = nullptr;          // Фон
-    QMediaPlayer    *sound = nullptr;               // ЗвукиКот на фоне
-    QAudioOutput    *output = nullptr;              // Аудтовыход
+    QMediaPlayer    *sound = nullptr;               // Звуки
+    QAudioOutput    *output = nullptr;              // Аудиовыход
     PicObject       *cat = nullptr;                 // Кот на фоне
     PicObject       *card[29] = {};                 // Карточки
     PicObject       *inv_card[29] = {};             // Перевернутые карты
-
+    PicObject       *hand = nullptr;                // Рука подсказка
+    PicObject       *hand1 = nullptr;               // Вторая рука подсказка
 
     int rnd(int a, int b);                          // Случайные числа в диапазоне от a до b
+    void mix_coordinates();                         // перемешиваем координаты карточек
 
 signals:
     void next_level(int lev);                       // Сигнал переход на следующий уровень
