@@ -25,9 +25,13 @@ public slots:
     void get_width(int w);                          // Получаем ширину экрана
     void get_height(int h);                         // Получаем высоту экрана
 
+private slots:
+    void help();                                    // Подсказка
+
 private:
     int WIDTH_SCREEN = 0;                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                          // Высота экрана
+    int HELP_CARD = 0;                              // Карта подсказка
 
     QLabel          *background = nullptr;          // Фон
     QMediaPlayer    *sound = nullptr;               // Звуки
@@ -35,8 +39,7 @@ private:
     PicObject       *cat = nullptr;                 // Кот на фоне
     PicObject       *card[29] = {};                 // Карточки
     PicObject       *inv_card[29] = {};             // Перевернутые карты
-    PicObject       *hand = nullptr;                // Рука подсказка
-    PicObject       *hand1 = nullptr;               // Вторая рука подсказка
+    PicObject       *hand[2] = {};                  // Рука подсказка
 
     int rnd(int a, int b);                          // Случайные числа в диапазоне от a до b
     void mix_coordinates();                         // перемешиваем координаты карточек

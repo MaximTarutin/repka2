@@ -18,6 +18,18 @@ Level_06::~Level_06()
     cat = nullptr;
     delete background;
     background = nullptr;
+    for(int i=0; i<=29; i++)
+    {
+        delete inv_card[i];
+        inv_card[i] = nullptr;
+        delete card[i];
+        card[i] = nullptr;
+    }
+    for(int i=0; i<2; i++)
+    {
+        delete hand[i];
+        hand[i] = nullptr;
+    }
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -96,7 +108,7 @@ void Level_06::initial()
             int x = inv_card[0]->x()+inv_card[0]->width()*i+WIDTH_SCREEN/80*i;
             int y = inv_card[0]->y();
             inv_card[i]->move(x, y);
-            //inv_card[i]->show();
+            inv_card[i]->show();
             coordinates_card.append(QList<int>() << x << y);
         } else
         if((i>=6)&&(i<=11))
@@ -104,7 +116,7 @@ void Level_06::initial()
             int x = inv_card[0]->x()+inv_card[0]->width()*(i-6)+WIDTH_SCREEN/80*(i-6);
             int y = inv_card[0]->y()+inv_card[0]->height()+HEIGHT_SCREEN/60;
             inv_card[i]->move(x, y);
-            //inv_card[i]->show();
+            inv_card[i]->show();
             coordinates_card.append(QList<int>() << x << y);
         } else
         if((i>=12)&&(i<=17))
@@ -112,7 +124,7 @@ void Level_06::initial()
             int x = inv_card[0]->x()+inv_card[0]->width()*(i-12)+WIDTH_SCREEN/80*(i-12);
             int y = inv_card[0]->y()+inv_card[0]->height()*2+HEIGHT_SCREEN/60*2;
             inv_card[i]->move(x, y);
-            //inv_card[i]->show();
+            inv_card[i]->show();
             coordinates_card.append(QList<int>() << x << y);
         } else
         if((i>=18)&&(i<=23))
@@ -120,7 +132,7 @@ void Level_06::initial()
             int x = inv_card[0]->x()+inv_card[0]->width()*(i-18)+WIDTH_SCREEN/80*(i-18);
             int y = inv_card[0]->y()+inv_card[0]->height()*3+HEIGHT_SCREEN/60*3;
             inv_card[i]->move(x, y);
-            //inv_card[i]->show();
+            inv_card[i]->show();
             coordinates_card.append(QList<int>() << x << y);
         } else
         if((i>=24)&&(i<=29))
@@ -128,7 +140,7 @@ void Level_06::initial()
             int x = inv_card[0]->x()+inv_card[0]->width()*(i-24)+WIDTH_SCREEN/80*(i-24);
             int y = inv_card[0]->y()+inv_card[0]->height()*4+HEIGHT_SCREEN/60*4;
             inv_card[i]->move(x, y);
-            //inv_card[i]->show();
+            inv_card[i]->show();
             coordinates_card.append(QList<int>() << x << y);
         }
     };
@@ -157,8 +169,21 @@ void Level_06::initial()
         int x = coordinates_card.at(i).at(0);
         int y = coordinates_card.at(i).at(1);
         card[i]->move(x, y);
+        card[i]->raise();
         card[i]->show();
     }
+
+    for(int i=0; i<2; i++)
+    {
+        hand[i] = new PicObject(":/resource/lev_01/ruka.png", this);
+        hand[i]->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
+        hand[i]->show();
+        hand[i]->raise();
+    }
+
+    connect(hand[1], &PicObject::move_end, this, &Level_06::help);
+    HELP_CARD = rnd(0,14);
+    help();
 }
 
 // ------------------------------- Перемешиваем список координат --------------------------
@@ -173,3 +198,17 @@ void Level_06::mix_coordinates()
     }
 }
 
+// --------------------------------- Подсказка -------------------------------------------
+
+void Level_06::help()
+{
+    int c = HELP_CARD;
+    int x1 = card[c]->x()+card[c]->width()/4;
+    int y1 = card[c]->y()+card[c]->height()/2;
+    int y11 = y1+HEIGHT_SCREEN/7;
+    int x2 = card[c+15]->x()+card[c+15]->width()/4;
+    int y2 = card[c+15]->y()+card[c+15]->height()/2;
+    int y21 = y2+HEIGHT_SCREEN/7;
+    hand[0]->move_to_y(x1, y1, y11, 40);
+    hand[1]->move_to_y(x2, y2, y21, 40);
+}
