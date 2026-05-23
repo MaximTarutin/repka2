@@ -9,6 +9,7 @@
 #include <QAudioOutput>
 #include <QList>
 #include <QMouseEvent>
+#include <QTimer>
 #include "picobject.h"
 
 class Level_06 : public QMainWindow
@@ -28,12 +29,15 @@ public slots:
 
 private slots:
     void help();                                    // Подсказка
+    void checking_for_math();                       // Проверяем совпали ли карты
 
 private:
     int WIDTH_SCREEN = 0;                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                          // Высота экрана
     int HELP_CARD = 0;                              // Карта подсказка
     int CLICKED_CARD = 100;                         // Номер карты по которой кликнули
+    int OPEN_CARD[2] = {100, 100};                  // Номера открытых карт на поле (100 - все закрыты)
+    int COUNTER = 0;                                // Счетчик совпавших пар
 
     QLabel          *background = nullptr;          // Фон
     QMediaPlayer    *sound = nullptr;               // Звуки
@@ -42,13 +46,15 @@ private:
     PicObject       *card[30] = {};                 // Карточки
     PicObject       *inv_card[30] = {};             // Перевернутые карты
     PicObject       *hand[2] = {};                  // Рука подсказка
+    QTimer          *timer_show = nullptr;          // Время показывания карт
 
     int rnd(int a, int b);                          // Случайные числа в диапазоне от a до b
     void create_cards();                            // Создаем карты и их рубашки
     void create_rubaha();
     void create_coordinates_list();                 // Создаем список координат карт
-    void mix_coordinates();                         // перемешиваем координаты карточек
-    void arrange_card();                            //Расставляем карты на поле
+    void mix_coordinates();                         // Перемешиваем координаты карточек
+    void arrange_card();                            // Расставляем карты на поле
+
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);  // события по нажатию кнопки мышки

@@ -30,6 +30,8 @@ Level_06::~Level_06()
         delete hand[i];
         hand[i] = nullptr;
     }
+    delete timer_show;
+    timer_show = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -58,6 +60,8 @@ void Level_06::get_height(int h)
 
 void Level_06::initial()
 {
+    timer_show = new QTimer(this);
+    connect(timer_show, &QTimer::timeout, this, &Level_06::checking_for_math);
     sound = new QMediaPlayer(this);
     output = new QAudioOutput();
     sound->setAudioOutput(output);
@@ -294,8 +298,55 @@ void Level_06::mousePressEvent(QMouseEvent *pe)
         {
             QString nameobj = QObject::sender()->objectName();   // Получаем имя объекта по которому кликнули
             CLICKED_CARD = nameobj.toInt();                      // Получаем номер карты
-            qDebug() << "Это карта № " << CLICKED_CARD;
-            exit(32);
+            if(OPEN_CARD[0] == 100)                              // Если первая карта еще закрыта
+            {
+                OPEN_CARD[0] = CLICKED_CARD;
+                inv_card[CLICKED_CARD]->hide();
+                card[CLICKED_CARD]->show();
+                CLICKED_CARD = 100;
+                return;
+            } else
+                if(OPEN_CARD[1] == 100)
+                {
+                    OPEN_CARD[1] = CLICKED_CARD;
+                    inv_card[CLICKED_CARD]->hide();
+                    card[CLICKED_CARD]->show();
+                    //CLICKED_CARD = 100;
+                    //checking_for_math();                        // Проверка карт на совпадение
+                    timer_show->start(1000);
+                    //qDebug() << "Это карта № " << OPEN_CARD[0] << "и карта № " << OPEN_CARD[1];
+                    //exit(32);
+                }
         }
     } else return;
+}
+
+// ---------------------------- Проверяем совпали ли карты ----------------------------------------
+
+void Level_06::checking_for_math()
+{
+    timer_show->stop();
+    if((OPEN_CARD[0]-OPEN_CARD[1]==15)or(OPEN_CARD[1]-OPEN_CARD[0]==15))
+    {
+        // если карты совпали
+        delete card[OPEN_CARD[0]];
+        delete card[OPEN_CARD[1]];
+        card[OPEN_CARD[0]] = nullptr;
+        card[OPEN_CARD[1]] = nullptr;
+        OPEN_CARD[0] = 100;
+        OPEN_CARD[1] = 100;
+        CLICKED_CARD = 100;
+        COUNTER++;
+        qDebug() << COUNTER;
+        if(COUNTER==15) exit(33);
+    } else
+    {
+        card[OPEN_CARD[0]]->hide();
+        inv_card[OPEN_CARD[0]]->show();
+        card[OPEN_CARD[1]]->hide();
+        inv_card[OPEN_CARD[1]]->show();
+        OPEN_CARD[0] = 100;
+        OPEN_CARD[1] = 100;
+        CLICKED_CARD = 100;
+    }
 }
