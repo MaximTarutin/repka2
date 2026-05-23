@@ -115,7 +115,6 @@ void Level_05::initial()
         panel[i]->resize_object(WIDTH_SCREEN/9, HEIGHT_SCREEN/5);
         panel[i]->move(coordinates_panel.at(i).at(0), coordinates_panel.at(i).at(1));
         panel[i]->show();
-        qDebug() << i << panel[i]->pos();
     }
 
     int nabor = rnd(0,5);      // случайный набор пазлов

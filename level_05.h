@@ -48,9 +48,9 @@ private:
     QList<QList<int>> coordinates_pazl = {};        // Координаты пазлов вокруг панели
     QTimer          *timer_victory = nullptr;       // Таймер победной анимации
 
-    private slots:
-        void victory();                             // Победа
-        void help();                                // Помощь
+private slots:
+    void victory();                                 // Победа
+    void help();                                    // Помощь
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
