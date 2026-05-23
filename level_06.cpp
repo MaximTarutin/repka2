@@ -168,57 +168,6 @@ void Level_06::create_coordinates_list()
             int y = inv_card[g]->y()+inv_card[g]->height()*i+HEIGHT_SCREEN/60*i;
             inv_card[k]->move(x,y);
             inv_card[k]->show();
-        }
-    }
-
-    for(int i=0; i<=29; i++)    // Заполняем список координат
-    {
-        if(i==0)
-        {
-            int x = WIDTH_SCREEN/6;
-            int y = HEIGHT_SCREEN/20;
-            inv_card[i]->move(x, y);
-            inv_card[i]->show();
-            coordinates_card.append(QList<int>() << x << y);
-        } else
-        if((i>=1)&&(i<=5))
-        {
-            int x = inv_card[0]->x()+inv_card[0]->width()*i+WIDTH_SCREEN/80*i;
-            int y = inv_card[0]->y();
-            inv_card[i]->move(x, y);
-            inv_card[i]->show();
-            coordinates_card.append(QList<int>() << x << y);
-        } else
-        if((i>=6)&&(i<=11))
-        {
-            int x = inv_card[0]->x()+inv_card[0]->width()*(i-6)+WIDTH_SCREEN/80*(i-6);
-            int y = inv_card[0]->y()+inv_card[0]->height()+HEIGHT_SCREEN/60;
-            inv_card[i]->move(x, y);
-            inv_card[i]->show();
-            coordinates_card.append(QList<int>() << x << y);
-        } else
-        if((i>=12)&&(i<=17))
-        {
-            int x = inv_card[0]->x()+inv_card[0]->width()*(i-12)+WIDTH_SCREEN/80*(i-12);
-            int y = inv_card[0]->y()+inv_card[0]->height()*2+HEIGHT_SCREEN/60*2;
-            inv_card[i]->move(x, y);
-            inv_card[i]->show();
-            coordinates_card.append(QList<int>() << x << y);
-        } else
-        if((i>=18)&&(i<=23))
-        {
-            int x = inv_card[0]->x()+inv_card[0]->width()*(i-18)+WIDTH_SCREEN/80*(i-18);
-            int y = inv_card[0]->y()+inv_card[0]->height()*3+HEIGHT_SCREEN/60*3;
-            inv_card[i]->move(x, y);
-            inv_card[i]->show();
-            coordinates_card.append(QList<int>() << x << y);
-        } else
-        if((i>=24)&&(i<=29))
-        {
-            int x = inv_card[0]->x()+inv_card[0]->width()*(i-24)+WIDTH_SCREEN/80*(i-24);
-            int y = inv_card[0]->y()+inv_card[0]->height()*4+HEIGHT_SCREEN/60*4;
-            inv_card[i]->move(x, y);
-            inv_card[i]->show();
             coordinates_card.append(QList<int>() << x << y);
         }
     }
@@ -306,16 +255,12 @@ void Level_06::mousePressEvent(QMouseEvent *pe)
                 CLICKED_CARD = 100;
                 return;
             } else
-                if(OPEN_CARD[1] == 100)
+                if(OPEN_CARD[1] == 100)                         // Если вторая карта закрыта
                 {
                     OPEN_CARD[1] = CLICKED_CARD;
                     inv_card[CLICKED_CARD]->hide();
                     card[CLICKED_CARD]->show();
-                    //CLICKED_CARD = 100;
-                    //checking_for_math();                        // Проверка карт на совпадение
-                    timer_show->start(1000);
-                    //qDebug() << "Это карта № " << OPEN_CARD[0] << "и карта № " << OPEN_CARD[1];
-                    //exit(32);
+                    timer_show->start(700);                     // делаем паузу перед проверкой пары
                 }
         }
     } else return;
@@ -329,6 +274,8 @@ void Level_06::checking_for_math()
     if((OPEN_CARD[0]-OPEN_CARD[1]==15)or(OPEN_CARD[1]-OPEN_CARD[0]==15))
     {
         // если карты совпали
+        sound->setSource(QUrl("qrc:/resource/sound/yes.mp3"));
+        sound->play();
         delete card[OPEN_CARD[0]];
         delete card[OPEN_CARD[1]];
         card[OPEN_CARD[0]] = nullptr;
@@ -341,6 +288,8 @@ void Level_06::checking_for_math()
         if(COUNTER==15) exit(33);
     } else
     {
+        sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
+        sound->play();
         card[OPEN_CARD[0]]->hide();
         inv_card[OPEN_CARD[0]]->show();
         card[OPEN_CARD[1]]->hide();
