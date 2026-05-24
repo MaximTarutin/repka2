@@ -32,6 +32,12 @@ Level_06::~Level_06()
     }
     delete timer_show;
     timer_show = nullptr;
+    delete timer_victory;
+    timer_victory = nullptr;
+    delete anime_cat_1;
+    anime_cat_1 = nullptr;
+    delete anime_cat_2;
+    anime_cat_2 = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -61,7 +67,9 @@ void Level_06::get_height(int h)
 void Level_06::initial()
 {
     timer_show = new QTimer(this);
+    timer_victory = new QTimer(this);
     connect(timer_show, &QTimer::timeout, this, &Level_06::checking_for_math);
+    connect(timer_victory, &QTimer::timeout, this, &Level_06::victory);
     sound = new QMediaPlayer(this);
     output = new QAudioOutput();
     sound->setAudioOutput(output);
@@ -103,7 +111,6 @@ void Level_06::initial()
         hand[i]->show();
         hand[i]->raise();
     }
-
     connect(hand[1], &PicObject::move_end, this, &Level_06::help);
     HELP_CARD = rnd(0,14);
     help();
@@ -284,8 +291,11 @@ void Level_06::checking_for_math()
         OPEN_CARD[1] = 100;
         CLICKED_CARD = 100;
         COUNTER++;
-        qDebug() << COUNTER;
-        if(COUNTER==15) exit(33);
+        if(COUNTER==15)
+        {
+            victory();
+            timer_victory->start(3000);
+        }
     } else
     {
         sound->setSource(QUrl("qrc:/resource/sound/nea.wav"));
@@ -298,4 +308,28 @@ void Level_06::checking_for_math()
         OPEN_CARD[1] = 100;
         CLICKED_CARD = 100;
     }
+}
+
+// --------------------------- Победная анимация --------------------------------------------
+
+void Level_06::victory()
+{
+    static int count = 0;
+    if(count == 0)
+    {
+        anime_cat_1 = new PicObject(":/resource/lev_06/321.gif", this);
+        anime_cat_2 = new PicObject(":/resource/lev_06/cat-cats.gif", this);
+        anime_cat_1->show();
+        anime_cat_2->show();
+        anime_cat_1->animation_start(WIDTH_SCREEN/6, HEIGHT_SCREEN/3);
+        anime_cat_2->animation_start(WIDTH_SCREEN/6, HEIGHT_SCREEN/3);
+        anime_cat_1->move(WIDTH_SCREEN/6, HEIGHT_SCREEN-anime_cat_1->height());
+        anime_cat_2->move(WIDTH_SCREEN-WIDTH_SCREEN/2, HEIGHT_SCREEN-anime_cat_2->height());
+    }
+    if(count >=3)
+    {
+        sound->stop();
+        emit next_level(7);
+    }
+    count++;
 }

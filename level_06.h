@@ -30,6 +30,7 @@ public slots:
 private slots:
     void help();                                    // Подсказка
     void checking_for_math();                       // Проверяем совпали ли карты
+    void victory();                                 // Победа
 
 private:
     int WIDTH_SCREEN = 0;                           // Ширина экрана
@@ -46,7 +47,10 @@ private:
     PicObject       *card[30] = {};                 // Карточки
     PicObject       *inv_card[30] = {};             // Перевернутые карты
     PicObject       *hand[2] = {};                  // Рука подсказка
+    PicObject       *anime_cat_1 = nullptr;         // анимация 1
+    PicObject       *anime_cat_2 = nullptr;         // анимация 2
     QTimer          *timer_show = nullptr;          // Время показывания карт
+    QTimer          *timer_victory = nullptr;       // Таймер победной анимации
 
     int rnd(int a, int b);                          // Случайные числа в диапазоне от a до b
     void create_cards();                            // Создаем карты и их рубашки

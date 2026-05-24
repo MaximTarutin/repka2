@@ -418,5 +418,12 @@ void Level_01::view_rdbvgkm(int current_level)
                      HEIGHT_SCREEN-HEIGHT_SCREEN/3);
         zuchka->show();
         break;
+    case 6:
+        cat = new PicObject(":/resource/lev_01/koshka.png", this);
+        cat->resize_object(WIDTH_SCREEN/6,HEIGHT_SCREEN/3);
+        cat->move(zuchka->x()+zuchka->width()-zuchka->width()/5,
+                     HEIGHT_SCREEN-HEIGHT_SCREEN/3);
+        cat->show();
+        break;
     }
 }

@@ -256,6 +256,11 @@ void MainWindow::start_level()
             lev_06->showFullScreen();
             this->hide();
             break;
+        case 7:
+            if(lev_07==(void*)0)
+            {
+                lev_07 = new Level_07();
+            }
     }
 }
 

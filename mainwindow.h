@@ -15,6 +15,7 @@
 #include "level_04.h"
 #include "level_05.h"
 #include "level_06.h"
+#include "level_07.h"
 
 class MainWindow : public QMainWindow
 {
@@ -41,10 +42,11 @@ private:
     Level_04            *lev_04 = nullptr;                          // четвертый уровень
     Level_05            *lev_05 = nullptr;                          // пятый уровень
     Level_06            *lev_06 = nullptr;                          // шестой уровень
+    Level_07            *lev_07 = nullptr;                          // седьмой уровень
 
     int WIDTH_SCREEN = 0;                                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                                          // Высота экрана
-    int CURRENT_LEVEL = 6;                                          // Текущий уровень
+    int CURRENT_LEVEL = 1;                                          // Текущий уровень
 
     void screen_size();                                             // Получаем разрешение экрана и
                                                                     // определяем результаты в переменные
