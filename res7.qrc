@@ -63,7 +63,6 @@
         <file>resource/lev_07/15-0.png</file>
         <file>resource/lev_07/15-1.png</file>
         <file>resource/lev_07/15-3.png</file>
-        <file>resource/lev_07/15-21.png</file>
         <file>resource/lev_07/16-0.png</file>
         <file>resource/lev_07/16-1.png</file>
         <file>resource/lev_07/16-2.png</file>
@@ -73,5 +72,6 @@
         <file>resource/lev_07/syr.png</file>
         <file>resource/lev_07/ura.gif</file>
         <file>resource/lev_07/ura1.gif</file>
+        <file>resource/lev_07/15-2.png</file>
     </qresource>
 </RCC>

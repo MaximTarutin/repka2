@@ -163,7 +163,6 @@ void Level_06::create_rubaha()
 
 void Level_06::create_coordinates_list()
 {
-
     for(int i=0; i<=4; i++)         // Расставляем карты в ряды
     {
         for(int j=0; j<=5; j++)

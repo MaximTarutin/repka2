@@ -9,7 +9,23 @@ Level_07::Level_07(QWidget *parent)
 
 Level_07::~Level_07()
 {
-
+    delete output;
+    output = nullptr;
+    delete sound;
+    sound = nullptr;
+    delete mysl;
+    mysl = nullptr;
+    delete myschka;
+    myschka = nullptr;
+    delete button_back;
+    button_back = nullptr;
+    delete background;
+    background = nullptr;
+    for(int i=0; i<17; i++)
+    {
+        delete puzle[i];
+        puzle[i] = nullptr;
+    }
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -62,12 +78,53 @@ void Level_07::initial()
     button_back->move(WIDTH_SCREEN/30, HEIGHT_SCREEN/20);
     button_back->show();
 
-    Myschka = new PicObject(":/resource/lev_07/myshka.png", this);
-    Myschka->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/3);
-    Myschka->move(WIDTH_SCREEN-Myschka->width()*1.5, HEIGHT_SCREEN-Myschka->height());
-    Myschka->show();
+    myschka = new PicObject(":/resource/lev_07/myshka.png", this);
+    myschka->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/3);
+    myschka->move(WIDTH_SCREEN-myschka->width()*2, HEIGHT_SCREEN-myschka->height());
+    myschka->show();
 
-    Mysl = new PicObject(":/res2/mysl.png", 500, 500, this);
-    Mysl->move(Myschka->x()+50, Myschka->y()-Myschka->height());
-    Mysl->show();
+    mysl = new PicObject(":/resource/lev_02/mysl.png", this);
+    mysl->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/3+HEIGHT_SCREEN/15);
+    mysl->move(myschka->x()+myschka->width()/2, myschka->y()-myschka->height());
+    mysl->show();
+
+    create_pazle();             // Создаем набор пазлов
+
+}
+
+// -------------------------------- Создаем набор пазлов -------------------------------------------
+
+void Level_07::create_pazle()
+{
+    int k = rnd(0,3);       // Выбираем случайный набор
+    QString puzle_name = ":/resource/lev_07/00-"+QString::number(k)+".png";
+    puzle[0] = new PicObject(puzle_name, mysl);
+    puzle[0]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/8);
+    puzle[0]->move(mysl->width()/4, mysl->height()/4);
+    puzle[0]->show();
+
+    for(int i=1; i<=16; i++)
+    {
+        if(i<10) puzle_name = ":/resource/lev_07/0"+QString::number(i)+"-"+QString::number(k)+".png";
+        else puzle_name = ":/resource/lev_07/"+QString::number(i)+"-"+QString::number(k)+".png";
+        puzle[i] = new PicObject(puzle_name, this);
+        puzle[i]->setObjectName(QString::number(i));
+        puzle[i]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/6);
+        puzle[i]->raise();
+        puzle[i]->hide();
+    }
+    puzle[1]->move(WIDTH_SCREEN/4, HEIGHT_SCREEN/6);
+    for(int i=1; i<=4; i++)
+    {
+        for(int j=1; j<=4; j++)
+        {
+            int k=4*(i-1)+j;            // Вычисляем порядковый номер карты
+            static int g = 0;           // ряд
+            if(k%5 == 0) g++;
+            int x = puzle[1]->x()+puzle[1]->width()*(j-1);
+            int y = puzle[g+1]->y()+puzle[g+1]->height()*(i-1);
+            puzle[k]->move(x,y);
+            puzle[k]->show();
+        }
+    }
 }

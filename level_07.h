@@ -32,10 +32,12 @@ private:
     QLabel          *background = nullptr;          // Фон
     QMediaPlayer    *sound = nullptr;               // Звуки
     QAudioOutput    *output = nullptr;              // Аудиовыход
-    PicObject       *Myschka = nullptr;             // Мышка на фоне
-    PicObject       *Mysl = nullptr;                // Мысль мышки
+    PicObject       *myschka = nullptr;             // Мышка на фоне
+    PicObject       *mysl = nullptr;                // Мысль мышки
+    PicObject       *puzle[17] = {};                // Набор пазлов
 
     int rnd(int a, int b);                          // Случайные числа в диапазоне от a до b
+    void create_pazle();                            // Создаем набор пазлов
 
 signals:
     void next_level(int lev);                       // Сигнал переход на следующий уровень
