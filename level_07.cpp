@@ -17,6 +17,8 @@ Level_07::~Level_07()
     mysl = nullptr;
     delete myschka;
     myschka = nullptr;
+    delete chees;
+    chees = nullptr;
     delete button_back;
     button_back = nullptr;
     delete background;
@@ -83,20 +85,27 @@ void Level_07::initial()
     myschka->move(WIDTH_SCREEN-myschka->width()*2, HEIGHT_SCREEN-myschka->height());
     myschka->show();
 
+    chees = new PicObject(":/resource/lev_07/syr.png", this);
+    chees->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/5);
+    chees->move(WIDTH_SCREEN/8, HEIGHT_SCREEN/6);
+    chees->show();
+
     mysl = new PicObject(":/resource/lev_02/mysl.png", this);
     mysl->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/3+HEIGHT_SCREEN/15);
     mysl->move(myschka->x()+myschka->width()/2, myschka->y()-myschka->height());
     mysl->show();
 
-    create_pazle();             // Создаем набор пазлов
+    create_puzle();             // Создаем набор пазлов
+    rotate_puzle();             // Рандомно переворачиваем пазлы
 
 }
 
 // -------------------------------- Создаем набор пазлов -------------------------------------------
 
-void Level_07::create_pazle()
+void Level_07::create_puzle()
 {
     int k = rnd(0,3);       // Выбираем случайный набор
+
     QString puzle_name = ":/resource/lev_07/00-"+QString::number(k)+".png";
     puzle[0] = new PicObject(puzle_name, mysl);
     puzle[0]->resize_object(WIDTH_SCREEN/12, HEIGHT_SCREEN/8);
@@ -128,3 +137,30 @@ void Level_07::create_pazle()
         }
     }
 }
+
+// -------------------------------- Рандомный поворот пазлов --------------------------------------
+
+void Level_07::rotate_puzle()
+{
+    int k = 0;
+    for(int i=1; i<=16; i++)
+    {
+        int a = rnd(0,3);
+        position_pusle[i] = a;
+        switch(a)
+        {
+        case 0: angle_of_rotate[i] = 0;     break;
+        case 1: angle_of_rotate[i] = 90;    break;
+        case 2: angle_of_rotate[i] = 180;   break;
+        case 3: angle_of_rotate[i] = 270;   break;
+        }
+        puzle[i]->rotate_object(angle_of_rotate[i]);
+
+    // проверим не находятся ли все пазлы в нулевом состоянии (исходная картинка)
+
+        if(position_pusle[i] != 0) k++;
+    }
+    if(k==0) rotate_puzle();
+}
+
+
