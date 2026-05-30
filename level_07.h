@@ -30,6 +30,7 @@ private:
     int HEIGHT_SCREEN = 0;                          // Высота экрана
     int position_pusle[17] = {};                    // Положение пазла (0-0, 1-90, 2-180, 3-270)
     int angle_of_rotate[17] = {};                   // Угол поворота
+    int CLICKED_PUZLE = 100;                        // Номер пазла по которому кликнули
 
     QLabel          *background = nullptr;          // Фон
     QMediaPlayer    *sound = nullptr;               // Звуки
@@ -42,6 +43,10 @@ private:
     int rnd(int a, int b);                          // Случайные числа в диапазоне от a до b
     void create_puzle();                            // Создаем набор пазлов
     void rotate_puzle();                            // Переворачиваем пазлы случайным образом
+    void check_to_victory();                        // Проверка на победу
+
+protected:
+    virtual void mousePressEvent(QMouseEvent *pe);  // события по нажатию кнопки мышки
 
 signals:
     void next_level(int lev);                       // Сигнал переход на следующий уровень

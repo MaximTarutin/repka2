@@ -121,6 +121,7 @@ void Level_07::create_puzle()
         puzle[i]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/6);
         puzle[i]->raise();
         puzle[i]->hide();
+        connect(puzle[i], &PicObject::clicked, this, &Level_07::mousePressEvent);
     }
     puzle[1]->move(WIDTH_SCREEN/4, HEIGHT_SCREEN/6);
     for(int i=1; i<=4; i++)
@@ -163,4 +164,47 @@ void Level_07::rotate_puzle()
     if(k==0) rotate_puzle();
 }
 
+// --------------------------------- Кликаем мышкой ---------------------------------------------
 
+void Level_07::mousePressEvent(QMouseEvent *pe)
+{
+    if(QObject::sender() && pe->button() == Qt::LeftButton)     // вращаем по часовой стрелке
+    {
+        QString nameobj = QObject::sender()->objectName();   // Получаем имя объекта по которому кликнули
+        CLICKED_PUZLE = nameobj.toInt();                      // Получаем номер пазла
+        int angle = angle_of_rotate[CLICKED_PUZLE]+90;
+        position_pusle[CLICKED_PUZLE]++;
+        if(position_pusle[CLICKED_PUZLE] > 3) position_pusle[CLICKED_PUZLE] = 0;
+        if(angle > 270) angle = 0;
+        angle_of_rotate[CLICKED_PUZLE] = angle;
+        puzle[CLICKED_PUZLE]->rotate_object(angle_of_rotate[CLICKED_PUZLE]);
+        check_to_victory();
+    }
+    if(QObject::sender() && pe->button() == Qt::RightButton)    // вращаем против часовой стрелки
+    {
+        QString nameobj = QObject::sender()->objectName();   // Получаем имя объекта по которому кликнули
+        CLICKED_PUZLE = nameobj.toInt();                      // Получаем номер пазла
+        int angle = angle_of_rotate[CLICKED_PUZLE]-90;
+        position_pusle[CLICKED_PUZLE]--;
+        if(position_pusle[CLICKED_PUZLE] < 0) position_pusle[CLICKED_PUZLE] = 3;
+        if(angle < 0) angle = 270;
+        angle_of_rotate[CLICKED_PUZLE] = angle;
+        puzle[CLICKED_PUZLE]->rotate_object(angle_of_rotate[CLICKED_PUZLE]);
+        check_to_victory();
+    }
+}
+
+// --------------------------------- Проверка на победу ----------------------------------------
+
+void Level_07::check_to_victory()
+{
+    int k = 0;
+    for(int i=1; i<=16; i++)
+    {
+        if(position_pusle[i]==0) k++;
+    }
+    if(k == 16)
+    {
+        exit(55);
+    } else return;
+}
