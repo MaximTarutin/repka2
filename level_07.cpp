@@ -17,6 +17,8 @@ Level_07::~Level_07()
     mysl = nullptr;
     delete myschka;
     myschka = nullptr;
+    delete mouse;
+    mouse = nullptr;
     delete chees;
     chees = nullptr;
     delete button_back;
@@ -28,6 +30,8 @@ Level_07::~Level_07()
         delete puzle[i];
         puzle[i] = nullptr;
     }
+    delete timer_animation;
+    timer_animation = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -84,6 +88,11 @@ void Level_07::initial()
     myschka->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/3);
     myschka->move(WIDTH_SCREEN-myschka->width()*2, HEIGHT_SCREEN-myschka->height());
     myschka->show();
+
+    mouse = new PicObject(":/resource/lev_07/ura.gif", this);
+    mouse->animation_start(WIDTH_SCREEN/5, HEIGHT_SCREEN/3);
+    mouse->move(WIDTH_SCREEN/20, HEIGHT_SCREEN-mouse->height());
+    mouse->show();
 
     chees = new PicObject(":/resource/lev_07/syr.png", this);
     chees->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/5);
@@ -205,6 +214,37 @@ void Level_07::check_to_victory()
     }
     if(k == 16)
     {
-        exit(55);
+        timer_animation = new QTimer(this);
+        connect(timer_animation, &QTimer::timeout, this, &Level_07::victory);
+        timer_animation->start(3000);
+        victory();
     } else return;
 }
+
+// ------------------------------- Победа ------------------------------------------------
+
+void Level_07::victory()
+{
+    static int k = 0;
+    if(k == 0)
+    {
+        delete mysl;
+        mysl = nullptr;
+        delete myschka;
+        myschka = nullptr;
+        mouse_victory = new PicObject(":/resource/lev_07/ura1.gif", this);
+        mouse_victory->animation_start(WIDTH_SCREEN/4, HEIGHT_SCREEN/2);
+        mouse_victory->move(WIDTH_SCREEN-mouse_victory->width(), HEIGHT_SCREEN-mouse_victory->height());
+        mouse_victory->show();
+    }
+    k++;
+    if(k==3)
+    {
+        next_level(8);
+    }
+}
+
+
+
+
+

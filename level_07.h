@@ -39,6 +39,9 @@ private:
     PicObject       *chees = nullptr;               // Кусок сыра на фоне
     PicObject       *mysl = nullptr;                // Мысль мышки
     PicObject       *puzle[17] = {};                // Набор пазлов
+    PicObject       *mouse = nullptr;               // Анимация
+    PicObject       *mouse_victory = nullptr;       // Победная мышка
+    QTimer          *timer_animation = nullptr;     // Таймер анимации
 
     int rnd(int a, int b);                          // Случайные числа в диапазоне от a до b
     void create_puzle();                            // Создаем набор пазлов
@@ -47,6 +50,9 @@ private:
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);  // события по нажатию кнопки мышки
+
+private slots:
+    void victory();                                 // победа
 
 signals:
     void next_level(int lev);                       // Сигнал переход на следующий уровень
