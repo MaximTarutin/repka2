@@ -30,6 +30,7 @@ private:
     int old_x = 0;                              // координаты объекта до перемещения
     int old_y = 0;
     bool HELP_FLAG = false;                     // false - первая подсказка, true - подсказка тазик в печь
+    int FLAG_LEVEL = 0;
 
     int  rnd(int a, int b);                     // Случайные числа в диапазоне от a до b
     void mix_ingridients();                     // перемешиваем список ингридиентов

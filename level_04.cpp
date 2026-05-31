@@ -47,6 +47,17 @@ Level_04::~Level_04()
     sound = nullptr;
     delete container;
     container = nullptr;
+
+    WIDTH_SCREEN = 0;
+    HEIGHT_SCREEN = 0;
+    STEP = 0;
+    ACTIVE_PEN = 7;
+    old_x = 0;
+    old_y = 0;
+
+    value_m.clear();
+    value_p.clear();
+    coordinates.clear();
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------

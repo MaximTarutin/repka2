@@ -50,6 +50,26 @@ Level_03::~Level_03()
     timer_victory = nullptr;
     delete hand;
     hand = nullptr;
+
+    WIDTH_SCREEN = 0;
+    HEIGHT_SCREEN = 0;
+    NUMBER = 0;
+    CURRENT_PRODUKT = 100;
+
+    for(int i=0; i<=7; i++)
+    {
+        x[i] = 0;
+        y[i] = 0;
+    }
+
+    old_x = 0;
+    old_y = 0;
+
+    HELP_FLAG = false;
+    FLAG_LEVEL = 0;
+    produkt_value.clear();
+    produkt_mysl_value.clear();
+    coordinates.clear();
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -459,12 +479,18 @@ void Level_03::mouseMoveEvent(QMouseEvent *pe)
 
 void Level_03::show_kolobok()
 {
-    static int opacity = 0;
+    static int opacity;
+    if(FLAG_LEVEL==0)
+    {
+        opacity = 0;
+        FLAG_LEVEL = 1;
+    }
     opacity++;
     kolobok->opacity(opacity);
     kolobok->show();
     if(opacity>=255)
     {
+        FLAG_LEVEL = 0;
         timer_show_kolobok->stop();
         disconnect(timer_show_kolobok, &QTimer::timeout, this, &Level_03::show_kolobok);
         delete timer_show_kolobok;
@@ -480,11 +506,22 @@ void Level_03::show_kolobok()
 
 void Level_03::victory()
 {
-    static int x = kolobok->x();
-    static int y = kolobok->y();
-    static bool FLAG_X = true;
-    static bool FLAG_Y = true;
-    static int index = 0;
+    static int x;
+    static int y;
+    static bool FLAG_X;
+    static bool FLAG_Y;
+    static int index;
+
+    if(FLAG_LEVEL==0)
+    {
+        x = kolobok->x();
+        y = kolobok->y();
+        FLAG_X = true;
+        FLAG_Y = true;
+        index = 0;
+        FLAG_LEVEL = 1;
+    }
+
 hand->raise();
     index++;
 
