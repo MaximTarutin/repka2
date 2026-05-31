@@ -5,11 +5,6 @@ Level_02::Level_02(QWidget *parent)
     : QMainWindow{parent}
 {
     srand(time(NULL));
-    for(int i=0; i<8; i++)
-    {
-        x[i]=0;
-        y[i]=0;
-    }
 }
 
 Level_02::~Level_02()
@@ -18,7 +13,7 @@ Level_02::~Level_02()
     button_back = nullptr;
     delete background_lev02;
     background_lev02 = nullptr;
-    for(int i=0; i==7; i++)
+    for(int i=0; i<=7; i++)
     {
         delete instruments[i];
         instruments[i] = nullptr;
@@ -47,6 +42,19 @@ Level_02::~Level_02()
     timer_hand = nullptr;
     delete hand;
     hand = nullptr;
+    delete timer_firework;
+    timer_firework = nullptr;
+
+    WIDTH_SCREEN = 0;
+    HEIGHT_SCREEN = 0;
+    STEP_NUMBER = 0;
+    for(int i=0; i<8; i++)
+    {
+        x[i]=0;
+        y[i]=0;
+    }
+    coordinates.clear();
+    FLAG_LEVEL = 0;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -76,6 +84,12 @@ void Level_02::get_height(int h)
 
 void Level_02::initial()
 {
+    FLAG_LEVEL = 0;
+    for(int i=0; i<8; i++)
+    {
+        x[i]=0;
+        y[i]=0;
+    }
     // ---- фон ---
 
     background_lev02 = new QLabel(this);
@@ -270,8 +284,9 @@ void Level_02::mysl_deda(int step)
 void Level_02::help()
 {
     static int k=0;
-    static int y=instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height();
-    static int x=instruments[value_m[STEP_NUMBER]]->x();
+    static int y=instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height();;
+    static int x=instruments[value_m[STEP_NUMBER]]->x();;
+
     hand->move(x, y);
     if(k==0)
     {
@@ -298,7 +313,12 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
     }
     if(QObject::sender() && pe->button() == Qt::LeftButton)   // Узнаем какой объект подал сигнал сlicked()
     {
-        static int step = cell->width()/50;  // расстояние между инструментами расставленных в ячейке
+        static int step;
+        if(FLAG_LEVEL==0)
+        {
+            step = cell->width()/50;  // расстояние между инструментами расставленных в ячейке
+            FLAG_LEVEL = 1;
+        }
 
         QString nameobj = QObject::sender()->objectName();
         QString current_mysl_name = instruments[value_m[STEP_NUMBER]]->objectName();

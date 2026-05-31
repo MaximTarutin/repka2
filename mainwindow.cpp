@@ -121,6 +121,7 @@ void MainWindow::start_level()
                             // ---------------------- Здесь сделать удаление из памяти ненужных объектов из lev_01
                             start_level();
                         });
+                connect(lev_01->button_end, &QPushButton::clicked, this, &MainWindow::restart_game);
         }
         lev_01->showFullScreen();   // Показываем уровень во весь экран
         this->hide();               // Скрываем это окно
@@ -294,7 +295,6 @@ void MainWindow::start_level()
             break;
         case 8:
             lev_01->happy_end();
-            connect(lev_01->button_end, &QPushButton::clicked, this, &MainWindow::restart_game);
             break;
     }
 }
@@ -310,10 +310,10 @@ void MainWindow::get_current_level(int lev)
 
 void MainWindow::restart_game()
 {
-    // delete lev_01;
-    // lev_01 = nullptr;
-    // this->showFullScreen();
-    exit(76);
+    this->showFullScreen();
+    delete lev_01;
+    lev_01 = nullptr;
+    CURRENT_LEVEL = 1;
 }
 
 

@@ -41,10 +41,15 @@ Level_03::~Level_03()
     delete timer_show_kolobok;
     timer_show_kolobok = nullptr;
     delete kolobok;
+    kolobok = nullptr;
     delete animate_persone;
     animate_persone = nullptr;
     delete prosrach;
     prosrach = nullptr;
+    delete timer_victory;
+    timer_victory = nullptr;
+    delete hand;
+    hand = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
