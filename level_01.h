@@ -21,6 +21,7 @@ public:
     ~Level_01();
     QPushButton     *button_next = nullptr;                 // Кнопка следующий уровень
     QPushButton     *button_back = nullptr;                 // Кнопка назад
+    QPushButton     *button_end = nullptr;                  // Кнопка назад
 
 private:
     int WIDTH_SCREEN = 0;                                   // Разрешение экрана
@@ -52,9 +53,13 @@ private:
     PicObject       *vnuchka = nullptr;                     // внучка
     PicObject       *zuchka = nullptr;                      // жучка
     PicObject       *cat = nullptr;                         // кошка
+    PicObject       *mouse = nullptr;                       // мышка
     QTimer          *timer_bird = nullptr;                  // таймер частоты полета птицы
     QMediaPlayer    *sound = nullptr;                       // звук "ага" или "noo"
     QAudioOutput    *output = nullptr;                      // аудиовыход
+    PicObject       *end_game = nullptr;                    // победный ролик
+    PicObject       *the_end = nullptr;                     // Надпись конец игры
+    QTimer          *timer_end = nullptr;                   // таймер запуска победного ролика
 
     int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
     void mix_vegetables();                                  // перемешать список нумерации овощей
@@ -66,12 +71,14 @@ public slots:
     void get_height(int h);                                 // Получаем HEIGHT_SCREEN
     void view_rdbvgkm(int current_level);                   // Прорисовываем цепочку Репка-Дедка-Бабка-
                                                             // -Внучка-Жучка-Кошка-Мышка в зависимости от
-                                                            // значения current_level
+                                                            // значения current_level 
+    void happy_end();                                       // победа игры
 
 private slots:
     void help_move_end();                                   // окончание движения подсказки
     void flight_bird();                                     // запускаем птицу
-    void victory();                                         // победа
+    void victory();                                         // победа уровня
+
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки

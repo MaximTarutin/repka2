@@ -42,6 +42,16 @@ Level_01::~Level_01()
     vnuchka = nullptr;
     delete zuchka;
     zuchka = nullptr;
+    delete cat;
+    cat = nullptr;
+    delete mouse;
+    mouse = nullptr;
+    delete end_game;
+    end_game = nullptr;
+    delete the_end;
+    the_end = nullptr;
+    delete button_end;
+    button_end = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -103,6 +113,26 @@ void Level_01::initial()
     button_next->move(WIDTH_SCREEN-WIDTH_SCREEN/12, HEIGHT_SCREEN/20);
     button_next->hide();
 
+    end_game = new PicObject(":/resource/lev_01/victory.gif", this);
+    end_game->animation_start(WIDTH_SCREEN/2, HEIGHT_SCREEN/2);
+    end_game->move(WIDTH_SCREEN/4, HEIGHT_SCREEN/4);
+    end_game->hide();
+    end_game->raise();
+
+    the_end = new PicObject(":/resource/lev_01/theend.png", this);
+    the_end->resize_object(WIDTH_SCREEN/4, HEIGHT_SCREEN/5);
+    the_end->move(end_game->x()+end_game->width()/2-the_end->width()/2,
+                  end_game->y()-end_game->height()/2);
+    the_end->hide();
+    the_end->raise();
+
+    button_end = new QPushButton(this);
+    button_end->setStyleSheet("border-image: url(:/resource/lev_01/next.png);");
+    button_end->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
+    button_end->move(end_game->x()+end_game->width()/2-button_end->width()/2,
+                     end_game->y()+end_game->height()+button_end->height()/2);
+    button_end->hide();
+
     vegetable[0] = new PicObject(":/resource/lev_01/repka.png", this);
     vegetable[0]->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/4);
     vegetable[0]->setObjectName("repka");
@@ -131,18 +161,9 @@ void Level_01::initial()
     vegetable[8]->resize_object(WIDTH_SCREEN/13, HEIGHT_SCREEN/6);
     vegetable[8]->setObjectName("rediska");
 
-    connect(vegetable[0], &PicObject::clicked, this, &Level_01::mousePressEvent);
-    connect(vegetable[1], &PicObject::clicked, this, &Level_01::mousePressEvent);
-    connect(vegetable[2], &PicObject::clicked, this, &Level_01::mousePressEvent);
-    connect(vegetable[3], &PicObject::clicked, this, &Level_01::mousePressEvent);
-    connect(vegetable[4], &PicObject::clicked, this, &Level_01::mousePressEvent);
-    connect(vegetable[5], &PicObject::clicked, this, &Level_01::mousePressEvent);
-    connect(vegetable[6], &PicObject::clicked, this, &Level_01::mousePressEvent);
-    connect(vegetable[7], &PicObject::clicked, this, &Level_01::mousePressEvent);
-    connect(vegetable[8], &PicObject::clicked, this, &Level_01::mousePressEvent);
-
     for(int i=0; i<9; i++)      // Помещаем овощи в круг
     {
+        connect(vegetable[i], &PicObject::clicked, this, &Level_01::mousePressEvent);
         vegetable[i]->move(warehouse->x()+warehouse->width()/2-vegetable[i]->width()/2,
                            warehouse->y()+warehouse->height()/2-vegetable[i]->height()/2);
     }
@@ -272,6 +293,8 @@ void Level_01::mousePressEvent(QMouseEvent *pe)
     if(QObject::sender() && pe->button() == Qt::LeftButton)
     {
         CURRENT_OBJECT_ACTIVE = true;
+        delete help;
+        help = nullptr;
     }
 }
 
@@ -382,7 +405,6 @@ void Level_01::victory()
 
 void Level_01::view_rdbvgkm(int current_level)
 {
-    qDebug() << current_level;
     switch(current_level)
     {
     case 1:
@@ -425,5 +447,58 @@ void Level_01::view_rdbvgkm(int current_level)
                      HEIGHT_SCREEN-HEIGHT_SCREEN/3);
         cat->show();
         break;
+    case 7:
+        mouse = new PicObject(":/resource/lev_01/myshka.png", this);
+        mouse->resize_object(WIDTH_SCREEN/10, HEIGHT_SCREEN/6);
+        mouse->move(cat->x()+cat->width()-cat->width()/5,
+                    HEIGHT_SCREEN-HEIGHT_SCREEN/5);
+        mouse->show();
     }
 }
+
+// -------------------------------- Конец игры --------------------------------------------
+
+void Level_01::happy_end()
+{
+    static int k=0;
+    if(k==0)
+    {
+        timer_end = new QTimer(this);
+        connect(timer_end, &QTimer::timeout, this, &Level_01::happy_end);
+        timer_end->start(1000);
+        delete button_back;
+        button_back = nullptr;
+        delete button_next;
+        button_next = nullptr;
+    }
+
+    k++;
+
+    if(k==5)
+    {
+        delete mouse;
+        mouse = nullptr;
+        delete cat;
+        cat = nullptr;
+        delete zuchka;
+        zuchka = nullptr;
+        delete vnuchka;
+        vnuchka = nullptr;
+        delete babka;
+        babka = nullptr;
+        delete dedka;
+        dedka = nullptr;
+        delete repka;
+        repka = nullptr;
+
+        disconnect(timer_end, &QTimer::timeout, this, &Level_01::happy_end);
+
+        the_end->show();
+        end_game->show();
+        button_end->show();
+    }
+}
+
+
+
+

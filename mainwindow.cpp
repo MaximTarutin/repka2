@@ -32,6 +32,16 @@ MainWindow::~MainWindow()
     lev_01 = nullptr;
     delete lev_02;
     lev_02 = nullptr;
+    delete lev_03;
+    lev_03 = nullptr;
+    delete lev_04;
+    lev_04 = nullptr;
+    delete lev_05;
+    lev_05 = nullptr;
+    delete lev_06;
+    lev_06 = nullptr;
+    delete lev_07;
+    lev_07 = nullptr;
 }
 
 // ------------------ Вычисляем разрешение экрана ---------------------------
@@ -272,13 +282,19 @@ void MainWindow::start_level()
                         {
                             lev_07->close();
                             lev_01->showFullScreen();
-                            lev_01->view_rdbvgkm(6);
+                            lev_01->view_rdbvgkm(7);
                             delete lev_07;
                             lev_07 = nullptr;
+                            CURRENT_LEVEL = 8;
+                            start_level();
                         });
             }
             lev_07->showFullScreen();
             this->hide();
+            break;
+        case 8:
+            lev_01->happy_end();
+            connect(lev_01->button_end, &QPushButton::clicked, this, &MainWindow::restart_game);
             break;
     }
 }
@@ -289,4 +305,16 @@ void MainWindow::get_current_level(int lev)
 {
     CURRENT_LEVEL = lev;
 }
+
+// ---------------------------- Рестарт игры ---------------------------------------------
+
+void MainWindow::restart_game()
+{
+    // delete lev_01;
+    // lev_01 = nullptr;
+    // this->showFullScreen();
+    exit(76);
+}
+
+
 

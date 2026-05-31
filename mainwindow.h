@@ -46,7 +46,7 @@ private:
 
     int WIDTH_SCREEN = 0;                                           // Ширина экрана
     int HEIGHT_SCREEN = 0;                                          // Высота экрана
-    int CURRENT_LEVEL = 7;                                          // Текущий уровень
+    int CURRENT_LEVEL = 1;                                          // Текущий уровень
 
     void screen_size();                                             // Получаем разрешение экрана и
                                                                     // определяем результаты в переменные
@@ -57,5 +57,6 @@ private slots:
     void exit_of_game();                                            // Выход из игрыvoid get_current_level(int lev);
     void start_level();                                             // Запуск текущего уровня
     void get_current_level(int lev);                                // получаем номер уровня (CURRENT_LEVEL)
+    void restart_game();                                            // рестарт игры
 };
 #endif // MAINWINDOW_H

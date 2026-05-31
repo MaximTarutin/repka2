@@ -13,6 +13,11 @@ Level_07::~Level_07()
     output = nullptr;
     delete sound;
     sound = nullptr;
+    // for(int i=0; i<17; i++)
+    // {
+    //     delete puzle[i];
+    //     puzle[i] = nullptr;
+    // }
     delete mysl;
     mysl = nullptr;
     delete myschka;
@@ -21,17 +26,14 @@ Level_07::~Level_07()
     mouse = nullptr;
     delete chees;
     chees = nullptr;
+    delete mouse_victory;
+    mouse_victory = nullptr;    
     delete button_back;
     button_back = nullptr;
-    delete background;
-    background = nullptr;
-    for(int i=0; i<17; i++)
-    {
-        delete puzle[i];
-        puzle[i] = nullptr;
-    }
     delete timer_animation;
     timer_animation = nullptr;
+    delete background;
+    background = nullptr;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -232,15 +234,17 @@ void Level_07::victory()
         mysl = nullptr;
         delete myschka;
         myschka = nullptr;
+        delete button_back;
+        button_back = nullptr;
         mouse_victory = new PicObject(":/resource/lev_07/ura1.gif", this);
         mouse_victory->animation_start(WIDTH_SCREEN/4, HEIGHT_SCREEN/2);
         mouse_victory->move(WIDTH_SCREEN-mouse_victory->width(), HEIGHT_SCREEN-mouse_victory->height());
         mouse_victory->show();
     }
     k++;
-    if(k==3)
+    if(k==4)
     {
-        next_level(8);
+        emit next_level(8);
     }
 }
 
