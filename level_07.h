@@ -41,7 +41,7 @@ private:
     PicObject       *puzle[17] = {};                // Набор пазлов
     PicObject       *mouse = nullptr;               // Анимация
     PicObject       *mouse_victory = nullptr;       // Победная мышка
-    QTimer          *timer_animation = nullptr;     // Таймер анимации
+    QTimer          *timer_animation = nullptr;     // Таймер анимации    
 
     int rnd(int a, int b);                          // Случайные числа в диапазоне от a до b
     void create_puzle();                            // Создаем набор пазлов

@@ -32,8 +32,12 @@ Level_01::~Level_01()
     button_next = nullptr;
     delete button_back;
     button_back = nullptr;
+    delete button_end;
+    button_end = nullptr;
     delete background_lev01;
     background_lev01 = nullptr;
+    delete repka;
+    repka = nullptr;
     delete dedka;
     dedka = nullptr;
     delete babka;
@@ -50,8 +54,32 @@ Level_01::~Level_01()
     end_game = nullptr;
     delete the_end;
     the_end = nullptr;
-    delete button_end;
-    button_end = nullptr;
+    delete warehouse;
+    warehouse = nullptr;
+    delete help;
+    help = nullptr;
+    delete timer_end;
+    timer_end = nullptr;
+
+    WIDTH_SCREEN = 0;
+    HEIGHT_SCREEN = 0;
+    CURRENT_OBJECT = 0;
+    CURRENT_OBJECT_ACTIVE = false;
+
+    for(int i=0; i<=8; i++)
+    {
+        x[i] = 0;
+        y[i] = 0;
+        x1[i] = 0;
+        y1[i] = 0;
+    }
+
+    value_i.clear();
+    coordinates_g.clear();
+
+    LEVEL_FLAG = false;
+    LEVEL_END = false;
+    HELP_FLAG = true;
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -476,6 +504,7 @@ void Level_01::happy_end()
 
     if(k==5)
     {
+        k=0;
         delete mouse;
         mouse = nullptr;
         delete cat;

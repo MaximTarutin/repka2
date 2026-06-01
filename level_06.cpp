@@ -108,6 +108,11 @@ void Level_06::initial()
     cat->move(WIDTH_SCREEN-cat->width(), HEIGHT_SCREEN-cat->height());
     cat->show();
 
+    anime_cat_1 = new PicObject(":/resource/lev_06/321.gif", this);
+    anime_cat_2 = new PicObject(":/resource/lev_06/cat-cats.gif", this);
+    anime_cat_1->hide();
+    anime_cat_2->hide();
+
     create_rubaha();                    // Создаем рубашки карт
     create_cards();                     // Загружаем картинки карт
     create_coordinates_list();          // Создаем список координат карт
@@ -173,12 +178,12 @@ void Level_06::create_rubaha()
 
 void Level_06::create_coordinates_list()
 {
+    static int g = -1;  // ряд
     for(int i=0; i<=4; i++)         // Расставляем карты в ряды
     {
         for(int j=0; j<=5; j++)
         {
-            int k = 5*i+j+i;
-            static int g = -1;  // ряд
+            int k = 5*i+j+i;            
             if(k%5 == 0) g++;
             int x = inv_card[0]->x()+inv_card[0]->width()*j+WIDTH_SCREEN/80*j;
             int y = inv_card[g]->y()+inv_card[g]->height()*i+HEIGHT_SCREEN/60*i;
@@ -187,6 +192,7 @@ void Level_06::create_coordinates_list()
             coordinates_card.append(QList<int>() << x << y);
         }
     }
+    g = -1;     // Приводим статическую переменную к начальному значению
 }
 
 // ------------------------------- Перемешиваем список координат --------------------------
@@ -326,8 +332,6 @@ void Level_06::victory()
     static int count = 0;
     if(count == 0)
     {
-        anime_cat_1 = new PicObject(":/resource/lev_06/321.gif", this);
-        anime_cat_2 = new PicObject(":/resource/lev_06/cat-cats.gif", this);
         anime_cat_1->show();
         anime_cat_2->show();
         anime_cat_1->animation_start(WIDTH_SCREEN/6, HEIGHT_SCREEN/3);
@@ -340,6 +344,7 @@ void Level_06::victory()
         count = 0;
         sound->stop();
         emit next_level(7);
+        return;
     }
     count++;
 }

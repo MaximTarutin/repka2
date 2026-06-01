@@ -30,6 +30,8 @@ Level_02::~Level_02()
     sound = nullptr;
     delete output;
     output = nullptr;
+    delete firework;
+    firework = nullptr;
     delete timer_spider;
     timer_spider = nullptr;
     delete spider;
@@ -54,6 +56,8 @@ Level_02::~Level_02()
         y[i]=0;
     }
     coordinates.clear();
+    value_i.clear();
+    value_m.clear();
     FLAG_LEVEL = 0;
 }
 
@@ -283,9 +287,9 @@ void Level_02::mysl_deda(int step)
 
 void Level_02::help()
 {
-    static int k=0;
-    static int y=instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height();;
-    static int x=instruments[value_m[STEP_NUMBER]]->x();;
+    static int k = 0;
+    static int y = instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height();
+    static int x = instruments[value_m[STEP_NUMBER]]->x();
 
     hand->move(x, y);
     if(k==0)
@@ -385,6 +389,7 @@ void Level_02::victory()
     firework = new PicObject(":/resource/lev_02/salut.gif", this);
     firework->show();
     firework->animation_start(WIDTH_SCREEN/2, HEIGHT_SCREEN/2);
+    FLAG_LEVEL = 0;
 }
 
 // -------------------- Возврат на 1 уровень -------------------------------

@@ -12,12 +12,7 @@ Level_07::~Level_07()
     delete output;
     output = nullptr;
     delete sound;
-    sound = nullptr;
-    // for(int i=0; i<17; i++)
-    // {
-    //     delete puzle[i];
-    //     puzle[i] = nullptr;
-    // }
+    sound = nullptr;    
     delete mysl;
     mysl = nullptr;
     delete myschka;
@@ -34,6 +29,21 @@ Level_07::~Level_07()
     timer_animation = nullptr;
     delete background;
     background = nullptr;
+    for(int i=1; i<=16; i++)
+    {
+        delete puzle[i];
+        puzle[i] = nullptr;
+    }
+
+    WIDTH_SCREEN = 0;
+    HEIGHT_SCREEN = 0;
+    CLICKED_PUZLE = 100;
+
+    for(int i=0; i<=16; i++)
+    {
+        position_pusle[i] = 0;
+        angle_of_rotate[i] = 0;
+    }
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -115,7 +125,8 @@ void Level_07::initial()
 
 void Level_07::create_puzle()
 {
-    int k = rnd(0,3);       // Выбираем случайный набор
+    int k = rnd(0,3);           // Выбираем случайный набор
+    static int g = 0;           // ряд
 
     QString puzle_name = ":/resource/lev_07/00-"+QString::number(k)+".png";
     puzle[0] = new PicObject(puzle_name, mysl);
@@ -139,8 +150,7 @@ void Level_07::create_puzle()
     {
         for(int j=1; j<=4; j++)
         {
-            int k=4*(i-1)+j;            // Вычисляем порядковый номер карты
-            static int g = 0;           // ряд
+            int k=4*(i-1)+j;            // Вычисляем порядковый номер карты            
             if(k%5 == 0) g++;
             int x = puzle[1]->x()+puzle[1]->width()*(j-1);
             int y = puzle[g+1]->y()+puzle[g+1]->height()*(i-1);
@@ -148,6 +158,7 @@ void Level_07::create_puzle()
             puzle[k]->show();
         }
     }
+    g = 0;  // Обнуляем статическую переменную
 }
 
 // -------------------------------- Рандомный поворот пазлов --------------------------------------
@@ -216,6 +227,8 @@ void Level_07::check_to_victory()
     }
     if(k == 16)
     {
+        delete puzle[0];
+        puzle[0] = nullptr;
         timer_animation = new QTimer(this);
         connect(timer_animation, &QTimer::timeout, this, &Level_07::victory);
         timer_animation->start(3000);
@@ -244,6 +257,7 @@ void Level_07::victory()
     k++;
     if(k==4)
     {
+        k = 0;
         emit next_level(8);
     }
 }
