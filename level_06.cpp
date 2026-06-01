@@ -38,6 +38,16 @@ Level_06::~Level_06()
     anime_cat_1 = nullptr;
     delete anime_cat_2;
     anime_cat_2 = nullptr;
+
+    WIDTH_SCREEN = 0;
+    HEIGHT_SCREEN = 0;
+    HELP_CARD = 0;
+    CLICKED_CARD = 100;
+    OPEN_CARD[0] = 100;
+    OPEN_CARD[1] = 100;
+    COUNTER = 0;
+
+    coordinates_card.clear();
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -327,6 +337,7 @@ void Level_06::victory()
     }
     if(count >=3)
     {
+        count = 0;
         sound->stop();
         emit next_level(7);
     }

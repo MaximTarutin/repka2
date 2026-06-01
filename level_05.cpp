@@ -31,8 +31,20 @@ Level_05::~Level_05()
         delete pazl[i];
         pazl[i] = nullptr;
     }
+    delete dog_victory;
+    dog_victory = nullptr;
+    delete hand;
+    hand = nullptr;
     delete timer_victory;
     timer_victory = nullptr;
+
+    coordinates_panel.clear();
+    coordinates_pazl.clear();
+
+    WIDTH_SCREEN = 0;
+    HEIGHT_SCREEN = 0;
+    ACTIVE_PAZL = 100;
+
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -292,13 +304,14 @@ void Level_05::mouseReleaseEvent(QMouseEvent *pe)
 
 void Level_05::victory()
 {
-    static int count;
+    static int count = 0;
     sound->play();
     dog_victory->move_to_x(WIDTH_SCREEN+dog_victory->width(), 0-dog_victory->width(),
                            HEIGHT_SCREEN-dog_victory->height(), 1, 1);
     count++;
     if(count>=3)
     {
+        count = 0;
         sound->stop();
         emit next_level(6);
     }
