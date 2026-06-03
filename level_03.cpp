@@ -99,48 +99,49 @@ void Level_03::get_height(int h)
 
 void Level_03::initial()
 {
-        background = new QLabel(this);
-        background->setStyleSheet("border-image: url(:/resource/lev_03/level_3.jpg);");
-        this->setCentralWidget(background);
-        background->show();
+    STATUS_LEVEL = 0;
+    background = new QLabel(this);
+    background->setStyleSheet("border-image: url(:/resource/lev_03/level_3.jpg);");
+    this->setCentralWidget(background);
+    background->show();
 
-        QCursor cursorTarget = QCursor(QPixmap(":/resource/logo/cursor1.png"),0,0);
-        this->setCursor(cursorTarget);
+    QCursor cursorTarget = QCursor(QPixmap(":/resource/logo/cursor1.png"),0,0);
+    this->setCursor(cursorTarget);
 
-        sound = new QMediaPlayer(this);
-        output = new QAudioOutput();
-        sound->setAudioOutput(output);
-        output->setVolume(1);
+    sound = new QMediaPlayer(this);
+    output = new QAudioOutput();
+    sound->setAudioOutput(output);
+    output->setVolume(1);
 
-        button_back = new QPushButton(this);
-        button_back->setStyleSheet("border-image: url(:/resource/lev_01/return.png);");
-        button_back->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
-        button_back->move(WIDTH_SCREEN/30, HEIGHT_SCREEN/20);
-        button_back->show();
+    button_back = new QPushButton(this);
+    button_back->setStyleSheet("border-image: url(:/resource/lev_01/return.png);");
+    button_back->resize(WIDTH_SCREEN/20, HEIGHT_SCREEN/10);
+    button_back->move(WIDTH_SCREEN/30, HEIGHT_SCREEN/20);
+    button_back->show();
 
-        table = new PicObject(":/resource/lev_03/stol.png", this);
-        table->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
-        table->move(WIDTH_SCREEN/2-WIDTH_SCREEN/20, HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
-        table->show();
+    table = new PicObject(":/resource/lev_03/stol.png", this);
+    table->resize_object(WIDTH_SCREEN/5, HEIGHT_SCREEN/5);
+    table->move(WIDTH_SCREEN/2-WIDTH_SCREEN/20, HEIGHT_SCREEN/2+HEIGHT_SCREEN/5);
+    table->show();
 
-        babka = new PicObject(":/resource/lev_03/babka.png", this);
-        babka->resize_object(WIDTH_SCREEN/8, HEIGHT_SCREEN/3);
-        babka->move(WIDTH_SCREEN/2+WIDTH_SCREEN/4, HEIGHT_SCREEN/2+HEIGHT_SCREEN/10);
-        babka->show();
+    babka = new PicObject(":/resource/lev_03/babka.png", this);
+    babka->resize_object(WIDTH_SCREEN/8, HEIGHT_SCREEN/3);
+    babka->move(WIDTH_SCREEN/2+WIDTH_SCREEN/4, HEIGHT_SCREEN/2+HEIGHT_SCREEN/10);
+    babka->show();
 
-        mysl = new PicObject(":/resource/lev_02/mysl.png", this);
-        mysl->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/5);
-        mysl->move(babka->x()+babka->width()/2, babka->y()-mysl->height());
-        mysl->show();
+    mysl = new PicObject(":/resource/lev_02/mysl.png", this);
+    mysl->resize_object(WIDTH_SCREEN/6, HEIGHT_SCREEN/5);
+    mysl->move(babka->x()+babka->width()/2, babka->y()-mysl->height());
+    mysl->show();
 
-        animate_persone = new PicObject(this);
-        prosrach = new PicObject(":/resource/lev_03/prosrach.png", this);
-        animate_persone->setParent(prosrach);
+    animate_persone = new PicObject(this);
+    prosrach = new PicObject(":/resource/lev_03/prosrach.png", this);
+    animate_persone->setParent(prosrach);
 
-        animate();
-        connect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
+    animate();
+    connect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
 
-        set_object();
+    set_object();
 }
 
 
@@ -326,27 +327,50 @@ void Level_03::mousePressEvent(QMouseEvent *pe)
 
 void Level_03::mouseMoveEvent(QMouseEvent *pe)
 {
-    if(CURRENT_OBJECT != 100)
+    if((CURRENT_OBJECT==6)&&(STATUS_LEVEL==0))
     {
         PicObject *active_object = this->findChild<PicObject*>(name_active_object); //указатель на объект по его имени
         active_object->raise();
         active_object->move(pe->position().x()-active_object->width()/2,
                             pe->position().y()-active_object->height()/2);
-        //exit(143);
-    }
+    } else return;
 }
 
 // ------------------------- Отпускаем кнопку мышки -------------------------------
 
 void Level_03::mouseReleaseEvent(QMouseEvent *pe)
 {
-    PicObject *active_object = this->findChild<PicObject*>(name_active_object); //указатель на объект по его имени
+    if(CURRENT_OBJECT!=100)
+    {
+        if((STATUS_LEVEL==0)&&(CURRENT_OBJECT==6))
+        {
+            if((tazik[0]->x()>=table->x())&&(tazik[0]->x()<=table->x()+table->width())&&
+                (tazik[0]->y()>=table->y()-table->height()/2)&&(tazik[0]->y()<=table->y()+table->height()/8))
+            {
+                tazik[0]->move(table->x()+table->width()/3,
+                               table->y()-tazik[0]->height()/2-tazik[0]->height()/6);
+                STATUS_LEVEL++;
+                CURRENT_OBJECT = 100;
+            } else return_object(pe);
+        } else
+            if((STATUS_LEVEL>=1)&&(STATUS_LEVEL<=6)&&(CURRENT_OBJECT!=6))
+        {
+            exit(65);
+        }
+
+    }
+}
+
+// ------------------------- Возвращаем объект на место --------------------------------
+
+void Level_03::return_object(QMouseEvent *pe)
+{
+    PicObject *active_object = this->findChild<PicObject*>(name_active_object);
     int x = pe->position().x();
     int old_x = coordinates.at(CURRENT_OBJECT).at(0);
     int y = pe->position().y();
     int old_y = coordinates.at(CURRENT_OBJECT).at(1);
     active_object->move_to_xy(x, old_x, y, old_y, 1, 4);
-    CURRENT_OBJECT = 100;
 }
 
 // void Level_03::initial()

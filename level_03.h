@@ -24,6 +24,10 @@ private:
     int WIDTH_SCREEN = 0;                       // Ширина экрана
     int HEIGHT_SCREEN = 0;                      // Высота экрана
     int CURRENT_OBJECT = 100;                   // Перемещаемый объект
+    int STATUS_LEVEL = 0;                       // 0    - Перемещаем корзину на стол
+                                                // 1-6  - Перемещаем продукты в корзину
+                                                // 7    - Перемещаем тазик в печку
+
 
     // int NUMBER = 0;                             // Номер ингридиента в мыслях бабки
     // int CURRENT_PRODUKT = 100;                  // Номер выбранного продукта (100 - продукт не выбран)
@@ -39,6 +43,7 @@ private:
     // void set_mysl();                            // показываем о чем думает бабка
     void set_object();                          // Создаем объекты для игры
     void mix_coordinates();                     // Перемешиваем координаты в списке
+    void return_object(QMouseEvent *pe);        // Возвращаем объект на место
 
     QLabel          *background = nullptr;      // Фон уровня
     QMediaPlayer    *sound = nullptr;           // Проигрыватель
