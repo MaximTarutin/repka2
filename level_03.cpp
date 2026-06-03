@@ -327,13 +327,19 @@ void Level_03::mousePressEvent(QMouseEvent *pe)
 
 void Level_03::mouseMoveEvent(QMouseEvent *pe)
 {
-    if((CURRENT_OBJECT==6)&&(STATUS_LEVEL==0))
+    if((CURRENT_OBJECT==6)&&(STATUS_LEVEL==0))      // Перемещаем корзину
     {
         PicObject *active_object = this->findChild<PicObject*>(name_active_object); //указатель на объект по его имени
         active_object->raise();
         active_object->move(pe->position().x()-active_object->width()/2,
                             pe->position().y()-active_object->height()/2);
-    } else return;
+    } else
+        if((STATUS_LEVEL>=1)&&(STATUS_LEVEL<=6)&&(CURRENT_OBJECT!=6)&&(CURRENT_OBJECT!=100))  // Наполняем корзину продуктами
+    {
+        produkt[CURRENT_OBJECT]->move(pe->position().x()-produkt[CURRENT_OBJECT]->width()/2,
+                                      pe->position().y()-produkt[CURRENT_OBJECT]->height()/2);
+        produkt[CURRENT_OBJECT]->raise();
+    }
 }
 
 // ------------------------- Отпускаем кнопку мышки -------------------------------
@@ -342,7 +348,7 @@ void Level_03::mouseReleaseEvent(QMouseEvent *pe)
 {
     if(CURRENT_OBJECT!=100)
     {
-        if((STATUS_LEVEL==0)&&(CURRENT_OBJECT==6))
+        if((STATUS_LEVEL==0)&&(CURRENT_OBJECT==6))  // Ставим корзину на стол
         {
             if((tazik[0]->x()>=table->x())&&(tazik[0]->x()<=table->x()+table->width())&&
                 (tazik[0]->y()>=table->y()-table->height()/2)&&(tazik[0]->y()<=table->y()+table->height()/8))
@@ -353,12 +359,12 @@ void Level_03::mouseReleaseEvent(QMouseEvent *pe)
                 CURRENT_OBJECT = 100;
             } else return_object(pe);
         } else
-            if((STATUS_LEVEL>=1)&&(STATUS_LEVEL<=6)&&(CURRENT_OBJECT!=6))
+            if((STATUS_LEVEL>=1)&&(STATUS_LEVEL<=6)&&(CURRENT_OBJECT!=6))  // Наполняем корзину продуктами
         {
-            exit(65);
+            return_object(pe);
+            CURRENT_OBJECT = 100;
         }
-
-    }
+    } else return;
 }
 
 // ------------------------- Возвращаем объект на место --------------------------------
