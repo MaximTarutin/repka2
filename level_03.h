@@ -30,18 +30,8 @@ private:
 
     int NUMBER_PRODUKT = 0;                     // Номер ингридиента в мыслях бабки
 
-
-    // int CURRENT_PRODUKT = 100;                  // Номер выбранного продукта (100 - продукт не выбран)
-    // int x[8] = {};                              // Координаты продуктов
-    // int y[8] = {};
-    // int old_x = 0;                              // координаты объекта до перемещения
-    // int old_y = 0;
-    // bool HELP_FLAG = false;                     // false - первая подсказка, true - подсказка тазик в печь
-    // int FLAG_LEVEL = 0;
-
     int  rnd(int a, int b);                     // Случайные числа в диапазоне от a до b
-    // void mix_ingridients();                     // перемешиваем список ингридиентов
-     void set_mysl();                           // показываем о чем думает бабка
+    void set_mysl();                           // показываем о чем думает бабка
     void set_object();                          // Создаем объекты для игры
     void mix_coordinates();                     // Перемешиваем координаты в списке
     void return_object(QMouseEvent *pe);        // Возвращаем объект на место
@@ -51,7 +41,7 @@ private:
     QAudioOutput    *output = nullptr;          // Аудиовыход
 
     QTimer          *timer_show_kolobok;        // Таймер появления колобка
-    // QTimer          *timer_victory;             // Таймер анимации при победе
+    QTimer          *timer_victory;             // Таймер анимации при победе
     PicObject       *table = nullptr;           // Стол
     PicObject       *babka = nullptr;           // Бабка
     PicObject       *mysl = nullptr;            // Мысль бабки
@@ -73,9 +63,6 @@ private:
 
     QString         name_active_object;         // имя объекта по которому кликнули мышкой
     QList<QList<int>>  coordinates = {};        // Список координаты продуктов (список в списке - [[a,b],[a,b],...,[a,b]])
-    // QList<int>  produkt_value = {};             // Список нумерации продукты
-    // QList<int>  produkt_mysl_value = {};        // Список нумерации продукты в мысли
-
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);
@@ -86,12 +73,12 @@ public slots:
     void initial();                             // Инициализация уровня
     void get_width(int w);                      // Получаем WIDTH_SCREEN
     void get_height(int h);                     // Получаем HEIGHT_SCREEN
-    // void back_level();                          // Закрываем окно текущего уровня
+    void back_level();                          // Закрываем окно текущего уровня
 
 private slots:
     void show_kolobok();                        // Колобок появляется на столе
     void animate();                             // анимация на уровне
-    // void victory();                             // Победа
+    void victory();                             // Победа
     void help();                                // Подсказка
 
 signals:
