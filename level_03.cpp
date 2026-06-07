@@ -11,7 +11,54 @@ Level_03::Level_03(QWidget *parent)
 
 Level_03::~Level_03()
 {
+    delete animate_persone;
+    animate_persone = nullptr;
+    delete prosrach;
+    prosrach = nullptr;
+    for(int i=0;i<=7; i++)
+    {
+        delete produkt_mysl[i];
+        produkt_mysl[i] = nullptr;
+    }
+    delete hand;
+    hand = nullptr;
+    for(int i=0; i<=5; i++)
+    {
+        delete produkt[i];
+        produkt[i] = nullptr;
+    }
+    delete kolobok;
+    kolobok = nullptr;
+    for(int i=0; i<=6; i++)
+    {
+        delete tazik[i];
+        tazik[i] = nullptr;
+    }
+    delete mysl;
+    mysl = nullptr;
+    delete babka;
+    babka = nullptr;
+    delete table;
+    table = nullptr;
+    delete timer_victory;
+    timer_victory = nullptr;
+    delete timer_show_kolobok;
+    timer_show_kolobok = nullptr;
+    delete output;
+    output = nullptr;
+    delete sound;
+    sound = nullptr;
+    delete background;
+    background = nullptr;
 
+    WIDTH_SCREEN = 0;
+    HEIGHT_SCREEN = 0;
+    CURRENT_OBJECT = 100;
+    STATUS_LEVEL = 0;
+    NUMBER_PRODUKT = 0;
+
+    name_active_object = "";
+    coordinates.clear();
 }
 
 //------------------ генератор случайных чисел в диапазоне от a до b -----------------------
@@ -431,7 +478,7 @@ void Level_03::help()
 
 void Level_03::show_kolobok()
 {
-    static int opacity=0;
+    static int opacity = 0;
     opacity++;
     kolobok->opacity(opacity);
     kolobok->show();
@@ -445,6 +492,7 @@ void Level_03::show_kolobok()
         timer_victory->start(4);
         connect(timer_victory, &QTimer::timeout, this, &Level_03::victory);
         sound->setSource(QUrl("qrc:/resource/sound/tuk.mp3"));
+        opacity = 0;
     }
 }
 
@@ -465,6 +513,11 @@ void Level_03::victory()
         timer_victory->stop();
         disconnect(timer_victory, &QTimer::timeout, this, &Level_03::victory);
         emit next_level(4);
+        x = kolobok->x();
+        y = kolobok->y();
+        FLAG_X = true;
+        FLAG_Y = true;
+        index = 0;
         return;
     }
 
