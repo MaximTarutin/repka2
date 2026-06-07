@@ -28,8 +28,9 @@ private:
                                                 // 1-6  - Перемещаем продукты в корзину
                                                 // 7    - Перемещаем тазик в печку
 
+    int NUMBER_PRODUKT = 0;                     // Номер ингридиента в мыслях бабки
 
-    // int NUMBER = 0;                             // Номер ингридиента в мыслях бабки
+
     // int CURRENT_PRODUKT = 100;                  // Номер выбранного продукта (100 - продукт не выбран)
     // int x[8] = {};                              // Координаты продуктов
     // int y[8] = {};
@@ -40,7 +41,7 @@ private:
 
     int  rnd(int a, int b);                     // Случайные числа в диапазоне от a до b
     // void mix_ingridients();                     // перемешиваем список ингридиентов
-    // void set_mysl();                            // показываем о чем думает бабка
+     void set_mysl();                           // показываем о чем думает бабка
     void set_object();                          // Создаем объекты для игры
     void mix_coordinates();                     // Перемешиваем координаты в списке
     void return_object(QMouseEvent *pe);        // Возвращаем объект на место
@@ -49,16 +50,15 @@ private:
     QMediaPlayer    *sound = nullptr;           // Проигрыватель
     QAudioOutput    *output = nullptr;          // Аудиовыход
 
-    // QTimer          *timer_show_kolobok;        // Таймер появления колобка
+    QTimer          *timer_show_kolobok;        // Таймер появления колобка
     // QTimer          *timer_victory;             // Таймер анимации при победе
     PicObject       *table = nullptr;           // Стол
     PicObject       *babka = nullptr;           // Бабка
     PicObject       *mysl = nullptr;            // Мысль бабки
-    // PicObject       *tazik[8] = {};             // Состояния тазика по мере наполняемости продуктами
     PicObject       *tazik[7] = {};             // Состояния тазика по мере наполняемости продуктами
-    //PicObject       *kolobok = nullptr;         // Колобок
+    PicObject       *kolobok = nullptr;         // Колобок
     PicObject       *produkt[6] = {};           // Продукты
-    // PicObject       *hand = nullptr;            // Рука - подсказка
+    PicObject       *hand = nullptr;            // Рука - подсказка
     PicObject       *produkt_mysl[8] = {};      // Продукты в мысли:
                                                 // 0 - тазик
                                                 // 1 - молоко
@@ -89,10 +89,10 @@ public slots:
     // void back_level();                          // Закрываем окно текущего уровня
 
 private slots:
-    // void show_kolobok();                        // Колобок появляется на столе
+    void show_kolobok();                        // Колобок появляется на столе
     void animate();                             // анимация на уровне
     // void victory();                             // Победа
-    // void help();                                // Подсказка
+    void help();                                // Подсказка
 
 signals:
     void next_level(int lev);                   // Сигнал переход на следующий уровень

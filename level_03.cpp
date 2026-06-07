@@ -100,6 +100,7 @@ void Level_03::get_height(int h)
 void Level_03::initial()
 {
     STATUS_LEVEL = 0;
+    NUMBER_PRODUKT = 0;
     background = new QLabel(this);
     background->setStyleSheet("border-image: url(:/resource/lev_03/level_3.jpg);");
     this->setCentralWidget(background);
@@ -134,6 +135,10 @@ void Level_03::initial()
     mysl->move(babka->x()+babka->width()/2, babka->y()-mysl->height());
     mysl->show();
 
+    kolobok = new PicObject(":/resource/lev_03/kolobok.png", this);
+    kolobok->resize_object(WIDTH_SCREEN/20, HEIGHT_SCREEN/12);
+    kolobok->hide();
+
     animate_persone = new PicObject(this);
     prosrach = new PicObject(":/resource/lev_03/prosrach.png", this);
     animate_persone->setParent(prosrach);
@@ -142,6 +147,15 @@ void Level_03::initial()
     connect(animate_persone, &PicObject::move_end, this, &Level_03::animate);
 
     set_object();
+    set_mysl();
+
+    hand = new PicObject(":/resource/lev_01/ruka.png", this);
+    hand->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
+    hand->move(500, 500);
+    hand->show();
+    hand->raise();
+    connect(hand, &PicObject::move_end, this, &Level_03::help);
+    help();
 }
 
 
@@ -320,6 +334,8 @@ void Level_03::mousePressEvent(QMouseEvent *pe)
     {
         name_active_object = QObject::sender()->objectName();
         CURRENT_OBJECT = name_active_object.toInt();
+        hand->hide();
+        disconnect(hand, &PicObject::move_end, this, &Level_03::help);
     }
 }
 
@@ -339,6 +355,12 @@ void Level_03::mouseMoveEvent(QMouseEvent *pe)
         produkt[CURRENT_OBJECT]->move(pe->position().x()-produkt[CURRENT_OBJECT]->width()/2,
                                       pe->position().y()-produkt[CURRENT_OBJECT]->height()/2);
         produkt[CURRENT_OBJECT]->raise();
+    } else
+        if((STATUS_LEVEL==7)&&(CURRENT_OBJECT==7))              // Двигаем полную корзину в печь
+    {
+        tazik[6]->move(pe->position().x()-tazik[6]->width()/2,
+                                      pe->position().y()-tazik[6]->height()/2);
+        tazik[6]->raise();
     }
 }
 
@@ -357,12 +379,56 @@ void Level_03::mouseReleaseEvent(QMouseEvent *pe)
                                table->y()-tazik[0]->height()/2-tazik[0]->height()/6);
                 STATUS_LEVEL++;
                 CURRENT_OBJECT = 100;
+                NUMBER_PRODUKT++;
+                set_mysl();
             } else return_object(pe);
         } else
             if((STATUS_LEVEL>=1)&&(STATUS_LEVEL<=6)&&(CURRENT_OBJECT!=6))  // Наполняем корзину продуктами
         {
-            return_object(pe);
-            CURRENT_OBJECT = 100;
+            if((produkt[NUMBER_PRODUKT-1]->x()>=tazik[0]->x())&&
+                (produkt[NUMBER_PRODUKT-1]->x()<=tazik[0]->x()+tazik[0]->width())&&
+                (produkt[NUMBER_PRODUKT-1]->y()>=tazik[0]->y()-tazik[0]->height()/2)&&
+                (produkt[NUMBER_PRODUKT-1]->y()<=tazik[0]->y()+tazik[0]->height()))
+            {
+                produkt[NUMBER_PRODUKT-1]->hide();
+                tazik[NUMBER_PRODUKT-1]->hide();
+                NUMBER_PRODUKT++;
+                tazik[NUMBER_PRODUKT-1]->show();
+                STATUS_LEVEL++;
+                if(STATUS_LEVEL>6)
+                {
+                    connect(hand, &PicObject::move_end, this, &Level_03::help);
+                    hand->show();
+                    help();
+                }
+                set_mysl();
+            } else
+            {
+                return_object(pe);
+                CURRENT_OBJECT = 100;
+            }
+        } else
+            if((STATUS_LEVEL==7)&&(CURRENT_OBJECT==7))
+        {
+            if((pe->position().x()<=WIDTH_SCREEN/5)&&(pe->position().x()>=WIDTH_SCREEN/7)&&
+             (pe->position().y()<=HEIGHT_SCREEN/2+HEIGHT_SCREEN/20)&&
+             (pe->position().y()>=HEIGHT_SCREEN/2-HEIGHT_SCREEN/20))
+            {
+                tazik[6]->hide();
+                mysl->hide();
+                button_back->hide();
+                kolobok->opacity(0);
+                kolobok->move(table->x()+table->width()/3,
+                                   table->y()-kolobok->height()/2-kolobok->height()/6);
+                kolobok->show();
+                timer_show_kolobok = new QTimer(this);
+                timer_show_kolobok->start(10);
+                connect(timer_show_kolobok, &QTimer::timeout, this, &Level_03::show_kolobok);
+            } else
+            {
+                return_object(pe);
+                CURRENT_OBJECT = 100;
+            }
         }
     } else return;
 }
@@ -377,6 +443,52 @@ void Level_03::return_object(QMouseEvent *pe)
     int y = pe->position().y();
     int old_y = coordinates.at(CURRENT_OBJECT).at(1);
     active_object->move_to_xy(x, old_x, y, old_y, 1, 4);
+}
+
+// ------------------------- Показываем о чем думает бабака ------------------------------
+
+void Level_03::set_mysl()
+{
+    if(NUMBER_PRODUKT!=0)
+    {
+        produkt_mysl[NUMBER_PRODUKT-1]->hide();
+        produkt_mysl[NUMBER_PRODUKT]->show();
+    } else produkt_mysl[NUMBER_PRODUKT]->show();
+}
+
+void Level_03::help()
+{
+    if(STATUS_LEVEL==0)
+    {
+        hand->move_to_xy(tazik[0]->x()+tazik[0]->width()/2,table->x()+table->width()/2,
+                         tazik[0]->y()+tazik[0]->height()/2,table->y(),2);
+    }
+    if(STATUS_LEVEL==7)
+    {
+        hand->move_to_xy(tazik[6]->x()+tazik[6]->width()/2, WIDTH_SCREEN/6,
+                         tazik[6]->y()+tazik[6]->height()/2, HEIGHT_SCREEN/2, 2);
+    }
+}
+
+// -------------- Колобок появляется на столе -----------------------------
+
+void Level_03::show_kolobok()
+{
+    static int opacity=0;
+    opacity++;
+    kolobok->opacity(opacity);
+    kolobok->show();
+    if(opacity>=255)
+    {
+        timer_show_kolobok->stop();
+        disconnect(timer_show_kolobok, &QTimer::timeout, this, &Level_03::show_kolobok);
+        delete timer_show_kolobok;
+        timer_show_kolobok = nullptr;
+        // timer_victory = new QTimer(this);
+        // timer_victory->start(4);
+        // connect(timer_victory, &QTimer::timeout, this, &Level_03::victory);
+        // sound->setSource(QUrl("qrc:/resource/sound/tuk.mp3"));
+    }
 }
 
 // void Level_03::initial()
@@ -756,32 +868,7 @@ void Level_03::return_object(QMouseEvent *pe)
 //     }
 // }
 
-// // -------------- Колобок появляется на столе -----------------------------
 
-// void Level_03::show_kolobok()
-// {
-//     static int opacity;
-//     if(FLAG_LEVEL==0)
-//     {
-//         opacity = 0;
-//         FLAG_LEVEL = 1;
-//     }
-//     opacity++;
-//     kolobok->opacity(opacity);
-//     kolobok->show();
-//     if(opacity>=255)
-//     {
-//         FLAG_LEVEL = 0;
-//         timer_show_kolobok->stop();
-//         disconnect(timer_show_kolobok, &QTimer::timeout, this, &Level_03::show_kolobok);
-//         delete timer_show_kolobok;
-//         timer_show_kolobok = nullptr;
-//         timer_victory = new QTimer(this);
-//         timer_victory->start(4);
-//         connect(timer_victory, &QTimer::timeout, this, &Level_03::victory);
-//         sound->setSource(QUrl("qrc:/resource/sound/tuk.mp3"));
-//     }
-// }
 
 // // ------------------------ Победа ---------------------------------------
 
