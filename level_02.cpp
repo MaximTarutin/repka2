@@ -367,6 +367,8 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
 
 void Level_02::victory()
 {
+    mysl->hide();
+    button_back->hide();
     sound->setSource(QUrl("qrc:/resource/sound/salut.mp3"));
     sound->play();
     mysl->hide();

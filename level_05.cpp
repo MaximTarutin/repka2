@@ -304,6 +304,8 @@ void Level_05::mouseReleaseEvent(QMouseEvent *pe)
 
 void Level_05::victory()
 {
+    mysl->hide();
+    button_back->hide();
     static int count = 0;
     sound->play();
     dog_victory->move_to_x(WIDTH_SCREEN+dog_victory->width(), 0-dog_victory->width(),

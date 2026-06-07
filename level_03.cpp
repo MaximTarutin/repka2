@@ -500,8 +500,8 @@ void Level_03::show_kolobok()
 
 void Level_03::victory()
 {
-    static int x = kolobok->x();
-    static int y = kolobok->y();
+    static int x = table->x()+table->width()/3;
+    static int y = table->y()-kolobok->height()/2-kolobok->height()/6;
     static bool FLAG_X = true;
     static bool FLAG_Y = true;
     static int index = 0;
@@ -513,8 +513,8 @@ void Level_03::victory()
         timer_victory->stop();
         disconnect(timer_victory, &QTimer::timeout, this, &Level_03::victory);
         emit next_level(4);
-        x = kolobok->x();
-        y = kolobok->y();
+        // x = table->x()+table->width()/3;
+        // y = table->y()-kolobok->height()/2-kolobok->height()/6;
         FLAG_X = true;
         FLAG_Y = true;
         index = 0;

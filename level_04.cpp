@@ -453,6 +453,8 @@ void Level_04::delete_pen()
 
 void Level_04::victory()
 {
+    mysl->hide();
+    button_back->hide();
     victory_timer = new QTimer(this);
     victory_timer->start(9000);
     connect(victory_timer, &QTimer::timeout, this, [this]()

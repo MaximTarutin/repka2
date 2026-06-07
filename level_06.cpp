@@ -329,6 +329,7 @@ void Level_06::checking_for_math()
 
 void Level_06::victory()
 {
+    button_back->hide();
     static int count = 0;
     if(count == 0)
     {
