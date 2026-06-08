@@ -240,8 +240,6 @@ void Level_07::check_to_victory()
 
 void Level_07::victory()
 {
-    button_back->hide();
-    mysl->hide();
     static int k = 0;
     if(k == 0)
     {

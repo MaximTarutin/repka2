@@ -40,8 +40,6 @@ Level_02::~Level_02()
     tarakan = nullptr;
     delete timer_tarakan;
     timer_tarakan = nullptr;
-    delete timer_hand;
-    timer_hand = nullptr;
     delete hand;
     hand = nullptr;
     delete timer_firework;
@@ -233,12 +231,8 @@ void Level_02::initial()
     hand->resize_object(WIDTH_SCREEN/25, HEIGHT_SCREEN/12);
     hand->show();
 
-    timer_hand = new QTimer(this);
-    timer_hand->start(3);
-
     // ---- сигналы и слоты -------
 
-    connect(timer_hand, &QTimer::timeout, this, &Level_02::help);    
     connect(instruments[0], &PicObject::clicked, this, &Level_02::mousePressEvent);
     connect(instruments[1], &PicObject::clicked, this, &Level_02::mousePressEvent);
     connect(instruments[2], &PicObject::clicked, this, &Level_02::mousePressEvent);
@@ -247,6 +241,9 @@ void Level_02::initial()
     connect(instruments[5], &PicObject::clicked, this, &Level_02::mousePressEvent);
     connect(instruments[6], &PicObject::clicked, this, &Level_02::mousePressEvent);
     connect(instruments[7], &PicObject::clicked, this, &Level_02::mousePressEvent);
+    connect(hand, &PicObject::move_end, this, &Level_02::help);
+
+    help();
 }
 
 // ---------------- Перемешаем список нумерации инструмента --------------------------
@@ -287,20 +284,9 @@ void Level_02::mysl_deda(int step)
 
 void Level_02::help()
 {
-    static int k = 0;
-    static int y = instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height();
-    static int x = instruments[value_m[STEP_NUMBER]]->x();
-
-    hand->move(x, y);
-    if(k==0)
-    {
-        y--;
-        if(y<=instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height()) k=1;
-    } else
-    {
-        y++;
-        if(y>=instruments[value_m[STEP_NUMBER]]->y()+instruments[value_m[STEP_NUMBER]]->height()+100) k=0;
-    }
+    hand->move_to_y(instruments[value_m[STEP_NUMBER]]->x()+instruments[value_m[STEP_NUMBER]]->width()/4,
+                    instruments[value_m[STEP_NUMBER]]->y()+HEIGHT_SCREEN/5,
+                    instruments[value_m[STEP_NUMBER]]->y()+hand->height(), 40);
 }
 
 // --------------------- Кликаем по предмету --------------------------------
@@ -309,9 +295,6 @@ void Level_02::mousePressEvent(QMouseEvent *pe)
 {
     if(hand)    // Убираем подсказку после первого клика
     {
-        timer_hand->stop();
-        delete timer_hand;
-        timer_hand = nullptr;
         delete hand;
         hand = nullptr;
     }

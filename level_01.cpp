@@ -60,6 +60,10 @@ Level_01::~Level_01()
     help = nullptr;
     delete timer_end;
     timer_end = nullptr;
+    delete about;
+    about = nullptr;
+    delete about_1;
+    about_1 = nullptr;
 
     WIDTH_SCREEN = 0;
     HEIGHT_SCREEN = 0;
@@ -120,6 +124,26 @@ void Level_01::initial()
     background_lev01->setStyleSheet("border-image: url(:/resource/lev_01/fon.jpg);");
     this->setCentralWidget(background_lev01);
     background_lev01->show();
+
+    about = new QLabel(this);
+    about->setText("Максим Тарутин.\n e-mail: mtarut@mail.ru \n сайт: www.mtarut.ru\n г. Воркута 2026 г.");
+    about->setStyleSheet("QLabel {color: yellow; font-size: 22pt;"
+                         "font-weight: bold;}");
+    about->setAlignment(Qt::AlignCenter);
+    about->resize(WIDTH_SCREEN/3, HEIGHT_SCREEN/4);
+    about->move(WIDTH_SCREEN-about->width(), HEIGHT_SCREEN-about->height());
+    about->raise();
+    about->hide();
+
+    about_1 = new QLabel(this);
+    about_1->setText("На идею вдохновили: \n Настя, Ксюша и Лиза Тарутины !!!\n ;)");
+    about_1->setStyleSheet("QLabel {color: yellow; font-size: 22pt;"
+                         "font-weight: bold;}");
+    about_1->setAlignment(Qt::AlignCenter);
+    about_1->resize(WIDTH_SCREEN/3, HEIGHT_SCREEN/4);
+    about_1->move(0+about_1->width()/2, HEIGHT_SCREEN-about_1->height());
+    about_1->raise();
+    about_1->hide();
 
     QCursor cursorTarget = QCursor(QPixmap(":/resource/logo/cursor1.png"),0,0);
     this->setCursor(cursorTarget);
@@ -497,7 +521,7 @@ void Level_01::happy_end()
         delete button_back;
         button_back = nullptr;
         delete button_next;
-        button_next = nullptr;
+        button_next = nullptr;        
     }
 
     k++;
@@ -519,9 +543,9 @@ void Level_01::happy_end()
         dedka = nullptr;
         delete repka;
         repka = nullptr;
-
         disconnect(timer_end, &QTimer::timeout, this, &Level_01::happy_end);
-
+        about->show();
+        about_1->show();
         the_end->show();
         end_game->show();
         button_end->show();

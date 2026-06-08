@@ -60,6 +60,8 @@ private:
     PicObject       *end_game = nullptr;                    // победный ролик
     PicObject       *the_end = nullptr;                     // Надпись конец игры
     QTimer          *timer_end = nullptr;                   // таймер запуска победного ролика
+    QLabel          *about = nullptr;                       // о программе
+    QLabel          *about_1 = nullptr;                     // ...........
 
     int rnd(int a, int b);                                  // случайное число в диапазоне от a до b
     void mix_vegetables();                                  // перемешать список нумерации овощей

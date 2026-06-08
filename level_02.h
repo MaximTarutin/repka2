@@ -60,7 +60,6 @@ private:
     QTimer       *timer_firework = nullptr;                 // Таймер салюта
     QTimer       *timer_spider = nullptr;                   // Таймер паука
     QTimer       *timer_tarakan = nullptr;                  // Таймер таракан
-    QTimer       *timer_hand = nullptr;                     // Таймер подсказки
 
 protected:
     virtual void mousePressEvent(QMouseEvent *pe);          // события по нажатию кнопки мышки
